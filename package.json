@@ -1,0 +1,51 @@
+{
+  "name": "purplecorn",
+  "version": "1.0.0",
+  "description": "purplecorn",
+  "productName": "purplecorn",
+  "cordovaId": "org.cordova.quasar.app",
+  "author": "juanash <juanita-bravo2011@hotmail.com>",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext .js,.vue src",
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "dependencies": {
+    "@imagina/qblog": "0.0.6",
+    "@imagina/qhelper": "0.0.16",
+    "@imagina/qmenu": "0.0.4",
+    "@imagina/qslider": "0.0.3",
+    "@imagina/quser": "0.0.29",
+    "axios": "^0.18.0",
+    "dotenv": "^6.1.0",
+    "vue-carousel": "^0.16.0-rc2",
+    "vue-i18n": "^7.3.3",
+    "vue-routisan": "^2.1.4",
+    "vue2-google-maps": "^0.10.5",
+    "webpack": "^4.25.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.18.2",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-vue": "^4.3.0",
+    "quasar-cli": "^0.17.0",
+    "strip-ansi": "=3.0.1"
+  },
+  "engines": {
+    "node": ">= 8.9.0",
+    "npm": ">= 5.6.0",
+    "yarn": ">= 1.6.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 10"
+  ]
+}
