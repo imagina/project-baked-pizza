@@ -71,13 +71,17 @@
       </div>
     </section>
 
-    <section class="row" style="padding: 0% 0; ">
-
-      <div class="col-xs-12 col-lg-7 q-py-xl only-desktop yellow-texture">
-
+    <section class="row desktop-only" style="background: url('/statics/textura7.jpg') no-repeat; background-size: 100%; display: none">
+      <div class="col-xs-12 col-lg-6 q-py-xl q-pl-md q-px-xl only-desktop">
+         <div>
+            <p class="q-headline q-mt-md color-baked-title">Descarga nuestra APP</p>
+            <p class="q-display-1 q-mt-md color-baked-subtitle">¡Haz tus pedidos desde el celular!</p>
+            <div>
+              <img src="/statics/googleplay.png" width="20%" style="cursor: pointer;">
+            </div>
+         </div>
       </div>
-
-      <div class="col-xs-12 col-lg-5 q-py-xl text-white red-texture" style="">
+      <div class="col-xs-12 col-lg-6 q-py-xl text-white ">
         <div class="q-headline q-mt-md" align="center">¿Tienes un evento?</div>
         <div class="q-display-2 color-baked-subtitle-1" align="center">SERVICIO DE CATERING</div>
         <p align="center" class="q-mx-xl" style="margin: 20px 100px; font-family: Muli; font-size: 20px">
@@ -87,7 +91,7 @@
         </p>
         <div class="q-display-1 q-mb-md color-baked-subtitle-1" align="center">catering@bakedpizza.com.co </div>
       </div>
-    </section> 
+    </section>
 
     <section class="row q-pb-lg" style="background: url('statics/textura.jpg')">
       <div class="col-md-12 q-py-xl">
@@ -201,42 +205,11 @@
       <!-- End Categories -->
     </section>
 
-    <section class="row" style="padding: 5% 15%; background: #f3f1dd url('statics/textura2.jpg')">
-      <div class="col-md-6">
-        <div class="q-display-1 color-baked-subtitle">Permítenos atenderte</div>
-        <div class="q-display-2 color-baked-title">¡VISÍTANOS PRONTO!</div>
-        <div style="width: 90%">
-            <google-map />
-
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="col-md-6">
-        <div class="q-display-1 color-baked-subtitle-sm">¿Necesitas ayuda?</div>
-        <div class="q-display-2 color-baked-title">DÉJANOS UN MENSAJE</div>
-
-        <div id="form" style="font-family: Muli" class="q-my-xl">
-        
-          <q-input v-model="text" float-label="Nombre Complejo"/>
-          <q-input v-model="text" float-label="Número de contacto"/>
-          <q-input v-model="text" float-label="Dirección de Dominilio"/>
-          <q-input v-model="text" type="textarea" float-label="Mensaje" rows="3"/>
-
-          <q-btn label="Enviar" color="red" sence class="q-my-md"/>
-
-        </div>     
-
-      </div>
-      </div>
-    </section>
-
   </div>
 </template>
 
 <script>
-  import GoogleMap from "src/components/GoogleMap";
-
+  
   export default {
 
     data(){
@@ -245,35 +218,30 @@
       }
     },
     components: {
-      GoogleMap
+      
     },
   }
 </script>
 
 <style >
+
+
  .yellow-texture{
-  background: #F5A613;
-  position: relative;
+
+  background: #F8b41c url('/statics/appbaked.png') no-repeat top right;
+  background-size: 45%;
+
  }
 
  .red-texture{
   position: relative;
-  padding-right: 180px; background: #C02400;
+
+  background: #C02400 url('/statics/textura6.png') no-repeat right top;  
  }
-  .red-texture::before{
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background: #c3c3c3;
 
 
-    transform: skew(-15deg, 0deg);
-
-
-    
+  .diagonal-texture{
+    background: linear-gradient(to right bottom, #F5A613 50%, #C02400 50%);
   }
 
   .diagonal{

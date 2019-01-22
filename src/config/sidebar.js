@@ -13,33 +13,28 @@
 export default {
   /*home*/
   home: {
-    title: 'Home',
+    title: 'inicio',
     icon: 'fas fa-home',
     to: 'home'
   },
   menu: {
-    title: 'Menú',
+    title: 'pedido',
     icon: 'fas fa-utensils',
-    to: 'menu'
+    to: 'pedido'
   },
   about: {
-    title: 'Purple Corn',
+    title: 'donde-estamos',
     icon: 'far fa-building',
-    to: 'about',
+    to: 'donde-estamos',
   },
   catering: {
-    title: 'Catering',
+    title: 'nosotros',
     icon: 'far fa-calendar-check',
-    to: 'catering'
+    to: 'nosotros'
   },
   locations: {
-    title: 'Locations',
+    title: 'pide-en-linea',
     icon: 'fas fa-map-marked-alt',
-    to: 'locations'
-  },
-  franchise: {
-    title: 'Franchise',
-    icon: 'fas fa-check-double',
-    to: 'franchise'
+    to: 'pide-en-linea'
   },
 }

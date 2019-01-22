@@ -5,7 +5,7 @@
     <header-component></header-component>
 
     <!--=== ROUTER VIEW ===-->
-    <q-page-container style="background: #f4f4f4;">
+    <q-page-container style="background: #f4f4f4; padding-bottom: 0px;">
       <router-view  />
     </q-page-container>
 

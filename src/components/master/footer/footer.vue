@@ -1,4 +1,38 @@
 <template>
+  <div>
+
+    <section class="row" style="padding: 5% 15%; background: #f3f1dd url('statics/textura2.jpg');">
+      <div class="col-md-6">
+        <div class="q-display-1 color-baked-subtitle">Permítenos atenderte</div>
+        <div class="q-display-2 color-baked-title">¡VISÍTANOS PRONTO!</div>
+        <div style="width: 90%">
+            <google-map />
+
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="col-md-6">
+        <div class="q-display-1 color-baked-subtitle-sm">¿Necesitas ayuda?</div>
+        <div class="q-display-2 color-baked-title">DÉJANOS UN MENSAJE</div>
+
+        <div id="form" style="font-family: Muli" class="q-my-xl">
+        
+          <q-input v-model="name" float-label="Nombre Complejo"/>
+          <q-input v-model="phone" float-label="Número de contacto"/>
+          <q-input v-model="addres" float-label="Dirección de Dominilio"/>
+          <q-input v-model="message" type="textarea" float-label="Mensaje" rows="3"/>
+
+          <q-btn label="Enviar" color="red" sence class="q-my-md"/>
+
+        </div>     
+
+      </div>
+      </div>
+      <div class="col-md-12 desktop-only" style="height: 200px ;">
+        
+      </div>
+    </section>
   
   <q-layout-footer id="footer" class="no-shadow" style="border-top: 9px solid #EC3800; background: url('statics/footer.jpg'); filter: contrast(110%);">
     <div class="flex flex-center">
@@ -57,17 +91,20 @@
       </div>
     </div>
   </q-layout-footer>
+  </div>
 </template>
 <script>
   /*Components*/
   import informationFooter from 'src/components/master/footer/information'
   import logoImagina from 'src/components/master/footer/imaginaSVG'
+  import GoogleMap from "src/components/GoogleMap";
 
   export default {
     props: {},
     components: {
       informationFooter,
-      logoImagina
+      logoImagina,
+      GoogleMap
     },
     watch: {},
     mounted() {
@@ -75,7 +112,12 @@
       })
     },
     data() {
-      return {}
+      return {
+        name: '',
+        phone: '',
+        addres: '',
+        message: '',
+      }
     },
     methods: {}
 

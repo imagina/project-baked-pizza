@@ -4,14 +4,14 @@
     <div class="desktop-only" style="display: inherit; ">
       <div class="infoHeader infoHeader-border">
         <h6>
-          <router-link tag="a" to="/menu">
+          <router-link tag="a" to="/inicio">
             Inicio
           </router-link>
         </h6>
       </div>
       <div class="infoHeader infoHeader-border">
         <h6>
-          <router-link tag="a" to="/about">
+          <router-link tag="a" to="/">
             Pide en Línea
           </router-link>
       </h6>
@@ -19,7 +19,7 @@
       </div>
       <div class="infoHeader infoHeader-border">
         <h6>
-          <router-link tag="a" to="/catering">
+          <router-link tag="a" to="/about">
             Nosotros
           </router-link>
         </h6>
@@ -169,6 +169,7 @@
 
 .infoHeader-border{
   position: relative;
+  cursor: pointer;
 }
 
 .infoHeader-border::after{

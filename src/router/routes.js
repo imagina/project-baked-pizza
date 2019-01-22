@@ -15,24 +15,19 @@ Route.view('/', master)
       Route.view('/inicio', require('../layouts/pages/inicio').default).options({
         name: 'home'
       }),
-      Route.view('/menu', require('../layouts/pages/menu').default).options({
-        name: 'menu'
+      Route.view('/pide-en-linea', require('../layouts/pages/pide').default).options({
+        name: 'pide-en-linea'
       }),
-      Route.view('/about', require('../layouts/pages/about').default).options({
-        name: 'about'
+      Route.view('/nosotros', require('../layouts/pages/about').default).options({
+        name: 'nosotros'
       }),
-      Route.view('/catering', require('../layouts/pages/catering').default).options({
-        name: 'catering'
+      Route.view('/donde-estamos', require('../layouts/pages/franchise').default).options({
+        name: 'donde-estamos'
       }),
-      Route.view('/locations', require('../layouts/pages/locations').default).options({
-        name: 'locations'
+      Route.view('/pedido', require('../layouts/pages/pedido').default).options({
+        name: 'pedido'
       })
-      Route.view('/franchise', require('../layouts/pages/franchise').default).options({
-        name: 'franchise'
-      }),
-      Route.view('/test', require('../layouts/pages/test').default).options({
-        name: 'franchise'
-      })
+      
     }
   )
 

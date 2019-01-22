@@ -21,21 +21,34 @@
 
       <div class="row desktop-only" style="height: 70px; padding: 25px 10%">
         <div class="col-12 text-center">
-            <img src="statics/logo.png" class="float-left" style="position: absolute; top: 8px; left: 10%" >
-            <span class="float-right q-ml-md nav-color">
-              <b> 10 MI PEDIDO</b>
+            <router-link  to="/inicio">
+              <img src="statics/logo.png" class="float-left" style="position: absolute; top: 8px; left: 10%; cursor: pointer;">
+            </router-link>
+
+            <span class="float-right q-ml-md nav-color" style="cursor: pointer;">
+              <router-link tag="span" to="/pedido">
+                <b> 10 MI PEDIDO</b>
+              </router-link>
             </span>
-            <span class="float-right q-ml-md util-link-1 nav-color"> 
+            <span class="float-right q-ml-md nav-color" style="cursor: pointer;"> 
+              <router-link tag="span" to="/donde-estamos">
               <b> DONDE ESTAMOS </b>
+              </router-link>
             </span>
-            <span class="float-right q-ml-md util-link-1 nav-color"> 
-              <b> NOSOTROS </b>
+            <span class="float-right q-ml-md nav-color" style="cursor: pointer;"> 
+              <router-link tag="span" to="/nosotros">
+              <b> NOSOTROS</b>
+              </router-link>
             </span>
-            <span class="float-right q-ml-md util-link-1 nav-color"> 
+            <span class="float-right q-ml-md nav-color" style="cursor: pointer;"> 
+              <router-link tag="span" to="/pide-en-linea">
               <b> PIDE EN LINEA</b>
+              </router-link>
             </span>
-            <span class="float-right q-ml-md util-link-1 nav-color"> 
-              <b> INICIO </b>
+            <span class="float-right q-ml-md nav-color" style="cursor: pointer;"> 
+              <router-link tag="span" to="/inicio">
+                <b> INICIO </b>
+              </router-link>
             </span>
         </div>
       </div>
