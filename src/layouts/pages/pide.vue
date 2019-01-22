@@ -9,13 +9,34 @@
 
 		<div class="row container">
 			<div class="col-md-2 q-py-xl">
-				<span class="label bg-deep-orange-7 text-white">· Nuestro Menú ·</span>
-				<ul class="categories">
-					<li v-for="category in categories" :key="category.id" class="category" @click="selectCategory(category)">{{category.title}}</li>
-				</ul>
+				<span class="label bg-deep-orange-7 text-white q-mb-md">· Nuestro Menú ·</span>
+
+				<div v-for="category in categories" :key="category.id">
+					<p class="category" @click="selectCategory(category)">{{category.title}}</p>
+				</div>
+				
 			</div>
 			<div class="col-md-10 q-my-xl border-top">
-				Seleccione el producto
+				
+				<div class="row">
+					<div class="col-6">
+						<span>Seleccione el producto: </span>
+					</div>
+					<div class="col-6">
+						<q-select
+				      	v-model="product"
+				      	:options="products"
+    					/>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-9">{{products}}</div>
+					<div class="col-3">
+						<p class="">Pizza Napolitana</p>
+					</div>
+				</div>
+
 			</div>
 		</div>
 
@@ -23,11 +44,16 @@
 </template>
 
 <script>
+	import {array} from "@imagina/qhelper/_plugins/array";
 	import categoryService from 'src/services/categories';
+	import productService from 'src/services/products';
 
 	export default{
 		data(){
 			return{
+				product:'',
+				products: [],
+				listProducto:[],
 				categories:[]
 			}
 		},
@@ -35,12 +61,39 @@
 			this.getCategories()
 		},
 		methods:{
+				select(dataArray) {
+					let response = []
+					dataArray.forEach((item) => {
+						let labelTitle = item.description ? item.description :'default'
+						response.push({
+							label: labelTitle,
+							value: item.id
+						});
+					})
+					return response
+				},
 			getCategories: function () {
 				this.loading = true
-				categoryService.index({},'', '', '', '', true)
+
+				categoryService.index({childrens: true},'', '', '', '', true)
 				.then(response =>{
 					this.categories = response.data
+					console.log(response.data)
 					this.loading = false
+				})
+			},
+			selectCategory: function (category){
+				this.productsByCategory(category.id)
+			},
+			productsByCategory: function (id){
+
+				let filterBackend = {}
+        
+        filterBackend["categories"] = [id];
+
+				productService.index(filterBackend,'', '', '', '', true)
+				.then(response =>{
+					this.products = this.select(response.data)
 				})
 			},
 		}
@@ -76,19 +129,18 @@
     border-radius: 5px;
 	}
 
-		.category{
-	    border-bottom: 3px solid #efefef;
-	    font-size: 1.2em;
+	.category{
+	    border-bottom: 3px dotted #723D3D;
+	    color: #723D3D;
+	    font-size: 1.8em;
 	    line-height: 60px;
 	    margin-bottom: 0;
 	    margin-right: 25px;
 	    list-style-type: none;
 	    transition: .4s all;
+
 	    cursor: pointer;
 	}
 
-	.category:hover{
-		background: #efefef;
 
-	}
 </style>
