@@ -9,6 +9,7 @@ export default {
     filter = JSON.stringify(filter);
     let key = ":" + JSON.stringify(filter + take + page + fields + include);
     key = key == ":null" ? "" : key;
+
     return new Promise((resolve, reject) => {
       remember.async("categories" + key, 3600 * 3, () => {
         return http.get(config('api.api_url') + '/icommerce/v3/categories', {
@@ -20,7 +21,7 @@ export default {
             include: include
           }
         })
-      }, refresh).then(response => {
+      }, true).then(response => {
         resolve(response);
       })
         .catch(error => {
