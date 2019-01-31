@@ -18,9 +18,9 @@
               <div class="q-display-1 q-my-lg">¡ACEPTANDO PEDIDOS!</div>
               <div class="q-display-2 q-my-lg">PARA LLEVAR <input class="toggle toggle__textless" type="checkbox"> DOMICILIO</div>
               <div class="q-my-lg" style="font-family: Muli">(Para llevar te ahorra la fila y esperar)</div>
-              <div class="q-my-lg">
-                 <input type="text" required class="search">
-                  <input type="button" value="RECOGER" class="button">
+              <div class="q-my-lg" id="q-carousel-search">
+                <input type="text" required class="search">
+                <input type="button" value="RECOGER" class="button button-search">
               </div>
 
               <div class="q-my-lg" style="font-family: Muli">Paga tu pedido en línea de forma segura</div>
@@ -52,174 +52,148 @@
       </div>
     </section>
 
-    <section class="row" style="padding: 5% 20%; background-image: linear-gradient(to right, white, #c2c2c2);">
-      <div class="col-md-6">
-        <div class="q-display-1 color-baked-subtitle" align="center">¿Ya nos Conocías?</div>
-        <div class="q-display-2 color-baked-title" align="center">SÓMOS BAKED PIZZA</div>
-        <br><br>
-        <p align="justify" class="q-mt-xs q-mx-lg" style="color: #4C3D3A; font-family: Muli; font-size: 20px">
-          Nuestras deliciosas recetas son preparadas de manera artesanal con los mejores ingredientes. 
-          La masa de nuestra pizza es estirada a mano dándole una textura suave y esponjosa, sus bordes 
-          son ligeramente dorados y crocantes. Estamos comprometidos a ofrecer a nuestros clientes calidad, 
-          generando confianza en cada plato. Nuestras preparaciones las realizamos al instante para ofrecer 
-          productos siempre frescos.
-        </p>
-      </div>
-      <div class="col-md-6 flex flex-center" style="height: 400px">
-
-        <img src="statics/caja.png" style="position: relative; top: -50px; max-width: 100%">
+    <section class="container-fluid" style="background-image: linear-gradient(to right, white, #c2c2c2);">
+      <div class="container-section">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="q-display-1 color-baked-subtitle" align="center">¿Ya nos Conocías?</div>
+            <div class="q-display-2 color-baked-title" align="center">SÓMOS BAKED PIZZA</div>
+            <br><br>
+            <p align="justify" class="q-mt-xs q-mx-lg" style="color: #4C3D3A; font-family: Muli; font-size: 20px">
+              Nuestras deliciosas recetas son preparadas de manera artesanal con los mejores ingredientes. 
+              La masa de nuestra pizza es estirada a mano dándole una textura suave y esponjosa, sus bordes 
+              son ligeramente dorados y crocantes. Estamos comprometidos a ofrecer a nuestros clientes calidad, 
+              generando confianza en cada plato. Nuestras preparaciones las realizamos al instante para ofrecer 
+              productos siempre frescos.
+            </p>
+          </div>
+          <div class="col-12 col-md-6 flex flex-center" style="height: 400px">
+            <img src="statics/caja.png" style="position: relative; top: -50px; max-width: 100%">
+          </div>
+        </div>
       </div>
     </section>
+    
+    <section-carting-app></section-carting-app>
 
-    <section class="row desktop-only" style="background: url('/statics/textura7.jpg') no-repeat; background-size: 100%; display: none">
-      <div class="col-xs-12 col-lg-6 q-py-xl q-pl-md q-px-xl only-desktop">
-         <div>
-            <p class="q-headline q-mt-md color-baked-title">Descarga nuestra APP</p>
-            <p class="q-display-1 q-mt-md color-baked-subtitle">¡Haz tus pedidos desde el celular!</p>
-            <div>
-              <img src="/statics/googleplay.png" width="20%" style="cursor: pointer;">
+    <section class="container-fluid q-pb-lg" style="background: url('statics/textura.jpg')">
+      <div class="container-section">
+        <div class="row">        
+          <div class="col-md-12 q-py-xl">
+            <div class="q-display-2 color-baked-title" align="center">¿Que quieres comer hoy?</div>
+            <div class="q-display-3 color-baked-subtitle" align="center">CONOCE NUESTRO MENÚ</div>
+          </div>
+          <!-- start Categories -->
+          <div class="col-md-12 flex flex-center">
+            <div class="q-mx-sm" style="display: inline-block;">
+              <div class="flex flex-center text-white border">
+                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/entradas.jpg') no-repeat center;">
+                    Entradas
+                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
+                  </div>
+              </div>
             </div>
-         </div>
+
+            <div class="q-mx-sm" style="display: inline-block;">
+              <div class="flex flex-center text-white border">
+                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/pizzas.jpg') no-repeat center;">
+                    Pizzas
+                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
+                  </div>
+              </div>
+            </div>
+
+            <div class="q-mx-sm" style="display: inline-block;">
+              <div class="flex flex-center text-white border">
+                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/hamburguesas.jpg') no-repeat center;">
+                    Hamburguesas
+                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 flex flex-center">
+            <div class="q-mx-sm" style="display: inline-block;">
+              <div class="flex flex-center text-white border">
+                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/sandwiches.jpg') no-repeat center;">
+                    Sandwiches
+                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
+                  </div>
+              </div>
+            </div>
+
+            <div class="q-mx-sm" style="display: inline-block;">
+              <div class="flex flex-center text-white border">
+                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/pastas.jpg') no-repeat center;">
+                    Pastas
+                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
+                  </div>
+              </div>
+            </div>
+
+            <div class="q-mx-sm" style="display: inline-block;">
+              <div class="flex flex-center text-white border">
+                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/panzerottis.jpg') no-repeat center;">
+                    Panzerottis
+                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
+                  </div>
+              </div>
+            </div>
+
+            <div class="q-mx-sm" style="display: inline-block;">
+              <div class="flex flex-center text-white border">
+                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/crepes.jpg') no-repeat center;">
+                    Crepes
+                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 flex flex-center">
+            <div class="q-mx-sm" style="display: inline-block;">
+              <div class="flex flex-center text-white border">
+                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/postres.jpg') no-repeat center;">
+                    Postres
+                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
+                  </div>
+              </div>
+            </div>
+
+            <div class="q-mx-sm" style="display: inline-block;">
+              <div class="flex flex-center text-white border">
+                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/bebidas.jpg') no-repeat center;">
+                    Bebidas
+                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
+                  </div>
+              </div>
+            </div>
+
+            <div class="q-mx-sm" style="display: inline-block;">
+              <div class="flex flex-center text-white border">
+                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/otros.jpg') no-repeat center;">
+                    Otros
+                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Categories -->
+        </div>
       </div>
-      <div class="col-xs-12 col-lg-6 q-py-xl text-white ">
-        <div class="q-headline q-mt-md" align="center">¿Tienes un evento?</div>
-        <div class="q-display-2 color-baked-subtitle-1" align="center">SERVICIO DE CATERING</div>
-        <p align="center" class="q-mx-xl" style="margin: 20px 100px; font-family: Muli; font-size: 20px">
-          En Baked Pizza queremos que pases momentos inolvidables y unicos, por esta razon te ofrecemos 
-          el servicio de catering en donde puedes contar con nosotros en tus eventos empresariales y sociales.  
-          Para mayor informacion envianos tus datos al correo:
-        </p>
-        <div class="q-display-1 q-mb-md color-baked-subtitle-1" align="center">catering@bakedpizza.com.co </div>
-      </div>
-    </section>
-
-    <section class="row q-pb-lg" style="background: url('statics/textura.jpg')">
-      <div class="col-md-12 q-py-xl">
-        <div class="q-display-2 color-baked-title" align="center">¿Que quieres comer hoy?</div>
-        <div class="q-display-3 color-baked-subtitle" align="center">CONOCE NUESTRO MENÚ</div>
-      </div>
-
-      <!-- start Categories -->
-      <div class="col-md-12 flex flex-center">
-
-        <div class="q-mx-sm" style="display: inline-block;">
-          <div class="flex flex-center text-white border">
-              <div class="flex flex-center text-white circle" style="background: url('statics/categories/entradas.jpg') no-repeat center;">
-                Entradas
-                <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-              </div>
-          </div>
-        </div>
-
-        <div class="q-mx-sm" style="display: inline-block;">
-          <div class="flex flex-center text-white border">
-              <div class="flex flex-center text-white circle" style="background: url('statics/categories/pizzas.jpg') no-repeat center;">
-                Pizzas
-                <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-              </div>
-          </div>
-        </div>
-
-        <div class="q-mx-sm" style="display: inline-block;">
-          <div class="flex flex-center text-white border">
-              <div class="flex flex-center text-white circle" style="background: url('statics/categories/hamburguesas.jpg') no-repeat center;">
-                Hamburguesas
-                <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-              </div>
-          </div>
-        </div>
-        
-      </div>
-
-      <div class="col-md-12 flex flex-center">
-
-        <div class="q-mx-sm" style="display: inline-block;">
-          <div class="flex flex-center text-white border">
-              <div class="flex flex-center text-white circle" style="background: url('statics/categories/sandwiches.jpg') no-repeat center;">
-                Sandwiches
-                <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-              </div>
-          </div>
-        </div>
-
-        <div class="q-mx-sm" style="display: inline-block;">
-          <div class="flex flex-center text-white border">
-              <div class="flex flex-center text-white circle" style="background: url('statics/categories/pastas.jpg') no-repeat center;">
-                Pastas
-                <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-              </div>
-          </div>
-        </div>
-
-        <div class="q-mx-sm" style="display: inline-block;">
-          <div class="flex flex-center text-white border">
-              <div class="flex flex-center text-white circle" style="background: url('statics/categories/panzerottis.jpg') no-repeat center;">
-                Panzerottis
-                <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-              </div>
-          </div>
-        </div>
-
-        <div class="q-mx-sm" style="display: inline-block;">
-          <div class="flex flex-center text-white border">
-              <div class="flex flex-center text-white circle" style="background: url('statics/categories/crepes.jpg') no-repeat center;">
-                Crepes
-                <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-              </div>
-          </div>
-        </div>
-        
-      </div>
-
-      <div class="col-md-12 flex flex-center">
-
-        <div class="q-mx-sm" style="display: inline-block;">
-          <div class="flex flex-center text-white border">
-              <div class="flex flex-center text-white circle" style="background: url('statics/categories/postres.jpg') no-repeat center;">
-                Postres
-                <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-              </div>
-          </div>
-        </div>
-
-        <div class="q-mx-sm" style="display: inline-block;">
-          <div class="flex flex-center text-white border">
-              <div class="flex flex-center text-white circle" style="background: url('statics/categories/bebidas.jpg') no-repeat center;">
-                Bebidas
-                <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-              </div>
-          </div>
-        </div>
-
-        <div class="q-mx-sm" style="display: inline-block;">
-          <div class="flex flex-center text-white border">
-              <div class="flex flex-center text-white circle" style="background: url('statics/categories/otros.jpg') no-repeat center;">
-                Otros
-                <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-              </div>
-          </div>
-        </div>
-        
-      </div>
-
-      <!-- End Categories -->
     </section>
 
   </div>
 </template>
 
 <script>
-  
-  export default {
-
+  export default{
     data(){
       return{
         checked: false
       }
-    },
-    components: {
-      
-    },
+    }
   }
 </script>
 
@@ -395,8 +369,17 @@ input.toggle__outline:checked:after {
   color: #fff;
 }
 
+@media screen and (min-width: 700px)
+{
+  #q-carousel-search
+  {
+    width: 600px;
+    max-width: 100%;
+  }
+}
+
 .search {
-  padding:8px 15px;
+  padding: 14px 14px 10px 14px;
   width: 75%;
   border:0px solid #dbdbdb;
   border-radius: 7px 0px 0px 7px;
@@ -413,6 +396,14 @@ input.toggle__outline:checked:after {
   color:#fafafa;
   cursor: pointer;
 }
+.button-search
+{
+  font-size: 1.4rem;
+  left: 0px;
+  margin: auto;
+  border-width: 1px;
+  padding: 10px 14px 8px 14px;
+}
 
 .color-baked-title{
   color: #EB3800;
@@ -427,6 +418,101 @@ input.toggle__outline:checked:after {
 }
 
 
+.q-carousel-quick-nav
+{
+    text-align: right;
+    background-color: transparent;
+}
+.q-carousel-quick-nav .q-btn-dense
+{
+    border: 2px solid white;
+    opacity: 1;
+    height: 2rem;
+    width: 2rem;
+    margin: 8px;
+}
+.q-carousel-quick-nav .q-btn-dense.inactive
+{
+  opacity: 1;
+}
+.q-carousel-quick-nav .q-btn-dense:not(.inactive),
+.q-carousel-quick-nav .q-btn-dense:hover,
+.q-carousel-quick-nav .q-btn-dense:hover .q-btn-inner,
+.q-carousel-quick-nav .q-btn-dense:not(.inactive) .q-btn-inner 
+{
+  border-color: #f44336;
+  color: #f44336;
+}
 
-
+.vertical-align-center {
+    display: flex;
+    align-items: center;
+}
+.csh3
+{
+  background-image: url('/statics/textura7.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.csh3__app_col
+{
+    display: flex;
+    align-items: center;
+}
+.csh3__catering_col
+{
+  background-position: right;
+  padding-left: 2rem;
+    display: flex;
+    align-items: center;
+}
+.csh3__catering_title,
+.csh3__catering_email
+{
+  color: #F8B41C;
+}
+.csh3__app_col .csh3__content
+{
+  width: 50%;
+  padding-left: 2rem;
+}
+.csh3__app_col .csh3__content,
+.csh3__catering_col .csh3__content
+{
+  padding-top: 60px;
+  padding-bottom: 60px;
+  
+}
+.csh3__catering_col .csh3__content
+{
+  width: 80%;
+}
+.csh3 > .row
+{
+  min-height: 100%;
+}
+@media screen and (max-width: 768px)
+{
+  .csh3 .container-section
+  {
+    padding: 0px !important;
+  }
+  .csh3__app_col
+  {
+    background-image: url('/statics/textura4-md.png');
+    background-size: cover;
+  }
+  .csh3__catering_col
+  {
+    background-image: url('/statics/textura5.png');
+  }
+}
+@media screen and (max-width: 768px)
+{ 
+  .csh3
+  {
+    background-image: none;
+  }
+}
 </style>

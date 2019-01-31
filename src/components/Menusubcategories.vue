@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<div v-for="category in categories" :key="category.id">
-		  <div v-if="category.id == category.parent_id">
-		    <p class="category subcategory" @click="getSubCategories(category.id)">{{category.title}}</p>
-		    <menu-subcategories :category="category"/>
-		  </div>
+			<div v-if="category.id == category.parent_id">
+		    	<p class="category subcategory" @click="getSubCategories(category.id)">{{category.title}}</p>
+		    	<menu-subcategories :category="category"/>
+		  	</div>
 		</div>
 	</div>
 </template>

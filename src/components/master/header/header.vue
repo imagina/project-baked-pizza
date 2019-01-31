@@ -19,37 +19,28 @@
         </div>
       </div>
 
-      <div class="row desktop-only" style="height: 70px; padding: 25px 10%">
+      <div class="row desktop-only" style="min-height: 70px; padding: 25px 10%">
         <div class="col-12 text-center">
             <router-link  to="/inicio">
-              <img src="statics/logo.png" class="float-left" style="position: absolute; top: 8px; left: 10%; cursor: pointer;">
+              <img src="statics/logo.png" class="float-left" id="header-logo">
             </router-link>
-
-            <span class="float-right q-ml-md nav-color" style="cursor: pointer;">
-              <router-link tag="span" to="/pedido">
-                <b> 10 MI PEDIDO</b>
+            <div class="desktop-only__slide">            
+              <router-link tag="a" to="/pedido" class="float-right q-ml-md nav-color desktop-only__slide__card">
+                <b> <span>10</span> MI PEDIDO</b>
               </router-link>
-            </span>
-            <span class="float-right q-ml-md nav-color" style="cursor: pointer;"> 
-              <router-link tag="span" to="/donde-estamos">
+              <router-link tag="a" to="/donde-estamos" class="float-right q-ml-md nav-color">
               <b> DONDE ESTAMOS </b>
               </router-link>
-            </span>
-            <span class="float-right q-ml-md nav-color" style="cursor: pointer;"> 
-              <router-link tag="span" to="/nosotros">
+              <router-link tag="a" to="/nosotros" class="float-right q-ml-md nav-color">
               <b> NOSOTROS</b>
               </router-link>
-            </span>
-            <span class="float-right q-ml-md nav-color" style="cursor: pointer;"> 
-              <router-link tag="span" to="/pide-en-linea">
+              <router-link tag="a" to="/pide-en-linea" class="float-right q-ml-md nav-color">
               <b> PIDE EN LINEA</b>
               </router-link>
-            </span>
-            <span class="float-right q-ml-md nav-color" style="cursor: pointer;"> 
-              <router-link tag="span" to="/inicio">
+              <router-link tag="a" to="/inicio" class="float-right q-ml-md nav-color">
                 <b> INICIO </b>
               </router-link>
-            </span>
+            </div>
         </div>
       </div>
 
@@ -157,7 +148,39 @@
     .btn-menu
       i
         font-size 30px
-
+    .desktop-only .desktop-only__slide
+      display: inline-block;
+      width: 100%;
+      a
+        position: relative
+        padding: 0px 0px 0px 1.5rem
+        text-decoration: none
+        color: #8e7e7d
+        font-size: 1.2rem
+        @media (max-width: 730px)
+          margin: 4px 0px;
+        &:hover,
+        &.router-link-active
+          color: #e64c03
+        &:not(:last-child)::before
+          content: ''
+          position: absolute
+          top: -5px
+          left: 0
+          width: 1px
+          height: calc(100% + 10px)
+          background-color: #8e7e7d
+          z-index: 1000
+          transform: rotate(21deg)
+          @media (max-width: 730px)
+            content: none
+        &.desktop-only__slide__card
+          color: #ed4400
+          span
+            color: white
+            background-color: #ed4400
+            padding: 5px
+            border-radius: 50%
   #dreawerLeft
     .q-layout-header
       min-height auto
@@ -187,6 +210,5 @@
   .nav-color::after
     border-right 1px #8e7e7d solid
 
-   
 
 </style>

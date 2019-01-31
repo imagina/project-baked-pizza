@@ -1,7 +1,9 @@
 <template>
   <div>
-  <q-collapsible :label="category.title" v-for="category in categories" :key="category.id" @show="getdata">
+  <q-collapsible :label="category.title" v-for="category in categories" :key="category.id" @show="getdata" class="pide-menu__category">
+    <div class="pide-menu__subcategory">
       <menu-subcategories :parent="category.id" v-if="showSubMenu"/>
+    </div>
   </q-collapsible>
   </div>
 </template>
