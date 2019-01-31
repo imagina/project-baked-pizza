@@ -26,12 +26,6 @@ Route.view('/', master)
       }),
       Route.view('/pedido', require('../layouts/pages/pedido').default).options({
         name: 'pedido'
-      }),
-      Route.view('/checkout/cart', require('../layouts/icommerce/cart').default).options({
-        name: 'cart'
-      }),
-      Route.view('/checkout/orders', require('../layouts/icommerce/orders').default).options({
-        name: 'orders'
       })
     }
   )
