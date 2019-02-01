@@ -1,6 +1,6 @@
 <template>
 	<section class="container-fluid">
-		<breadcrumb name="Pide en linea" image="/statics/header-pide.jpg"></breadcrumb>
+		<breadcrumb name="Pide en linea" image="statics/header-pide.jpg"></breadcrumb>
 		<div class="container-section">		
 			<div class="row">
 				<div class="col-md-3">
@@ -24,7 +24,7 @@
 						<div class="row">
 							<div class="col-5">
 								<div class="card-product-img">
-									<img src="/statics/pizza.png" alt="" class="responsive m-w-100">
+									<img src="statics/pizza.png" alt="" class="responsive m-w-100">
 								</div>
 							</div>
 							<div class="col">
@@ -97,7 +97,6 @@
 		},
 		data(){
 			return{
-				parent_id: 0,
 				product:'',
 				products: [],
 				selectAdicionales: [{
@@ -152,7 +151,7 @@
 			},
 			selectCategory: function (category){
 				this.parent_id = category.id
-				this.productsByCategory(category.id)
+				//this.productsByCategory(category.id)
 				this.getSubCategories()
 
 			},

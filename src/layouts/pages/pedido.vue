@@ -22,7 +22,7 @@
 		    					<tr>
 		    						<td class="table-description">
 		    							<div class="table-description__img">
-		    								<img src="/statics/pizza.png" alt="pizza">
+		    								<img src="statics/pizza.png" alt="pizza">
 		    							</div>
 		    						</td>
 		    						<td class="table-description table-description--info">
@@ -40,7 +40,7 @@
 		    					<tr>
 		    						<td class="table-description">
 		    							<div class="table-description__img">
-		    								<img src="/statics/pizza.png" alt="pizza">
+		    								<img src="statics/pizza.png" alt="pizza">
 		    							</div>
 		    						</td>
 		    						<td class="table-description table-description--info">

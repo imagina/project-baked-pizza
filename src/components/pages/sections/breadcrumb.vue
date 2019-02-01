@@ -18,7 +18,7 @@
     name: 'breadcrumb',
     props: {
       'name': { type: String,  default: '' },
-      'image' :  {  type: String,   default: '/statics/header-nosotros.png' },
+      'image' :  {  type: String,   default: 'statics/header-nosotros.png' },
     }
   }
 </script>

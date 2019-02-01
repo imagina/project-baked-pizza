@@ -1,7 +1,7 @@
 <template>
 	<section id='vue-about'>
 
-		<breadcrumb name="Nosotros" image="/statics/header-nosotros.png"></breadcrumb>
+		<breadcrumb name="Nosotros" image="statics/header-nosotros.png"></breadcrumb>
 
 		<div class="container-section">
 			<div class="row">
@@ -26,7 +26,7 @@
 
 			<div class="row">
 				<div class="col-md-6 q-my-md">
-					<img src="/statics/nosotros-1.jpg" width="100%" style="max-width: 100%">
+					<img src="statics/nosotros-1.jpg" width="100%" style="max-width: 100%">
 				</div>
 				<div class="col-md-6 q-my-md">
 					<div class="q-display-2 color-baked-title">Misión</div>
@@ -46,7 +46,7 @@
 					</p>
 				</div>
 				<div class="col-md-6 q-my-md">
-					<img src="/statics/nosotros-2.jpg" width="100%" class="m-w-100">
+					<img src="statics/nosotros-2.jpg" width="100%" class="m-w-100">
 				</div>
 			</div>
 

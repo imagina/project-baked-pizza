@@ -1,8 +1,8 @@
 {
-  "name": "purplecorn",
+  "name": "Baked",
   "version": "1.0.0",
-  "description": "purplecorn",
-  "productName": "purplecorn",
+  "description": "Baked",
+  "productName": "Baked",
   "cordovaId": "org.cordova.quasar.app",
   "author": "juanash <juanita-bravo2011@hotmail.com>",
   "private": true,

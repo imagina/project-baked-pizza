@@ -1,5 +1,7 @@
 <template>
-  <section class="container-fluid desktop-only csh3">
+  <section class="container-fluid desktop-only" style="background-image: url('statics/textura7.jpg');   background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;">
     <div class="container-100">
       <div class="row">
         <div class="col-12 col-md-6 csh3__app_col">
@@ -7,7 +9,7 @@
             <div class="q-display-2 color-baked-title">Descarga nuestra APP</div>
             <div class="q-display-1 color-baked-subtitle">¡Haz tu pedido desde el celular!</div>
             <a href="#">
-              <img src="/statics/googleplay.png" width="200">
+              <img src="statics/googleplay.png" width="200">
             </a>
           </div>
         </div>
