@@ -8,7 +8,7 @@
 						<span>· Nuestro Menú ·</span>
 					</div>
 					<q-list sublabel-lines id="pide-menu">
-						<menucategories-component parent="0"/>
+						<menucategories-component parent="0" @category="getProductsByCategory" group="root"/>
 					</q-list>
 				</div>
 				<div class="col-md-9 border-top">
@@ -70,12 +70,15 @@
 				    				</div>
 									<div class="col-12">
 										<div class="col-count-product text-right">
-						                	<q-btn type="submit" label="AÑADIR" size="lg" color="red" sence class="q-my-md round-borders-0"/>
+											<q-btn type="submit" label="AÑADIR" size="lg" color="red" sence class="q-my-md round-borders-0"/>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+						<q-inner-loading :visible="visible" style="background-color: #f4f4f4c7">
+      				<q-spinner size="50px" color="primary"></q-spinner>
+    				</q-inner-loading>
 					</div>
 				</div>
 			</div>
@@ -97,73 +100,50 @@
 		},
 		data(){
 			return{
+				visible: false,
 				product:'',
 				products: [],
-				selectAdicionales: [{
-					label: 'Añadir Adicionales',
-					value: []
-				},{
-        		  label: 'queso',
-        		  value: 'valor_1'
-        		},
-        		{
-        		  label: 'peperoni',
-        		  value: 'valor_2'
-        		}],
+				selectAdicionales: 
+				[
+					{
+						label: 'Añadir Adicionales',
+						value: []
+					},
+					{
+        		label: 'queso',
+        		value: 'valor_1'
+        	},
+        	{
+        		label: 'peperoni',
+        		value: 'valor_2'
+        	}
+        ],
 				adicionales: [],
-				listProducto:[{
-        		  label: 'pizza 4queseo',
-        		  value: 'pizza'
-        		},
-        		{
-        		  label: 'pizza napolitana',
-        		  value: 'pizza_napolitana'
-        		}],
+				listProducto:[],
 				categories:[],
 				subcategory: []
 			}
 		},
-		mounted(){
-
-		},
 		methods:{
-				select(dataArray) {
-					let response = []
-					dataArray.forEach((item) => {
-						let labelTitle = item.description ? item.description :'default'
-						response.push({
-							label: labelTitle,
-							value: item.id
-						});
-					})
-					return response
-				},
-
-			getSubCategories: function () {
-
-				categoryService.index({parent_id: this.parent_id})
-				.then(response =>{
-					this.subcategory = response.data
-					console.log(response.data)
-
+			select(dataArray) {
+				let response = []
+				dataArray.forEach((item) => {
+					let labelTitle = item.description ? item.description :'default'
+					response.push({
+						label: labelTitle,
+						value: item.id
+					});
 				})
-
+				return response
 			},
-			selectCategory: function (category){
-				this.parent_id = category.id
-				//this.productsByCategory(category.id)
-				this.getSubCategories()
-
-			},
-			productsByCategory: function (id){
-
+			getProductsByCategory(id){
+				this.visible = true
 				let filterBackend = {}
-        
         filterBackend["categories"] = [id];
-
 				productService.index(filterBackend,'', '', '', '', true)
 				.then(response =>{
-					this.products = this.select(response.data)
+					this.visible = false
+					this.listProducto = this.select(response.data)
 				})
 			},
 		}

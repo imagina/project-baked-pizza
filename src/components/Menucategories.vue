@@ -1,27 +1,30 @@
 <template>
   <div>
-  <q-collapsible :label="category.title" v-for="category in categories" :key="category.id" @show="getdata" class="pide-menu__category">
-    <div class="pide-menu__subcategory">
-      <menu-subcategories :parent="category.id" v-if="showSubMenu"/>
-    </div>
-  </q-collapsible>
+    <q-collapsible :label="category.title" v-for="category in categories" :key="category.id" @show="getdata(category.id)" class="pide-menu__category" :group="group">
+      <div class="pide-menu__subcategory">
+        <menu-menucategories :parent="category.id" @category="getdata" :group="category.title"/>
+      </div>
+    </q-collapsible>
+    <q-inner-loading :visible="visible" style="background-color: #f4f4f4c7">
+      <q-spinner size="50px" color="primary"></q-spinner>
+    </q-inner-loading>
   </div>
 </template>
 
 <script>
-
   import categoryService from 'src/services/categories';
-  import Menusubcategories from 'src/components/Menusubcategories';
+  import menuCategories from 'src/components/Menucategories';
 
   export default {
-    name: 'menu-subcategories',
+    name: 'menu-menucategories',
     components:{
-      'menusubcategories-componnet': Menusubcategories
+      'menucategories-component': menuCategories,
     },
-    props:['parent'],
+    props:['parent', 'group'],
 
     data(){
       return{
+        visible: false,
         showSubMenu: false,
         categories: [],
         subcategories: [],
@@ -32,13 +35,15 @@
     },
     methods:{
       getCategories: function () {
+        this.visible = true
         categoryService.index({parent_id: this.parent})
           .then(response =>{
           this.categories = response.data
+          this.visible = false
         })
       },
-      getdata(){
-        this.showSubMenu = true
+      getdata(id){
+        this.$emit('category', id)
       },
     }
   }
