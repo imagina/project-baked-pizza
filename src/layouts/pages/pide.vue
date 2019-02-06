@@ -16,7 +16,7 @@
 						<div class="col div-select text-right">
 							<span class="div-select__label">Seleccione un producto</span>
 							<div class="div-select__product">
-    							<q-select v-model="product" float-label="Seleccione un producto" class="q-select--app" radio :options="listProducto" />
+    							<q-select v-model="product" float-label="Seleccione un producto" class="q-select--app" radio :options="listProducto"/>
 							</div>
 						</div>
 					</div>
@@ -39,22 +39,22 @@
 										<div class="col-count-product">
 											
 				    					<span>Cantidad:</span>
-				    					<input type="number" class="input-count-product" float-label="Seleccione un producto" value="1" readonly style="width: 80px">
+				    					<input type="number" class="input-count-product" float-label="Seleccione un producto" value="1" v-model="quantiy" style="width: 80px">
 										</div>
 									</div>
 									<div class="col-6 col-md-8">
 										<div class="col-count-product">
-					    					<span>Adicionales:</span>
+
 											<div class="div-select__product" style="width: 200px">
-					    						<q-select type="checkbox" v-model="adicionales" :options="selectAdicionales" radio></q-select>
+													
 					    					</div>
 										</div>
 									</div>
 									<div class="col">
 										<div class="col-count-product">
-											<span>Bebida para el combo:</span>
+		
 											<div class="div-select__product">
-				    							<q-select v-model="product" float-label="Seleccione un producto" class="q-select--app" :options="listProducto" />
+				    							<options-component :product="product"/>
 											</div>
 										</div>
 									</div>
@@ -83,6 +83,7 @@
 				</div>
 			</div>
 		</div>
+
 	</section>
 </template>
 
@@ -93,36 +94,38 @@
 	import breadcrumb from 'src/components/pages/sections/breadcrumb'
 	import menuCategories from 'src/components/Menucategories';
 
+	import productOptionService from 'src/services/product-option';
+	import productOptionValuesService from 'src/services/product-option-values';
+
+	import modaloptions from 'src/components/pages/menu/modal';
+
+	import optionsComponent from 'src/components/pages/menu/options';
+	
+
 	export default{
 		components:{
 			'menucategories-component': menuCategories,
+			'modaloptions-component': modaloptions,
+			'options-component': optionsComponent,
 			breadcrumb
 		},
 		data(){
 			return{
 				visible: false,
-				product:'',
+				opened: false,
+				product: '',
+				quantiy: '',
 				products: [],
-				selectAdicionales: 
-				[
-					{
-						label: 'Añadir Adicionales',
-						value: []
-					},
-					{
-        		label: 'queso',
-        		value: 'valor_1'
-        	},
-        	{
-        		label: 'peperoni',
-        		value: 'valor_2'
-        	}
-        ],
+				selectAdicionales: [],
+        bebidas: [],
 				adicionales: [],
 				listProducto:[],
 				categories:[],
 				subcategory: []
 			}
+		},
+		mounted(){
+			//this.getProductsByCategory(4)
 		},
 		methods:{
 			select(dataArray) {
@@ -137,6 +140,7 @@
 				return response
 			},
 			getProductsByCategory(id){
+				console.lo
 				this.visible = true
 				let filterBackend = {}
         filterBackend["categories"] = [id];

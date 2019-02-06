@@ -1,25 +1,34 @@
 <template>
 	<div>
-		<q-modal v-model="opened" :content-css="{minWidth: '60vw', minHeight: '80vh'}">
-		  <q-modal-layout>
-		  	<div class="row">
-		    	<div class="col-12" style="background: #1f0543; color: white">
-		    		<q-btn icon="close" flat rounded @click="opened = false" class="float-right"/>
-		    	</div>		  		
+		<q-btn  label="Adicionales" size="md" color="red" sence class="q-my-sm round-borders-0 full-width" @click="opened = true"  />
+		<q-modal v-model="opened" :content-css="{minWidth: '80vw', minHeight: '80vh'}">
+			<q-modal-layout>
+		  	<q-toolbar slot="header">
+		    	<q-btn flat round dense v-close-overlay icon="cancel"/>
+		    	<q-toolbar-title>
+		     		Adicionales
+		    	</q-toolbar-title>
+		  	</q-toolbar>
+		  	<div class="layout-padding">
+		    	<options-component :product_id="product_id"/>
 		  	</div>
-		    <div class="layout-padding">		     
-		      <p>SED GRAVIDA</p>
-		      <div class="row">
-		      	<div class="col-md-4"></div>
-		      	<div class="col-md-4"></div>
-		      	<div class="col-md-4"></div>
-		      </div>
-		    </div>
-		  </q-modal-layout>
+			</q-modal-layout>
 		</q-modal>
 	</div>
 </template>
 
 <script>
-	
+	import optionsComponent from 'src/components/pages/menu/options';
+
+	export default{
+		components:{
+			'options-component': optionsComponent,
+		},
+		props:['product_id',],
+		data(){
+			return{
+				opened: false,
+			}
+		},
+	}	
 </script>
