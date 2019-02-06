@@ -49,6 +49,15 @@
 		watch:{
 			product(newValue, old){
 				this.getOptions(0, null)
+				this.options2 = []
+				this.option3s = []
+				this.option4s = []
+				this.option5s = []
+				this.selectLevel1 = ''
+				this.selectLevel2 = ''
+				this.selectLevel3 = ''
+				this.selectLevel4 = ''
+				this.selectLevel5 = ''
 			},
 			selectLevel1(newValue, old){
 				this.levet2(newValue)
