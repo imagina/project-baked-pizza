@@ -33,6 +33,7 @@
 <script>
   import headerComponent from 'src/components/master/header/header'
   import footerComponent from 'src/components/master/footer/footer'
+  import {helper} from '@imagina/qhelper/_plugins/helper'
 
   export default {
     components: {
@@ -41,7 +42,7 @@
     },
     mounted() {
       this.$nextTick(function () {
-        
+        this.chekcart()
       })
     },
     data() {
@@ -54,6 +55,13 @@
         setTimeout(() => { 
           this.loading = false
         }, 3000);
+      },
+      chekcart(){
+        helper.storage.get.item('cart').then(res => {
+          if (res !== null) {
+            this.$store.dispatch("init_cart", res.items)
+          }
+        })
       }
     }
   }

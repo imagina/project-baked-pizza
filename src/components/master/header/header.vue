@@ -26,7 +26,7 @@
             </router-link>
             <div class="desktop-only__slide">            
               <router-link tag="a" to="/pedido" class="float-right q-ml-md nav-color desktop-only__slide__card">
-                <b> <span>10</span> MI PEDIDO</b>
+                <b> <span>{{cart}}</span> MI PEDIDO</b>
               </router-link>
               <router-link tag="a" to="/donde-estamos" class="float-right q-ml-md nav-color">
               <b> DONDE ESTAMOS </b>
@@ -131,6 +131,16 @@
     data() {
       return {
         leftDrawerOpen: false,
+      }
+    },
+    computed: {
+      cart() {
+        let cart = this.$store.getters.getcart
+        var result = 0
+        for (var i = 0; i < cart.items.length ; i++) {
+          result = result + parseInt(cart.items[i].quantity_cart)
+        }
+        return result
       }
     },
     methods: {

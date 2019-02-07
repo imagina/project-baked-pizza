@@ -11,25 +11,29 @@
 						<menucategories-component parent="0" @category="getProductsByCategory" group="root"/>
 					</q-list>
 				</div>
-				<div class="col-md-9 border-top">
-					<div class="row">
-						<div class="col div-select text-right">
-							<span class="div-select__label">Seleccione un producto</span>
-							<div class="div-select__product">
-    							<q-select v-model="product" float-label="Seleccione un producto" class="q-select--app" radio :options="listProducto"/>
+				<div class="col-md-9">
+
+					<!-- Start Show product-->
+					<div class="container-section--p2" v-if="showProduct">		
+						<div class="row">
+							<div class="col-md-12 div-select text-right border-top">
+								<span class="div-select__label">Seleccione un producto</span>
+								<div class="div-select__product">
+	    							<q-select v-model="product" float-label="Seleccione un producto" class="q-select--app" radio :options="listProducto" @input="updateaSelected"/>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="container-section container-section--p2">					
-						<div class="row">
+
+						<div class="row q-mt-lg">
 							<div class="col-5">
 								<div class="card-product-img">
 									<img src="statics/pizza.png" alt="" class="responsive m-w-100">
 								</div>
 							</div>
 							<div class="col">
-								<span class="q-display-1 color-baked-title">Pizza Napolitana</span>
-								<p>Variedad de vegetales, tomate, cebolla, pimentón, aceitunas, champiñones.</p>
+								<span class="q-display-1 color-baked-title">{{productSelected.name}}</span>
+								<p>{{productSelected.description}}</p>
+								<p>${{productSelected.price}}</p>
 							</div>
 						</div>
 						<div class="row">
@@ -37,53 +41,67 @@
 								<div class="row">
 									<div class="col-6 col-md-4">
 										<div class="col-count-product">
-											
 				    					<span>Cantidad:</span>
 				    					<input type="number" class="input-count-product" float-label="Seleccione un producto" value="1" v-model="quantiy" style="width: 80px">
 										</div>
 									</div>
 									<div class="col-6 col-md-8">
 										<div class="col-count-product">
-
 											<div class="div-select__product" style="width: 200px">
-													
 					    					</div>
 										</div>
 									</div>
 									<div class="col">
 										<div class="col-count-product">
-		
 											<div class="div-select__product">
-				    							<options-component :product="product"/>
+				    							<options-component :product="productSelected.id"/>
 											</div>
 										</div>
 									</div>
 								</div>
-								
 							</div>
 							<div class="col">
 								<div class="row">
-									
 									<div class="col-12 col-count-product">
 			    						<span>Valor Total:</span>
 				    					<input type="text" class="input-count-product" value="$10.900" readonly>
 				    				</div>
 									<div class="col-12">
 										<div class="col-count-product text-right">
-											<q-btn type="submit" label="AÑADIR" size="lg" color="red" sence class="q-my-md round-borders-0"/>
+											<q-btn type="submit" label="AÑADIR" size="lg" color="red" sence class="q-my-md round-borders-0" @click="addCart()"/>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<q-inner-loading :visible="visible" style="background-color: #f4f4f4c7">
+					</div>
+					<!-- Show product-->
+
+					<div class="container-section--p2" v-else>		
+						<div class="row" v-if="products.length ">
+							<div class="col-4" align="center" v-for="product in products" :key="product.id">
+								<div class="card-product-img">
+									<img src="statics/pizza.png" alt="" class="responsive m-w-100">
+									<q-btn type="submit" label="Pedir" color="red" sence class="q-my-md round-borders-0" @click="show(product)"/>
+								</div>
+								<div class="q-mt-lg">
+									<span class="q-display-1 color-baked-title">{{product.name}}</span>
+									<p>${{product.price}}</p>
+								</div>
+							</div>
+						</div>
+						<div class="row" v-else align="center">
+							<div class="col-md-12">
+								<span class="q-display-1 color-baked-title">No se encontraron resultados para esta categoría.</span>
+							</div>	
+						</div>
+					</div>
+					<q-inner-loading :visible="visible" style="background-color: #f4f4f4c7">
       				<q-spinner size="50px" color="primary"></q-spinner>
     				</q-inner-loading>
-					</div>
 				</div>
 			</div>
 		</div>
-
 	</section>
 </template>
 
@@ -100,7 +118,7 @@
 	import modaloptions from 'src/components/pages/menu/modal';
 
 	import optionsComponent from 'src/components/pages/menu/options';
-	
+	import {alert} from '@imagina/qhelper/_plugins/alert'
 
 	export default{
 		components:{
@@ -114,42 +132,60 @@
 				visible: false,
 				opened: false,
 				product: '',
-				quantiy: '',
+				quantiy: 1,
 				products: [],
 				selectAdicionales: [],
         bebidas: [],
 				adicionales: [],
 				listProducto:[],
 				categories:[],
-				subcategory: []
+				subcategory: [],
+				showProduct: false,
+				productSelected: [],
 			}
 		},
 		mounted(){
 			//this.getProductsByCategory(4)
 		},
 		methods:{
+			updateaSelected(newVal){
+				this.productSelected = newVal
+			},
+			show(product){
+				this.showProduct = true
+				this.productSelected = product
+				this.product = product
+			},
 			select(dataArray) {
 				let response = []
 				dataArray.forEach((item) => {
-					let labelTitle = item.description ? item.description :'default'
+					let labelTitle = item.name ? item.name :'default'
 					response.push({
 						label: labelTitle,
-						value: item.id
+						value: item
 					});
 				})
 				return response
 			},
 			getProductsByCategory(id){
-				console.lo
 				this.visible = true
+				this.showProduct = false
 				let filterBackend = {}
         filterBackend["categories"] = [id];
 				productService.index(filterBackend,'', '', '', '', true)
 				.then(response =>{
 					this.visible = false
 					this.listProducto = this.select(response.data)
+					this.products = response.data
 				})
 			},
+	  	addCart: function () {
+	  		let item = []
+	  		item['product'] = this.product;
+	  		item['quantity_cart'] = this.quantiy;
+	      	this.$store.dispatch("add_item", item)
+	      	alert.success('Producto agregado')
+	    },
 		}
 	}
 </script>
