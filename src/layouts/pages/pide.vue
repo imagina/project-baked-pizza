@@ -68,7 +68,7 @@
 				    				</div>
 									<div class="col-12">
 										<div class="col-count-product text-right">
-											<q-btn type="submit" label="AÑADIR" size="lg" color="red" sence class="q-my-md round-borders-0" @click="addCart()"/>
+											<q-btn type="submit" label="AÑADIR" size="lg" color="red" sence class="q-my-md round-borders-0" @click="addCart(productSelected)"/>
 										</div>
 									</div>
 								</div>
@@ -179,13 +179,11 @@
 					this.products = response.data
 				})
 			},
-	  	addCart: function () {
-	  		let item = []
-	  		item['product'] = this.product;
-	  		item['quantity_cart'] = this.quantiy;
-	      	this.$store.dispatch("add_item", item)
-	      	alert.success('Producto agregado')
-	    },
+    	addCart (item) {
+    		item['quantity_cart'] = this.quantiy;
+        	this.$store.dispatch("add_item", item)
+        	alert.success('Producto agregado')
+      },
 		}
 	}
 </script>

@@ -29,6 +29,7 @@ export function UPDATE_ITEM_UP (state, payload) {
 }
 
 export function UPDATE_ITEM_DOWN (state, payload) {
+	console.log('in mutations')
 	let item = state.items.find(product => product.id === payload.id)
 	if (item.quantity_cart > 1) 
 	{
