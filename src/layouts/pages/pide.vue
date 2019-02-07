@@ -145,7 +145,7 @@
 			}
 		},
 		mounted(){
-			//this.getProductsByCategory(4)
+			this.getProductsByCategory(4)
 		},
 		methods:{
 			updateaSelected(newVal){

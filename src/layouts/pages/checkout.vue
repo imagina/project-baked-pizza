@@ -69,12 +69,11 @@
 	    	</q-inner-loading>
 			</div>
 		</div>
+		<section-carting-app></section-carting-app>
 	</section>
 </template>
 
 <script>
-	
-
 	export default{
 	components:{
 	},
@@ -91,7 +90,3 @@
 	}
 	}
 </script>
-
-<style>
-	
-</style>

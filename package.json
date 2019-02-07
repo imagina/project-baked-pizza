@@ -4,7 +4,7 @@
   "description": "Baked",
   "productName": "Baked",
   "cordovaId": "org.cordova.quasar.app",
-  "author": "juanash <juanita-bravo2011@hotmail.com>",
+  "author": "Imagina Colombia <soporte@imaginacolombia.com>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",

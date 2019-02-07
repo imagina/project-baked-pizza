@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<breadcrumb name="Listado de Pedidos"></breadcrumb>
-		<div class="container-section">
+		<div class="container-section" v-if="cart.items.length">
 			<div class="row">
 				<div class="col-12">
 	    			<p class="q-display-2 color-baked-title" align="center">Listado de Pedidos</p>
@@ -13,7 +13,7 @@
 						<table class="table">
 							<thead>
 		    					<tr>
-		    					 <th colspan="2">Name</th>
+		    					 <th colspan="2">Descripción del producto</th>
 									<th>Cantidad</th>
 									<th>Sub-Total</th>
 									<th></th>
@@ -67,7 +67,13 @@
 				</div>
 			</div>
 		</div>
-    	<section-carting-app></section-carting-app>
+		<div class="row flex flex-center" v-else style="height: 500px">
+			<div class="col-12" align="center">
+    			<p class="q-display-2 color-baked-title" align="center">Su carrito está vacio ...</p>
+    			<q-btn type="button" label="CONTINUAR COMPRANDO" size="lg" color="red" sence class="q-my-md" to="/pide-en-linea" />
+			</div>
+		</div>
+    <section-carting-app></section-carting-app>
 	</div>
 </template>
 

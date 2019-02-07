@@ -14,7 +14,9 @@
             </span>
             <span class="float-right q-ml-md util-link-1"> 
               <q-icon name="fas fa-question-circle util-1"/> 
-              <b> PQRS </b>
+              <router-link tag="b" to="/pqrs">
+                <b> PQRS </b>
+              </router-link>
             </span>
         </div>
       </div>
