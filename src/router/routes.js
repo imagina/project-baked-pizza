@@ -26,6 +26,9 @@ Route.view('/', master)
       }),
       Route.view('/pedido', require('../layouts/pages/pedido').default).options({
         name: 'pedido'
+      }),
+      Route.view('/checkout', require('../layouts/pages/checkout').default).options({
+        name: 'checkout'
       })
     }
   )

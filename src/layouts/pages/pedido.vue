@@ -48,11 +48,9 @@
 		    						</td>
 		    						<td class="table-price"><span class="q-display">${{item.price}}</span></td>
 		    						<td>
-		    							<q-btn  round color="red" @click="deleteitem(item)" icon="remove"/>
+		    							<q-btn size="sm" round color="red" @click="deleteitem(item)" icon="close"/>
 		    						</td>
 		    					</tr>
-
-
 							</tbody>
 							<tfoot>
 							    <tr>
@@ -64,8 +62,8 @@
 					</div>
 				</div>
 				<div class="col-12 text-right">
-					<q-btn type="button" label="IR AL CHECKOUT" size="lg" color="red" sence class="q-my-md q-mr-sm"/>
-					<q-btn type="button" label="CONTINUAR COMPRANDO" size="lg" color="red" sence class="q-my-md"/>
+					<q-btn type="button" label="IR AL CHECKOUT" size="lg" color="red" sence class="q-my-md q-mr-sm" to="/checkout" />
+					<q-btn type="button" label="CONTINUAR COMPRANDO" size="lg" color="red" sence class="q-my-md" to="/pide-en-linea" />
 				</div>
 			</div>
 		</div>
