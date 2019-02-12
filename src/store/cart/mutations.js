@@ -17,8 +17,7 @@ export function ADD_ITEM (state, payload) {
 }
 
 export function DELETE_ITEM (state, payload) {
-	let item = state.items.find(product => product.id === payload.id)
-	state.items.splice(item, 1)
+	state.items.splice(payload, 1)
 	helper.storage.set('cart', state)
 }
 

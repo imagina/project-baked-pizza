@@ -42,7 +42,7 @@
 									<div class="col-6 col-md-4">
 										<div class="col-count-product">
 				    					<span>Cantidad:</span>
-				    					<input type="number" class="input-count-product" float-label="Seleccione un producto" value="1" v-model="quantiy" style="width: 80px">
+				    					<input type="number" class="input-count-product" float-label="Seleccione un producto"  v-model="quantiy" style="width: 80px">
 										</div>
 									</div>
 									<div class="col-6 col-md-8">

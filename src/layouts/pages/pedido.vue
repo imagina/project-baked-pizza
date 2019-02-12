@@ -19,9 +19,10 @@
 									<th></th>
 								</tr>
 							</thead>
+							<pre>{{cart.items}}</pre>
 		  					<tbody>
 
-		    					<tr v-for="item in cart.items" :key="item.id">
+		    					<tr v-for="(item, index) in cart.items" :key="index">
 		    						<td class="table-description">
 		    							<div class="table-description__img">
 		    								<img src="statics/pizza.png" alt="pizza">
@@ -48,7 +49,7 @@
 		    						</td>
 		    						<td class="table-price"><span class="q-display">${{item.price}}</span></td>
 		    						<td>
-		    							<q-btn size="sm" round color="red" @click="deleteitem(item)" icon="close"/>
+		    							<q-btn size="sm" round color="red" @click="deleteitem(index)" icon="close"/>
 		    						</td>
 		    					</tr>
 							</tbody>
@@ -113,10 +114,12 @@
     		upcantitem (item) {
     			this.$store.dispatch("update_item_up", item)
     			alert.info('Producto Actualizado')	
+
     		},
 			downcantitem (item) {
 				this.$store.dispatch("update_item_down", item)
 				alert.warning('Producto Actualizado')
+
 
 			},
 		}
