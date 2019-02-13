@@ -48,13 +48,14 @@
 									<div class="col-6 col-md-8">
 										<div class="col-count-product">
 											<div class="div-select__product" style="width: 200px">
+													<options-component :product="productSelected.id" :parent="0"/>
 					    					</div>
 										</div>
 									</div>
 									<div class="col">
 										<div class="col-count-product">
 											<div class="div-select__product">
-				    							<options-component :product="productSelected.id"/>
+				    							
 											</div>
 										</div>
 									</div>
@@ -117,7 +118,7 @@
 
 	import modaloptions from 'src/components/pages/menu/modal';
 
-	import optionsComponent from 'src/components/pages/menu/options';
+	import optionsComponent from 'src/components/pages/menu/optionsComponent';
 	import {alert} from '@imagina/qhelper/_plugins/alert'
 
 	export default{
