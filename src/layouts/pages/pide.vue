@@ -112,6 +112,8 @@
 	import productService from 'src/services/products';
 	import breadcrumb from 'src/components/pages/sections/breadcrumb'
 	import menuCategories from 'src/components/Menucategories';
+	import cartService from 'src/services/cart';
+	import {helper} from '@imagina/qhelper/_plugins/helper';
 
 	import productOptionService from 'src/services/product-option';
 	import productOptionValuesService from 'src/services/product-option-values';
@@ -181,9 +183,51 @@
 				})
 			},
     	addCart (item) {
-    		item['quantity_cart'] = this.quantiy;
-        	this.$store.dispatch("add_item", item)
-        	alert.success('Producto agregado')
+    		let data 					= []
+			let cart_id 				= null
+			let user_id 				= 1
+			let product_id 				= this.productSelected.id
+			let quantity 				= this.quantiy
+			let price					= this.productSelected.price
+			let product_option_id 		= 1
+			let product_option_value_id = 1
+
+			data = {
+					"cart_id" : cart_id,
+					"user_id" : user_id,
+						"cart_products": {
+							"product_id"	: product_id,
+							"quantity"		: quantity,
+							"price"			:price
+						},
+						"cart_product_option":{
+							"product_option_id"			: product_option_id,
+							"product_option_value_id"	: product_option_value_id
+						}
+            		}
+
+			helper.storage.get.item('cart_id').then(response =>{
+				cart_id = response
+				if(cart_id === null){
+					cartService.sendItem(data)
+					.then(response =>{
+						cart_id = response.data.data.cart;
+						helper.storage.set('cart_id', cart_id ).then(response => {
+							item['quantity_cart'] = this.quantiy;
+							this.$store.dispatch("add_item", item)
+							alert.success('Producto agregado')
+						})
+					})
+				}else{
+					data.cart_id = cart_id
+					cartService.sendItem(data)
+					.then(response =>{
+						item['quantity_cart'] = this.quantiy;
+        				this.$store.dispatch("add_item", item)
+						alert.success('Producto agregado')
+					})
+				}
+			})
       },
 		}
 	}
