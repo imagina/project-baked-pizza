@@ -130,7 +130,7 @@
     			
     			helper.storage.set('cart_server', response.data.data.cart)
     			this.cart = response.data.data.cart
-    			this.$root.$emit('updateCart', this.cart)
+    			this.$root.$emit('updateCart',  response.data.data.cart)
     			
     		})
 			}

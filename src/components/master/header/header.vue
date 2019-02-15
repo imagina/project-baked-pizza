@@ -28,7 +28,7 @@
             </router-link>
             <div class="desktop-only__slide">            
               <router-link tag="a" to="/pedido" class="float-right q-ml-md nav-color desktop-only__slide__card">
-                <b> <span>{{cart}}</span> MI PEDIDO</b>
+                <b> <span>{{cant}}</span> MI PEDIDO</b>
               </router-link>
               <router-link tag="a" to="/donde-estamos" class="float-right q-ml-md nav-color">
               <b> DONDE ESTAMOS </b>
@@ -110,6 +110,7 @@
 
 <script>
   import widgetMenu from "src/components/menu/widget-menu";
+  import {helper} from '@imagina/qhelper/_plugins/helper';
 
   import menuDesktop from '@imagina/qmenu/_components/menu-desktop'
   import menuMobile from '@imagina/qmenu/_components/menu-mobile'
@@ -126,28 +127,36 @@
       widgetMenu
     },
     watch: {},
+    created(){
+      this.$root.$on("updateCart", this.updateCart);
+    },
     mounted() {
       this.$nextTick(function () {
+        this.getcart()
       })
     },
     data() {
       return {
         leftDrawerOpen: false,
+        cant:0,
       }
     },
     computed: {
-      cart() {
-        let cart = this.$store.getters.getcart
-        var result = 0
-        for (var i = 0; i < cart.items.length ; i++) {
-          result = result + parseInt(cart.items[i].quantity_cart)
-        }
-        return result
-      }
+
     },
     methods: {
+      updateCart(event){
+        this.cant = event.products_cant
+      },
       toggleFullscreen() {
         this.$q.fullscreen.toggle()
+      },
+      getcart(){
+        helper.storage.get.item('cart_server').then(res => {
+          if (res !== null) {
+            this.cant = res.products_cant
+          }
+        })
       },
     }
 
