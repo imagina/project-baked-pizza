@@ -112,10 +112,6 @@
 					  "quantity": this.quantity,
 					  "price": this.product.product.price
 					},
-					"cart_product_option":{
-						"product_option_id":"1",
-					  "product_option_value_id":"1"
-					}
 				}
 
 				if (this.cart != '')

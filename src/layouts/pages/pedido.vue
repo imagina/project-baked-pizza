@@ -26,7 +26,7 @@
 	    							</div>
 	    						</td>
 	    						<td class="table-description table-description--info">
-	    							<span class="q-display-1 color-baked-title d-block">{{item.name}}</span>
+	    							<span class="q-display-1 color-baked-title d-block">{{item.product_id}} - {{item.name}}</span>
 									<p>Tamaño: Personal</p>
 									<p>Adicionales: 0</p>
 	    						</td>
@@ -37,8 +37,8 @@
 	    									<input type="number" class="input-count-product" :value="item.quantity" readonly>
 	    								</div>
 	    								<div class="col-4">
-	    									<q-btn flat round color="red" @click="upcantitem(item)" icon="add"/>
-												<q-btn flat round color="red" @click="downcantitem(item)" icon="remove"/>
+	    									<q-btn flat round color="red" @click="update(item, '+')" icon="add"/>
+												<q-btn flat round color="red" @click="update(item, '-')" icon="remove"/>
 	    								</div>
 	    							</div>
 	    						</td>
@@ -57,6 +57,9 @@
 							  </tr>
 							</tfoot>
 						</table>
+						<q-inner-loading :visible="visible" style="background-color: #f4f4f4c7">
+      				<q-spinner size="50px" color="primary"></q-spinner>
+    				</q-inner-loading>
 					</div>
 				</div>
 				<div class="col-12 text-right">
@@ -64,6 +67,7 @@
 					<q-btn type="button" label="CONTINUAR COMPRANDO" size="lg" color="red" sence class="q-my-md" to="/pide-en-linea" />
 				</div>
 			</div>
+
 		</div>
     <section-carting-app></section-carting-app>
 	</div>
@@ -77,6 +81,7 @@
 	export default{
 		data(){
 			return{
+				visible: false,
 				cart: [],
 				products: [],
 			}
@@ -88,24 +93,36 @@
  			getcart(){
         helper.storage.get.item('cart_server').then(res => {
           if (res !== null) {
-            this.cart = res
+          	this.visible = true
+          	cartService.show(res.id)
+          	.then(response=>{
+          		this.cart = response.data
+          		this.visible = false
+          	})
           }
         })
       },
 			deleteitem (item) {
 				cartService.deleteProduct(item.id)
 				.then(response=>{
-					console.log('Ok') 
+					this.$root.$emit('deleteItemCart')
+					this.getcart()
 				})
-				
-				
     	},
-    	upcantitem (item) {
-				console.log('action')
+    	update (item, sign) {
+     		let formData = {
+					"cart_products": {
+					 	"product_id": item.product_id,
+					  "quantity": parseInt(item.quantity) + (sign == '+' ? +1 : -1),
+					  "price": item.price
+					},
+				}
+				formData['cart_id']  = this.cart.id
+				cartService.create(formData)
+				.then(response=>{
+					this.getcart()
+				})
     	},
-			downcantitem (item) {
-				console.log('action')
-			},
 		}
 	}
 </script>

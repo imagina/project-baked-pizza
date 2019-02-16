@@ -117,6 +117,8 @@
   import informationHeader from 'src/components/master/header/information'
   import searchComponent from '@imagina/qmenu/_components/search'
 
+  import cartService from 'src/services/cart';
+
   export default {
     props: {},
     components: {
@@ -129,6 +131,7 @@
     watch: {},
     created(){
       this.$root.$on("updateCart", this.updateCart);
+      this.$root.$on("deleteItemCart", this.deleteItemCart);
     },
     mounted() {
       this.$nextTick(function () {
@@ -139,6 +142,7 @@
       return {
         leftDrawerOpen: false,
         cant:0,
+        cart_id:0,
       }
     },
     computed: {
@@ -147,6 +151,14 @@
     methods: {
       updateCart(event){
         this.cant = event.products_cant
+        this.cart_id = event.id
+      },
+      deleteItemCart(){
+        cartService.show(this.cart_id)
+        .then(response=>{
+          helper.storage.set('cart_server', response.data)    
+          this.cant = response.data.products_cant
+        })
       },
       toggleFullscreen() {
         this.$q.fullscreen.toggle()
