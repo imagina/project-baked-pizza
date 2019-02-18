@@ -34,7 +34,8 @@
 					<div class="col-6 col-md-8">
 						<div class="col-count-product">
 							<div class="div-select__product" style="width: 200px">
-									<options-component :product="product.product.id" :parent="0"/>
+									<pre>{{option}}</pre>
+									<options-component :product="product.product.id" :parent="0" id="options"/>
 	    					</div>
 						</div>
 					</div>
@@ -63,7 +64,6 @@
 	import {helper} from '@imagina/qhelper/_plugins/helper';
 	import cartService from 'src/services/cart';
 
-
 	export default {
 		props :['products', 'product'],
 		components:{
@@ -75,7 +75,11 @@
 				options: [],
 				cart: '',
 				user: '',
+				option: [],
 			}
+		},
+		created(){
+  		this.$root.$on("updateoptions", this.updateOptions);
 		},
 		computed:{
 			selectProduts(){
@@ -112,6 +116,7 @@
 					  "quantity": this.quantity,
 					  "price": this.product.product.price
 					},
+					"cart_product_option":this.option
 				}
 
 				if (this.cart != '')
@@ -129,6 +134,23 @@
     			this.$root.$emit('updateCart',  response.data.data.cart)
     			
     		})
+			},
+			updateOptions(event){
+
+				var found = this.option.find(function(element) {
+  				return element.product_option_value_id === event.product_option_value_id;
+				});
+
+				if (!found) {
+					this.option.push(event)
+				} else {
+					var index = this.option.indexOf(found);
+					this.option.splice(index, 1);
+					this.option.push(event)
+				}
+				
+
+			
 			}
 
 		}

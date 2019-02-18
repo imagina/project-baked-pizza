@@ -26,7 +26,7 @@
 	    							</div>
 	    						</td>
 	    						<td class="table-description table-description--info">
-	    							<span class="q-display-1 color-baked-title d-block">{{item.product_id}} - {{item.name}}</span>
+	    							<span class="q-display-1 color-baked-title d-block">{{item.name}}</span>
 									<p>Tamaño: Personal</p>
 									<p>Adicionales: 0</p>
 	    						</td>
@@ -43,7 +43,7 @@
 	    							</div>
 	    						</td>
 	    						<td class="table-price">
-	    							<span class="q-display">${{item.price}}</span>
+	    							<span class="q-display">${{item.subtotal}}</span>
 	    						</td>
 	    						<td>
 	    							<q-btn size="sm" round color="red" @click="deleteitem(item)" icon="close"/>
@@ -110,6 +110,7 @@
 				})
     	},
     	update (item, sign) {
+    		this.visible = true
      		let formData = {
 					"cart_products": {
 					 	"product_id": item.product_id,

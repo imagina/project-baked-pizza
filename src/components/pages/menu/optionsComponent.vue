@@ -3,7 +3,7 @@
 		<div v-for="(option, index) in options" :key="index">
 			<div v-if="option.productOptionValues.length">
 			<label>{{option.option_description}}</label>
-			<select v-model="option.selected" >
+			<select v-model="option.selected" @change="updateOption(option)">
 				<option></option>
 				<option v-for="(value, index) in option.productOptionValues" :key="index" :value="value.option_value_id">
 					{{value.option_value}}
@@ -12,6 +12,7 @@
 			<div v-if="option.selected != ''">
 		  	<options-values-component :product="product" :parent="option.option_id" :parentOptionValueId="option.selected"/>
 			</div>
+
 			</div>
 		</div>
 		<q-inner-loading :visible="loading" style="background-color: #f4f4f4c7">
@@ -33,6 +34,7 @@
 				valueSelected: null,
 			}
 		},
+
 		watch: {
     	parentOptionValueId(val){
     		this.getOptions()	
@@ -68,6 +70,16 @@
 			},
 			setValueSelected(event){
 				this.valueSelected = event
+			},
+			updateOption(option){
+
+				let data = {
+					'product_option_id' : option.selected,
+					'product_option_value_id' : option.option_id,
+				}
+
+				this.$root.$emit('updateoptions', data)
+
 			}
 
 		}
