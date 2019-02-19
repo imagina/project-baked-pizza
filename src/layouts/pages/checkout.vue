@@ -11,28 +11,110 @@
 				<div class="col-sm-12" align="center">
 					<div class="q-display-2 csh3__catering_title q-mt-xl q-mb-lg">Información del cliente</div>
 				</div>
-
-				<div class="col-sm-12 border-top q-py-lg row flex flex-center">
-					<div class="col-md-6">
+				<div class="col-sm-12 border-top q-py-lg row" align="center">
+					<div class="col-sm-12 col-md-4">
+						<q-radio v-model="CustmerType" val="invited" label="Comprar como invitado" />	
+					</div>
+					<div class="col-sm-12 col-md-4">
+						<q-radio v-model="CustmerType" val="registerAccount" label="Crear cuenta" />	
+					</div>
+					<div class="col-sm-12 col-md-4">
+						<q-radio v-model="CustmerType" val="registered" label="Soy usuario" />	
+					</div>
+					
+				</div>
+				
+				<div class="col-sm-12 border-top q-py-lg row" v-if="(CustmerType == 'invited') || (CustmerType == 'registerAccount') ">
+					<div class="col-sm-12 col-md-6">
 						<div class="row">
-							<div class="col-md-2 label-content">
-								<label for="">E-Mail:</label>
+							<div class="col-md-3 label-content">
+								<label for="">Nombres:</label>
 							</div>
-							<div class="col-md-10">
-								<q-input type="text" v-model="email" :after="[{ icon: 'email', }]" placeholder="Email" style="background: transparent;" class="no-shadow" />
+							<div class="col-md-9">
+								<q-input type="text" v-model="name" :after="[{ icon: 'email', }]" placeholder="Nombre" style="background: transparent;" class="no-shadow" />
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-6">
+						<div class="row">
+							<div class="col-md-3 label-content">
+								<label for="">Apellidos:</label>
+							</div>
+							<div class="col-md-9">
+								<q-input type="text" placeholder="Apellidos" v-model="lastName" :after="[{ icon: 'motorcycle', }]" style="background: transparent;" class="no-shadow" />
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-12 border-top q-py-lg row" align="center">
+				<div class="col-sm-12 border-top q-py-lg row" v-if="(CustmerType == 'invited') || (CustmerType == 'registerAccount') ">
 					<div class="col-sm-12 col-md-6">
-						<q-radio v-model="CustmerType" val="opt1" label="Nuevo" />	
+						<div class="row">
+							<div class="col-md-3 label-content">
+								<label for="">E-Mail:</label>
+							</div>
+							<div class="col-md-9">
+								<q-input type="email" v-model="email" :after="[{ icon: 'email', }]" placeholder="Email" style="background: transparent;" class="no-shadow" />
+							</div>
+						</div>
 					</div>
 					<div class="col-sm-12 col-md-6">
-						<q-radio v-model="CustmerType" val="opt2" label="Comprar como invitado" />	
+						<div class="row">
+							<div class="col-md-5 label-content">
+								<label for="">Número de Teléfono:</label>
+							</div>
+							<div class="col-md-7">
+								<q-input type="text" placeholder="Numero de Teléfono" v-model="phone" :after="[{ icon: 'motorcycle', }]" style="background: transparent;" class="no-shadow" />
+							</div>
+						</div>
 					</div>
-				</div>	
+				</div>
 
+				<div class="col-sm-12 border-top q-py-lg row" v-if="CustmerType == 'registerAccount'">
+					<div class="col-sm-12 col-md-6">
+						<div class="row">
+							<div class="col-md-3 label-content">
+								<label for="">Clave:</label>
+							</div>
+							<div class="col-md-9">
+								<q-input type="password" v-model="password" :after="[{ icon: 'email', }]" placeholder="Clave" style="background: transparent;" class="no-shadow" />
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-6">
+						<div class="row">
+							<div class="col-md-5 label-content">
+								<label for="">Confirmar clave:</label>
+							</div>
+							<div class="col-md-7">
+								<q-input type="password" placeholder="Confirmar clave" v-model="confirmPassword" :after="[{ icon: 'motorcycle', }]" style="background: transparent;" class="no-shadow" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-12 border-top q-py-lg row" v-if="CustmerType == 'registered'">
+					<div class="col-sm-12 col-md-6">
+						<div class="row">
+							<div class="col-md-3 label-content">
+								<label for="">E-Mail:</label>
+							</div>
+							<div class="col-md-9">
+								<q-input type="email" v-model="email" :after="[{ icon: 'email', }]" placeholder="Email" style="background: transparent;" class="no-shadow" />
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-6">
+						<div class="row">
+							<div class="col-md-5 label-content">
+								<label for="">Clave:</label>
+							</div>
+							<div class="col-md-7">
+								<q-input type="password" placeholder="Numero de Teléfono" v-model="password" :after="[{ icon: 'motorcycle', }]" style="background: transparent;" class="no-shadow" />
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				<div class="col-sm-12" align="center">
 					<div class="q-display-2 csh3__catering_title q-mb-md">Detalles</div>
 				</div>
@@ -78,7 +160,7 @@
 							</div>
 							<div class="col-md-6">
 								<q-select
-								v-model="select"
+								v-model="selectPayment"
 								:options="paymentMethod" placeholder="Pago en Línea"
 								/>
 							</div>
@@ -131,28 +213,43 @@
 	data(){
 		return{
 			visible: false,
+			name: 'Yeison',
+			lastName: 'Tapia',
 			email: 'ejemplo@ejemplo.com',
 			address: 'Cra 87F #38A Sur-10',
+			phone: '',
 			distance: '3,7 Km',
 			commentary: '',
 			coupon: '',
+			selectPayment: '',
 			CustmerType: false,
 			total: '$' + 100,
+			CustmerType: 'invited',
+			password: '',
+			confirmPassword: '',
 			paymentMethod: [
 				{
-				label: 'Payu',
-				value: 'payu'
+				label: 'Paypal',
+				value: 'paypal'
 				},
 				{
-				label: 'Credito',
-				value: 'credit'
+				label: 'Cheque / giro postal',
+				value: 'check'
+				},
+				{
+					label: 'Autorizar',
+					value: 'autorizar'
 				}
 			],
 		}
 	},
 	mounted(){
+		this.typeUser()
 	},
 	methods:{
+		typeUser(){
+			console.log(this.CustmerType)
+		}
 	}
 	}
 </script>
