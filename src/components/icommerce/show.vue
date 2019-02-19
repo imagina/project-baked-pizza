@@ -80,6 +80,8 @@
 		},
 		created(){
   		this.$root.$on("updateoptions", this.updateOptions);
+  		this.$root.$on("deleteoptions", this.deleteoptions);
+
 		},
 		computed:{
 			selectProduts(){
@@ -138,7 +140,7 @@
 			updateOptions(event){
 
 				var found = this.option.find(function(element) {
-  				return element.product_option_value_id === event.product_option_value_id;
+  				return element.product_option_id === event.product_option_id;
 				});
 
 				if (!found) {
@@ -148,9 +150,14 @@
 					this.option.splice(index, 1);
 					this.option.push(event)
 				}
-				
-
-			
+							
+			},
+			deleteoptions(event){
+				var found = this.option.find(function(element) {
+  				return element.id === event.id;
+				});
+				var index = this.option.indexOf(found);
+				this.option.splice(index, 1);
 			}
 
 		}

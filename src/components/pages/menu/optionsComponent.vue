@@ -5,7 +5,7 @@
 			<label>{{option.option_description}}</label>
 			<select v-model="option.selected" @change="updateOption(option)">
 				<option></option>
-				<option v-for="(value, index) in option.productOptionValues" :key="index" :value="value.option_value_id">
+				<option v-for="(value, index) in option.productOptionValues" :key="index" :value="value.id">
 					{{value.option_value}}
 				</option>
 			</select>
@@ -32,6 +32,7 @@
 				loading: false,
 				options:[],
 				valueSelected: null,
+				selected: [], 
 			}
 		},
 
@@ -42,6 +43,9 @@
   	},
 		mounted(){
 			this.getOptions()
+		},
+		beforeDestroy(){
+			this.$root.$emit('deleteoptions', this.selected)
 		},
 		methods:{
 			getOptions(){
@@ -73,9 +77,10 @@
 			},
 			updateOption(option){
 
+				this.selected = option
 				let data = {
-					'product_option_id' : option.selected,
-					'product_option_value_id' : option.option_id,
+					'product_option_id' : option.id,
+					'product_option_value_id' : option.selected,
 				}
 
 				this.$root.$emit('updateoptions', data)
