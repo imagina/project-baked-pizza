@@ -10,10 +10,9 @@
                 <b>BÙSQUEDA</b> 
             </router-link>
 
-
-            <router-link tag="span" to="/login" class="float-right q-ml-md util-link-1" style="cursor: pointer;">
+            <router-link tag="span" to="/auth/login" class="float-right q-ml-md util-link-1" style="cursor: pointer;">
               <q-icon name="fas fa-user util-1"/>
-                <b>INICIAR SESIÒN</b> 
+                <b>{{userData ? userData.first_name : 'INICIAR SESIÒN' }}</b> 
             </router-link>
 
             <router-link tag="span" to="/pqrs" class="float-right q-ml-md util-link-1" style="cursor: pointer;">
@@ -139,6 +138,7 @@
     mounted() {
       this.$nextTick(function () {
         this.getcart()
+        this.setData()
       })
     },
     data() {
@@ -146,12 +146,18 @@
         leftDrawerOpen: false,
         cant:0,
         cart_id:0,
+        userData : false,
       }
     },
     computed: {
 
     },
     methods: {
+      setData(){
+        helper.storage.get.item('userData').then(response => {
+          this.userData = response
+        })
+      },
       updateCart(event){
         this.cant = event.products_cant
         this.cart_id = event.id
