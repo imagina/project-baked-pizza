@@ -9,6 +9,7 @@
 			</div>
 			<div class="row">
 				<div class="col-12">
+					<!--== START TABLE PRODUCTSO BY CATEGORI SELECTED ==-->
 					<div class="table-responsive">					
 						<table class="table">
 							<thead>
@@ -61,6 +62,7 @@
       				<q-spinner size="50px" color="primary"></q-spinner>
     				</q-inner-loading>
 					</div>
+					<!--== EMD TABLE PRODUCTSO BY CATEGORI SELECTED ==-->
 				</div>
 				<div class="col-12 text-right">
 					<q-btn type="button" label="IR AL CHECKOUT" size="lg" color="red" sence class="q-my-md q-mr-sm" to="/checkout" />

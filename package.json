@@ -15,7 +15,7 @@
     "@imagina/qhelper": "0.0.16",
     "@imagina/qmenu": "0.0.4",
     "@imagina/qslider": "0.0.3",
-    "@imagina/quser": "0.0.29",
+    "@imagina/quser": "0.0.28",
     "axios": "^0.18.0",
     "dotenv": "^6.1.0",
     "vue-carousel": "^0.16.0-rc2",

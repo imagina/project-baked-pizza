@@ -4,20 +4,23 @@
     <q-layout-header class="no-shadow">
       <div class="row desktop-only " style="background-image: linear-gradient(to right, #a71100,  #e74d03) !important; color: white; padding: 7px 10% ; font-size: .7em">
         <div class="col-12 text-center">
-            <span class="float-right q-ml-md">
+
+            <router-link tag="span" to="/busqueda" class="float-right q-ml-md util-link-1" style="cursor: pointer;">
               <q-icon name="fas fa-search util-1"/> 
-              <b> BÙSQUEDA</b>
-            </span>
-            <span class="float-right q-ml-md util-link-1"> 
+                <b>BÙSQUEDA</b> 
+            </router-link>
+
+
+            <router-link tag="span" to="/login" class="float-right q-ml-md util-link-1" style="cursor: pointer;">
               <q-icon name="fas fa-user util-1"/>
-              <b> INICIAR SESIÒN</b>
-            </span>
-            <span class="float-right q-ml-md util-link-1"> 
+                <b>INICIAR SESIÒN</b> 
+            </router-link>
+
+            <router-link tag="span" to="/pqrs" class="float-right q-ml-md util-link-1" style="cursor: pointer;">
               <q-icon name="fas fa-question-circle util-1"/> 
-              <router-link tag="b" to="/pqrs">
-                <b> PQRS </b>
-              </router-link>
-            </span>
+                <b>PQRS</b> 
+            </router-link>
+
         </div>
       </div>
 
