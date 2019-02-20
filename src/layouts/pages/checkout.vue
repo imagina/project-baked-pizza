@@ -433,6 +433,10 @@
 	}
 
 	::placeholder { color: red; font-weight: bold; }
+	.disabled, [disabled]{
+		opacity: 1 !important;
+		color: #ec3800!important;
+	}
 
 	.q-option-label{
 		font-size: 23px;
@@ -442,6 +446,7 @@
 	.component-fade-enter-active, .component-fade-leave-active {
 		transition: opacity .3s ease;
 	}
+
 	.component-fade-enter, .component-fade-leave-to{
 		opacity: 0;
 	}
