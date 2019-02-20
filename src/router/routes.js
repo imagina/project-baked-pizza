@@ -1,4 +1,6 @@
 import Route from 'vue-routisan'
+import user from '@imagina/quser/_router/routes' //Routes module QUser
+import auth from '@imagina/quser/_router/middlewares/auth' //Middleware auth
 
 /*VIEWS*/
 import master from 'src/layouts/master'
