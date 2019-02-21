@@ -1,37 +1,46 @@
 <template>
 
-	<div class="container-section--p2">		
-		<div class="row">
-			<div class="col-md-12 div-select text-right border-top">
-				<span class="div-select__label">Seleccione un producto</span>
-				<div class="div-select__product">
-						<q-select v-model="product.product" float-label="Seleccione un producto" class="q-select--app" radio :options="selectProduts"/>
-				</div>
+	<div class="container-section--p2">	
+		<div class="border-top">	
+			<div class="row q-mt-md">
+				<label for="" class="col-xs-12 col-sm-12 col-md-3 offset-5">Seleccione un producto:</label>
+				<q-select v-model="product.product" placeholder="Seleccione un producto" class="q-select--app col-xs-12 col-sm-12 col-md-4" radio :options="selectProduts"/>
 			</div>
 		</div>
 
 		<div class="row q-mt-lg">
-			<div class="col-5">
-				<div class="card-product-img">
+			<div class="col-xs-12 col-sm-12 col-md-5">
+				<div class="card-product-img im-mt-1">
 					<img src="statics/logo.png" alt="" class="responsive m-w-100">
 				</div>
 			</div>
-			<div class="col">
+			<div class="col-xs-12 col-sm-12 col-md-7 im-mt-1">
 				<span class="q-display-1 color-baked-title">{{product.product.name}}</span>
 				<p>{{product.product.description}}</p>
 				<p>${{product.product.price}}</p>
+				<div class="row">
+					<div class="col-md-4 product-type-grid" v-for="option of optionSize" :key="option.id">
+						<label>
+							<input v-model="productTypeOption" type="radio" name="test" :value="option.id" class="radio">
+							<img src="statics/logo.png" alt="" class="responsive m-w-100 imgradio">
+						</label>
+						
+						<p align="center" class="product-type-name">{{ option.name }}</p>
+						<p align="center" class="product-type-description">( {{ option.description }} )</p>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-8">
+			<div class="col-xs-12 col-sm-12 col-md-8">
 				<div class="row">
-					<div class="col-6 col-md-4">
+					<div class="col-xs-12 col-sm-12 col-md-4">
 						<div class="col-count-product">
-	  					<span>Cantidad:</span> 
-	  					<input type="number" class="input-count-product" float-label="Seleccione un producto"  v-model="quantity" style="width: 80px">
+	  						<span>Cantidad:</span> 
+	  						<input type="number" class="input-count-product" float-label="Seleccione un producto" min="0"  v-model="quantity" style="width: 80px">
 						</div>
 					</div>
-					<div class="col-6 col-md-8">
+					<div class="col-xs-12 col-sm-12 col-md-8">
 						<div class="col-count-product">
 							<div class="div-select__product" style="width: 200px">
 									<pre>{{option}}</pre>
@@ -41,7 +50,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col">
+			<div class="col-xs-12 col-sm-12 col-md-4">
 				<div class="row">
 					<div class="col-12 col-count-product">
 							<span>Valor Total:</span>
@@ -76,6 +85,24 @@
 				cart: '',
 				user: '',
 				option: [],
+				productTypeOption:'',
+				optionSize:[
+					{
+						id: 1,
+						name: 'Personal',
+						description: '4 Porciones'
+					},
+					{
+						id: 2,
+						name: 'Mediana',
+						description: '8 Porciones'
+					},
+					{
+						id: 3,
+						name: 'Familiar',
+						description: '12 Porciones'
+					}
+				]
 			}
 		},
 		created(){
