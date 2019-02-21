@@ -1,240 +1,221 @@
 <template>
 	<section class="container-fluid">
 		<breadcrumb name="Checkout" image="statics/header-pide.jpg"></breadcrumb>
-		<div class="container-section">		
+		<div class="container-section">
+			
 			<div class="row">
-
-				<div class="col-sm-12">
+				<div class="col-xs-12 col-sm-12 col-md-12">
 					<div class="q-display-2 color-baked-title" align="center">Checkout</div>	
 				</div>
+			</div>
 
-				<div class="row">
-					<div class="col-md-4">
-						<div class="row">
-							<div class="col-sm-12" align="center">
-								<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Información del cliente</div>
-							</div>
+			<div class="row">
+				<!-- section -->
+				<div class="col-xs-12 col-sm-12 col-md-4 section-1">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12" align="center">
+							<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Información del cliente</div>
+							<hr>
 						</div>
-						<div class="border-top q-py-lg row" align="center">
-							<div class="col-sm-12 col-md-4">
-								<q-radio v-model="CustmerType" val="invited" label="Comprar como invitado" />	
-							</div>
-							<div class="col-sm-12 col-md-4">
-								<q-radio v-model="CustmerType" val="registerAccount" label="Crear cuenta" />	
-							</div>
-							<div class="col-sm-12 col-md-4">
-								<q-radio v-model="CustmerType" val="registered" label="Soy usuario" />	
-							</div>
-						</div>
-
-						<transition name="component-fade" mode="out-in">
-							<div class="border-top q-py-lg row" v-if="(CustmerType == 'invited') || (CustmerType == 'registerAccount') ">
-								<div class="col-sm-12 col-md-12">	
-									<q-input type="text" v-model="name" :after="[{ icon: 'fas fa-user', }]" float-label="Nombre" style="background: transparent;" class="no-shadow" />
-								</div>
-								<div class="col-sm-12 col-md-12">
-									<q-input type="text" float-label="Apellidos" v-model="lastName" :after="[{ icon: 'fas fa-user', }]" style="background: transparent;" class="no-shadow" />
-								</div>
-							</div>
-						</transition>
-
-						<transition name="component-fade" mode="out-in">
-							<div class="border-top q-py-lg row" v-if="(CustmerType == 'invited') || (CustmerType == 'registerAccount') ">
-								<div class="col-sm-12 col-md-12">
-									<q-input type="email" v-model="email" :after="[{ icon: 'fas fa-envelope', }]" float-label="E-mail" style="background: transparent;" class="no-shadow" />
-								</div>
-								<div class="col-sm-12 col-md-12">
-									<q-input type="text" float-label="Número de Teléfono" v-model="phone" :after="[{ icon: 'fas fa-phone', }]" style="background: transparent;" class="no-shadow" />
-								</div>
-							</div>
-						</transition>
-
-						<transition name="component-fade" mode="out-in">
-							<div class="border-top q-py-lg row" v-if="CustmerType == 'registerAccount'">
-								<div class="col-sm-12 col-md-12">
-									<q-input type="password" v-model="password" :after="[{ icon: 'fas fa-key', }]" float-label="Clave" style="background: transparent;" class="no-shadow" />
-								</div>
-								<div class="col-sm-12 col-md-12">
-									<q-input type="password" float-label="Confirmar clave" v-model="confirmPassword" :after="[{ icon: 'fas fa-key', }]" style="background: transparent;" class="no-shadow" />
-								</div>
-							</div>
-						</transition>
-
-						<transition name="component-fade" mode="out-in">
-							<div class="border-top q-py-lg row" v-if="CustmerType == 'registered'">
-								<div class="col-sm-12 col-md-12">
-									<q-input type="email" v-model="registeredEmail" :after="[{ icon: 'fas fa-envelope', }]" float-label="Email" style="background: transparent;" class="no-shadow" />
-								</div>
-								<div class="col-sm-12 col-md-12">
-									<q-input type="password" float-label="Clave" v-model="registeredPassword" :after="[{ icon: 'fas fa-key', }]" style="background: transparent;" class="no-shadow" />
-								</div>
-							</div>
-						</transition>
 					</div>
 
-					<div class="col-md-4">
-						<div class="row">
-							<div class="col-sm-12" align="center">
-								<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Detalles de facturación</div>
-							</div>
+					
+						<q-list>
+							<q-collapsible opened group="somegroup" icon="shopping_cart" label="Comprar como invitado">
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<hr>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-12">	
+										<q-input type="text" v-model="name" :after="[{ icon: 'fas fa-user', }]" float-label="Nombre" style="background: transparent;" class="no-shadow" />
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<q-input type="text" float-label="Apellidos" v-model="lastName" :after="[{ icon: 'fas fa-user', }]" style="background: transparent;" class="no-shadow" />
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<q-input type="email" v-model="email" :after="[{ icon: 'fas fa-envelope', }]" float-label="E-mail" style="background: transparent;" class="no-shadow" />
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<q-input type="text" float-label="Número de Teléfono" v-model="phone" :after="[{ icon: 'fas fa-phone', }]" style="background: transparent;" class="no-shadow" />
+									</div>
+								</div>
+							</q-collapsible>
+							<q-collapsible group="somegroup" icon="fa fa-user" label="Crear cuenta">
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<hr>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-12">	
+										<q-input type="text" v-model="name" :after="[{ icon: 'fas fa-user', }]" float-label="Nombre" style="background: transparent;" class="no-shadow" />
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<q-input type="text" float-label="Apellidos" v-model="lastName" :after="[{ icon: 'fas fa-user', }]" style="background: transparent;" class="no-shadow" />
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<q-input type="email" v-model="email" :after="[{ icon: 'fas fa-envelope', }]" float-label="E-mail" style="background: transparent;" class="no-shadow" />
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<q-input type="text" float-label="Número de Teléfono" v-model="phone" :after="[{ icon: 'fas fa-phone', }]" style="background: transparent;" class="no-shadow" />
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<q-input type="password" v-model="password" :after="[{ icon: 'fas fa-key', }]" float-label="Clave" style="background: transparent;" class="no-shadow" />
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<q-input type="password" float-label="Confirmar clave" v-model="confirmPassword" :after="[{ icon: 'fas fa-key', }]" style="background: transparent;" class="no-shadow" />
+									</div>
+								</div>
+							</q-collapsible>
+							<q-collapsible group="somegroup" icon="fas fa-key" label="Soy usuario">
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<hr>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<q-input type="email" v-model="registeredEmail" :after="[{ icon: 'fas fa-envelope', }]" float-label="Email" style="background: transparent;" class="no-shadow" />
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<q-input type="password" float-label="Clave" v-model="registeredPassword" :after="[{ icon: 'fas fa-key', }]" style="background: transparent;" class="no-shadow" />
+									</div>
+								</div>
+							</q-collapsible>
+						</q-list>
+					
+				</div>
+				<!-- end section -->
+				<!-- section -->
+				<div class="col-xs-12 col-sm-12 col-md-4 section-1 section-2">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12" align="center">
+							<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Detalles de facturación</div>
+							<hr>
 						</div>
-						<div class="row" v-if="differentAddress == 'yes'">
-							<div class="border-top q-py-lg row q-mb-md">
-								<div class="col-sm-12 col-md-12">
-									<q-input type="text" v-model="billName" :after="[{ icon: 'fas fa-user', }]" float-label="Nombre" style="background: transparent;" class="no-shadow" />
-								</div>
-								<div class="col-sm-12 col-md-12">
-									<q-input type="text" float-label="Apellidos" v-model="billLastName" :after="[{ icon: 'fas fa-user', }]" style="background: transparent;" class="no-shadow" />
-								</div>
-							</div>
-
-							<div class="border-top q-py-lg row">
-								<div class="col-sm-12 col-md-12">
-									<q-input type="text" v-model="billCompanyName" :after="[{ icon: 'fas fa-building', }]" float-label="Nombre de empresa" style="background: transparent;" class="no-shadow" />
-								</div>
-							</div>
-
-							<div class="border-top q-py-lg row">
-								<div class="col-sm-12 col-md-12">
-									<q-input type="text" v-model="billAddress1" :after="[{ icon: 'fas fa-map-marker-alt', }]" float-label="Dirección 1" style="background: transparent;" class="no-shadow" />
-								</div>
-							</div>
-
-							<div class="border-top q-py-lg row">
-								<div class="col-sm-12 col-md-12">
-									<q-input type="text" v-model="billAddress2" :after="[{ icon: 'fas fa-map-marker-alt', }]" float-label="Dirección 2" style="background: transparent;" class="no-shadow" />
-								</div>
-							</div>
-
-							<div class="border-top q-py-lg row">
-								<div class="col-sm-12 col-md-12">
-									<q-input type="text" v-model="billCity" :after="[{ icon: 'fas fa-city', }]" float-label="Ciudad" style="background: transparent;" class="no-shadow" />
-								</div>
-								<div class="col-sm-12 col-md-12">
-									<q-input type="text" float-label="Código postal" v-model="postalCode" :after="[{ icon: 'fas fa-archway', }]" style="background: transparent;" class="no-shadow" />
-								</div>
-							</div>
-
-							<div class="col-sm-12 border-top q-py-lg row">
-								<div class="col-sm-12 col-md-12">
-									<q-select
-									v-model="billSelectCountry"
-									style="background: transparent;"
-									:options="country" float-label="Seleccione pais..." />
-								</div>
-							</div>
+					</div>
+					<div class="row" v-if="differentAddress == 'yes' || expandBill">
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billName" :after="[{ icon: 'fas fa-user', }]" float-label="Nombre" style="background: transparent;" class="no-shadow" />
 						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" float-label="Apellidos" v-model="billLastName" :after="[{ icon: 'fas fa-user', }]" style="background: transparent;" class="no-shadow" />
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billCompanyName" :after="[{ icon: 'fas fa-building', }]" float-label="Nombre de empresa" style="background: transparent;" class="no-shadow" />
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billAddress1" :after="[{ icon: 'fas fa-map-marker-alt', }]" float-label="Dirección 1" style="background: transparent;" class="no-shadow" />
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billAddress2" :after="[{ icon: 'fas fa-map-marker-alt', }]" float-label="Dirección 2" style="background: transparent;" class="no-shadow" />
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billCity" :after="[{ icon: 'fas fa-city', }]" float-label="Ciudad" style="background: transparent;" class="no-shadow" />
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" float-label="Código postal" v-model="postalCode" :after="[{ icon: 'fas fa-archway', }]" style="background: transparent;" class="no-shadow" />
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-select
+							v-model="billSelectCountry"
+							style="background: transparent;"
+							:options="country" float-label="Seleccione pais..." />
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12 q-mt-lg"><br><hr></div>
+					</div>
 
-						<div class="row">
-							<div class="col-sm-12 q-mb-md" align="center">
-								<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Dirección de Envío</div>
-								<q-checkbox
-								v-model="differentAddress"
-								label="Mis direcciones de envío y facturación son las mismas."
-								true-value="yes"
-								false-value="no"
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 q-mb-md" align="center">
+							<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Dirección de Envío</div>
+							<q-checkbox
+							v-model="differentAddress"
+							label="Mis direcciones de envío y facturación son las mismas."
+							true-value="yes"
+							false-value="no"
+							/>
+							<hr>
+						</div>
+					</div>
+					
+					<transition name="component-fade" mode="out-in">
+						<div class="row" v-if="differentAddress == 'no'">
+							<div class="col-sm-12 col-md-12">
+								<q-input type="text" v-model="shippingName" :after="[{ icon: 'fas fa-user', }]" float-label="Nombre" style="background: transparent;" class="no-shadow" />
+							</div>
+							<div class="col-sm-12 col-md-12">
+								<q-input type="text" float-label="Apellidos" v-model="shippingLastName" :after="[{ icon: 'fas fa-user', }]" style="background: transparent;" class="no-shadow" />
+							</div>
+							<div class="col-sm-12 col-md-12">
+								<q-input type="text" v-model="shippingCompanyName" :after="[{ icon: 'fas fa-building', }]" float-label="Nombre de empresa" style="background: transparent;" class="no-shadow" />
+							</div>
+							<div class="col-sm-12 col-md-12">
+								<q-input type="text" v-model="shippingAddress1" :after="[{ icon: 'fas fa-map-marker-alt', }]" float-label="Dirección 1" style="background: transparent;" class="no-shadow" />
+							</div>
+							<div class="col-sm-12 col-md-12">
+								<q-input type="text" v-model="shippingAddress2" :after="[{ icon: 'fas fa-map-marker-alt', }]" float-label="Dirección 2" style="background: transparent;" class="no-shadow" />
+							</div>
+							<div class="col-sm-12 col-md-12">
+								<q-input type="text" v-model="shippingCity" :after="[{ icon: 'fas fa-city', }]" float-label="Ciudad" style="background: transparent;" class="no-shadow" />
+							</div>
+							<div class="col-sm-12 col-md-12">
+								<q-input type="text" float-label="Código postal" v-model="shippingPostalCode" :after="[{ icon: 'fas fa-archway', }]" style="background: transparent;" class="no-shadow" />
+							</div>
+							<div class="col-sm-12 col-md-12">
+								<q-select
+								v-model="shippingSelectCountry"
+								style="background: transparent;"
+								:options="country" float-label="Seleccione pais..."
 								/>
 							</div>
 						</div>
-						
-						<transition name="component-fade" mode="out-in">
-							<div class="row" v-if="differentAddress == 'no'">
-
-								<div class="border-top q-py-lg row">
-									<div class="col-sm-12 col-md-12">
-										<q-input type="text" v-model="shippingName" :after="[{ icon: 'fas fa-user', }]" float-label="Nombre" style="background: transparent;" class="no-shadow" />
-									</div>
-								</div>
-
-								<div class="border-top q-py-lg row">
-									<div class="col-sm-12 col-md-12">
-										<q-input type="text" float-label="Apellidos" v-model="shippingLastName" :after="[{ icon: 'fas fa-user', }]" style="background: transparent;" class="no-shadow" />
-									</div>
-								</div>
-
-								<div class="border-top q-py-lg row">
-									<div class="col-sm-12 col-md-12">
-										<q-input type="text" v-model="shippingCompanyName" :after="[{ icon: 'fas fa-building', }]" float-label="Nombre de empresa" style="background: transparent;" class="no-shadow" />
-									</div>
-								</div>
-
-								<div class="border-top q-py-lg row">
-									<div class="col-sm-12 col-md-12">
-										<q-input type="text" v-model="shippingAddress1" :after="[{ icon: 'fas fa-map-marker-alt', }]" float-label="Dirección 1" style="background: transparent;" class="no-shadow" />
-									</div>
-								</div>
-
-								<div class="border-top q-py-lg row">
-									<div class="col-sm-12 col-md-12">
-										<q-input type="text" v-model="shippingAddress2" :after="[{ icon: 'fas fa-map-marker-alt', }]" float-label="Dirección 2" style="background: transparent;" class="no-shadow" />
-									</div>
-								</div>
-
-								<div class="border-top q-py-lg row">
-									<div class="col-sm-12 col-md-12">
-										<q-input type="text" v-model="shippingCity" :after="[{ icon: 'fas fa-city', }]" float-label="Ciudad" style="background: transparent;" class="no-shadow" />
-									</div>
-									<div class="col-sm-12 col-md-12">
-										<q-input type="text" float-label="Código postal" v-model="shippingPostalCode" :after="[{ icon: 'fas fa-archway', }]" style="background: transparent;" class="no-shadow" />
-									</div>
-								</div>
-
-								<div class="col-sm-12 border-top q-py-lg row">
-									<div class="col-sm-12 col-md-12">
-										<q-select
-										v-model="shippingSelectCountry"
-										style="background: transparent;"
-										:options="country" float-label="Seleccione pais..."
-										/>
-									</div>
-								</div>
-								
-							</div>
-						</transition>
+					</transition>
+				</div>
+				<!-- end section -->
+				<!-- section -->
+				<div class="col-xs-12 col-sm-12 col-md-4 section-1 section-3">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12" align="center">
+							<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Métodos de pago</div>
+							<hr>
+						</div>
 					</div>
 
-					<div class="col-md-4">
-						<div class="col-sm-12" align="center">
-							<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Métodos de pago</div>
+					<div class="q-py-lg row">
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-radio v-model="paymentMethod" val="paypal" label="Paypal" />	
 						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-radio v-model="paymentMethod" val="cheque" label="Cheque / Giro postal" />
+						</div>	
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-radio v-model="paymentMethod" val="autorizar" label="Autorizar" />
+						</div>	
+						<div class="col-xs-12 col-sm-12 col-md-12"><br><hr></div>
+					</div>
 
-						<div class="border-top q-py-lg row" align="center">
-							<div class="col-sm-12 col-md-4">
-								<q-radio v-model="paymentMethod" val="paypal" label="Paypal" />	
-							</div>
-							<div class="col-sm-12 col-md-4">
-								<q-radio v-model="paymentMethod" val="cheque" label="Cheque / Giro postal" class="col-sm-12 col-md-4" />
-							</div>	
-							<div class="col-sm-12 col-md-4">
-								<q-radio v-model="paymentMethod" val="autorizar" label="Autorizar" class="col-sm-12 col-md-4" />
-							</div>	
-						</div>
-
-						<div class="col-sm-12" align="center">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12" align="center">
 							<div class="q-display-1 csh3__catering_title q-mt-lg q-mb-lg">Detalles</div>
+							<hr>
 						</div>
+					</div>
 
-						<div class="border-top q-py-lg row">
-							<div class="col-sm-12 col-md-12">
-								<q-input type="text" float-label="Distancia del pedido" v-model="distance" :after="[{ icon: 'motorcycle', }]" style="background: transparent;" class="no-shadow" />
-							</div>
-							<div class="col-sm-12 col-md-12">
-								<q-input type="text" float-label="Escribe aquí..." v-model="commentary" :after="[{ icon: 'fas fa-comment', }]" style="background: transparent;" class="no-shadow" />
-							</div>
+					<div class="q-py-lg row">
+						<div class="col-sm-12 col-md-12">
+							<q-input type="text" float-label="Distancia del pedido" v-model="distance" :after="[{ icon: 'motorcycle', }]" style="background: transparent;" class="no-shadow" />
 						</div>
-
-						<div class="border-top q-py-lg row">
-							<div class="col-sm-12 col-md-12">
-								<q-input type="text" float-label="Añadir cupones" v-model="coupon" :after="[{ icon: 'fa fa-tag', }]" style="background: transparent;" class="no-shadow" />
-							</div>
-							<div class="col-sm-12 col-md-12">
-								<q-input type="text" float-label="Valor Total" v-model="total" :after="[{ icon: 'fas fa-thumbs-up', }]"   style="background: transparent;" :disable="true" class="no-shadow" />
-							</div>
+						<div class="col-sm-12 col-md-12">
+							<q-input type="text" float-label="Escribe aquí..." v-model="commentary" :after="[{ icon: 'fas fa-comment', }]" style="background: transparent;" class="no-shadow" />
 						</div>
-
+						<div class="col-sm-12 col-md-12">
+							<q-input type="text" float-label="Añadir cupones" v-model="coupon" :after="[{ icon: 'fa fa-tag', }]" style="background: transparent;" class="no-shadow" />
+						</div>
+						<div class="col-sm-12 col-md-12">
+							<q-input type="text" float-label="Valor Total" v-model="total" :after="[{ icon: 'fas fa-thumbs-up', }]"   style="background: transparent;" :disable="true" class="no-shadow" />
+						</div>
 					</div>
 				</div>
-
+				<!-- end section -->
+			</div>
+					
+			<div class="row q-mt-lg">
 				<div class="col-12">
 					<div class="col-count-product text-right">
 						<q-btn type="submit" label="Comprar Ahora" size="lg" color="red" sence class="q-my-md round-borders-0"/>
@@ -337,7 +318,7 @@
 		typeUser(){
 			console.log(this.CustmerType)
 		}
-	}
+	},
 	}
 </script>
 
@@ -388,23 +369,35 @@
 		opacity: 0;
 	}
 
-	span.number-circle{
-		background: gray;
-		border-radius: 0.8em;
-		-moz-border-radius: 0.8em;
-		-webkit-border-radius: 0.8em;
-		color: #ffffff;
-		display: inline-block;
-		font-weight: bold;
-		line-height: 1.6em;
-		margin-right: 15px;
-		text-align: center;
-		width: 1.6em; 
+	.q-if-standard.q-if-has-label{
+		box-shadow: 0px 3px 5px -1px #c1c1c100!important;
+	}
+
+	.section-2{
+		border-left: 1px solid #80808024;
+		border-right: 1px solid #80808024;
+	}
+
+	.q-input .q-icon{
+		color: #eb4000!important;
+	}
+
+	.q-collapsible-opened .q-item{
+		background-color:#f8b415c2;
 	}
 
 	@media only screen and (max-width: 600px) {
 		.q-input-target{
 			font-size: 17px!important;
+		}
+
+		.section-2{
+			border-left: none!important;
+			border-right: none!important;
+		}
+
+		.q-collapsible-inner > .q-item .q-item-label{
+			font-size: 1.3rem!important;
 		}
 
 	}
