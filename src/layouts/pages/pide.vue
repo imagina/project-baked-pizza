@@ -6,8 +6,8 @@
 		<div class="container-section">	
 			<div class="row">
 				<!--== START CATETGORIES MENU ==-->
-				<div class="col-md-3">
-					<div class="label bg-deep-orange-7 text-white full-width">
+				<div class="col-xs-12 col-sm-12 col-md-3">
+					<div class="label bg-deep-orange-7 text-white full-width title-menu">
 						<span>· Nuestro Menú ·</span>
 					</div>
 					<q-list sublabel-lines id="pide-menu">
@@ -16,16 +16,16 @@
 				</div>
 				<!--== END CATETGORIES MENU ==-->
 				<!--== START GRIDS PRODUCTS ==-->
-				<div class="container-section--p2" v-if="!showProduct">	
-					<div class="row" v-if="products.length">
-						<div class="col-4" align="center" v-for="product in products" :key="product.id">
+				<div class="col-md-9" v-if="!showProduct">	
+					<div class="row grid-products" v-if="products.length">
+						<div class="col-xs-12 col-sm-12 col-md-4" align="center" v-for="product in products" :key="product.id">
 							<div class="card-product-img">
 								<img src="statics/logo.png" alt="" class="responsive m-w-100">
-								<q-btn type="submit" label="Pedir" color="red" sence class="q-my-md round-borders-0" @click="productSelected(product)"/>
+								<q-btn type="submit" label="Pedir" color="red" sence class="q-my-md round-borders-0 btn-add-card" @click="productSelected(product)"/>
 							</div>
 							<div class="q-mt-lg">
 								<span class="q-display-1 color-baked-title">{{product.name}}</span>
-								<p>${{product.price}}</p>
+								<p class="baked-price">${{product.price}}</p>
 							</div>
 						</div>
 					</div>
@@ -41,7 +41,6 @@
 				<!--== END GRIDS PRODUCTS ==-->
 				</div>
 			</div>
-		</div>
 	</section>
 </template>
 
@@ -98,12 +97,64 @@
 	    border-radius 20px
 	    display table
 	    padding 1rem
+		position relative
 	    img
 	        vertical-align middle
 	        width 100%
 	        max-height 100%
 	        display table-cell
 
+	.card-product-img
+		position relative
+		text-align center
+
+	.card-product-img
+		.btn-add-card
+			position absolute
+			left 50%
+			bottom -33px
+			transform translate(-50%)
+			-webkit-transform translate(-50%)
+			&:hover
+				background-color #ff8c00!important
+
+
+	.grid-products
+		.color-baked-title
+			color #723d3d!important
+
+	.baked-price
+		color #ec3800!important
+		font-weight 600
+
+	.title-menu
+		border-radius 15px
+		span 
+			padding 5px 0 5px 0
+
+
+	.product-type-name
+		color #ff8c00
+		font-weight 600
+	
+	.product-type-description
+		color #723d3d
+		font-size 1rem
+
+	.product-type-grid .radio { 
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+	}
+
+	.imgradio
+		cursor: pointer;
+		-webkit-filter: grayscale(100%)
+	
+	.radio:checked + img
+		-webkit-filter: grayscale(0%)
+	
 	.border-top
 	    border-top 1px solid #c4c4c4
 
@@ -162,4 +213,14 @@
 		.q-item-label
 	    padding-left 0px !important
 	    color #723D3D !important
+
+	@media only screen and (max-width: 600px) {
+		.grid-products{
+			margin-top: 20px;
+		}
+
+		.im-mt-1{
+			margin-top: 1rem;
+		}
+	}
 </style>
