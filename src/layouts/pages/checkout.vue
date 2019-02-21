@@ -11,7 +11,40 @@
 
 			<div class="row">
 				<!-- section -->
-				<div class="col-xs-12 col-sm-12 col-md-4 section-1">
+
+				<div class="col-xs-12 col-sm-12 col-md-4 section-1" v-if="userData">
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12" align="center">
+							<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Información del cliente</div>
+							<hr>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12">	
+							<q-input type="text" v-model="userData.first_name" float-label="Nombre" style="background: transparent;" class="no-shadow" readonly/>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" float-label="Apellidos" v-model="userData.last_name" style="background: transparent;" class="no-shadow" readonly/>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="email" v-model="userData.email"  float-label="E-mail" style="background: transparent;" class="no-shadow" readonly/>
+						</div>
+
+						<div class="col-sm-12 col-md-12 q-my-md" align="center">
+							<q-btn label="Cerrar Sesión" :loading="loading_login" color="red">
+								<span slot="loading">
+        					<q-spinner-oval class="on-left"/>
+        					Validando ...
+      					</span>
+							</q-btn>
+					</div>
+
+					</div>						
+				</div>
+
+				<div class="col-xs-12 col-sm-12 col-md-4 section-1" v-else>
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12" align="center">
 							<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Información del cliente</div>
@@ -66,24 +99,36 @@
 								</div>
 							</q-collapsible>
 							<q-collapsible group="somegroup" icon="fas fa-key" label="Soy usuario">
+
+								<!--== START INICIO DE SESION == -->
 								<div class="row">
 									<div class="col-xs-12 col-sm-12 col-md-12">
 										<hr>
 									</div>
 									<div class="col-xs-12 col-sm-12 col-md-12">
-										<q-input type="email" v-model="registeredEmail" :after="[{ icon: 'fas fa-envelope', }]" float-label="Email" style="background: transparent;" class="no-shadow" />
+										<q-input type="email" v-model="form.username" :after="[{ icon: 'fas fa-envelope', }]" float-label="Email" style="background: transparent;" class="no-shadow" :error="$v.form.username.$error"/>
 									</div>
 									<div class="col-xs-12 col-sm-12 col-md-12">
-										<q-input type="password" float-label="Clave" v-model="registeredPassword" :after="[{ icon: 'fas fa-key', }]" style="background: transparent;" class="no-shadow" />
+										<q-input type="password" float-label="Clave" v-model="form.password" :after="[{ icon: 'fas fa-key', }]" style="background: transparent;" class="no-shadow" :error="$v.form.password.$error"/>
+									</div>									
+									<div class="col-sm-12 col-md-12 q-my-md" align="center">
+											<q-btn label="Iniciar Sesión"  @click="authenticate()" :loading="loading_login">
+												<span slot="loading">
+                					<q-spinner-oval class="on-left"/>
+                					Validando ...
+              					</span>
+											</q-btn>
 									</div>
+									<!--== END INICIO DE SESION == -->
+
 								</div>
 							</q-collapsible>
 						</q-list>
-					
 				</div>
+
 				<!-- end section -->
 				<!-- section -->
-				<div class="col-xs-12 col-sm-12 col-md-4 section-1 section-2">
+				<div class="col-xs-12 col-sm-12 col-md-4 section-1 section-2" >
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12" align="center">
 							<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Detalles de facturación</div>
@@ -232,15 +277,29 @@
 </template>
 
 <script>
+	import {required, email, numeric, minLength} from 'vuelidate/lib/validators';
+  import {alert} from '@imagina/qhelper/_plugins/alert'
+  import {helper} from '@imagina/qhelper/_plugins/helper'
+
 	export default{
 	components:{
 	},
 	data(){
 		return{
+			userData : false,
+
+		 	form: {
+        username: null,
+        password: null
+      },
+      rememberData: true,
+      loading_login: false,
+
+
 			visible: false,
-			name: 'Yeison',
-			lastName: 'Tapia',
-			email: 'ejemplo@ejemplo.com',
+			name: '',
+			lastName: '',
+			email: '',
 			phone: '',
 			password: '',
 			confirmPassword: '',
@@ -311,14 +370,41 @@
 			]
 		}
 	},
+  validations: {
+    form: {
+      username: {required},
+      password: {required}
+    }
+  },
 	mounted(){
 		this.typeUser()
+		this.setData()
 	},
 	methods:{
+		setData(){
+      helper.storage.get.item('userData').then(response => {
+        this.userData = response
+      })
+    },
 		typeUser(){
 			console.log(this.CustmerType)
-		}
-	},
+		},
+		async authenticate() {
+        this.$v.$touch();
+
+        if (this.$v.$error) {
+          alert.error('Please review fields again.', 'bottom');
+        } else {
+          this.loading_login = !this.loading_login;
+          const {username, password} = this.form;
+
+          this.$store.dispatch("auth/AUTH_REQUEST", {username, password}).then(response => {
+            this.loading_login = !this.loading_login;
+            console.log('setear variables del store para el Checkout')
+          });
+        }
+      },
+		},
 	}
 </script>
 

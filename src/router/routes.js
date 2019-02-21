@@ -40,6 +40,9 @@ Route.view('/', master)
       }),
       Route.view('/busqueda', require('../layouts/pages/busqueda').default).options({
         name: 'busqueda'
+      }),
+      Route.view('/perfil', require('../layouts/pages/perfil').default).options({
+        name: 'perfil'
       })
 
 
