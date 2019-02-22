@@ -116,6 +116,7 @@
 
 					<q-card class="no-shadow">
 					<div class="row">
+
 						<div class="col-xs-12 col-sm-12 col-md-12" align="center">
 							<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Detalles de facturación</div>
 						</div>
@@ -136,11 +137,13 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-12 q-mb-lg">
 							<q-btn label=" - Agregar otra direccion -" class="full-width" color="red"/>
 						</div>
 					</div>
+					</q-card>
 
+<q-card class="no-shadow">
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12 q-mb-md" align="center">
 							<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Dirección de Envío</div>
@@ -158,7 +161,7 @@
 						<div class="row" v-if="differentAddress == 'no'">
 
 
-						<div class="col-md-12">
+						<div class="col-md-12 q-pb-lg">
 			
 
 
