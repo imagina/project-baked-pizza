@@ -134,6 +134,8 @@
 
 
 	.product-type-name
+		margin-bottom 0px!important
+		margin-top -14px
 		color #ff8c00
 		font-weight 600
 	
