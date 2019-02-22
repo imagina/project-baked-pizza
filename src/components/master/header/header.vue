@@ -7,12 +7,19 @@
 
             <router-link tag="span" to="/busqueda" class="float-right q-ml-md util-link-1" style="cursor: pointer;">
               <q-icon name="fas fa-search util-1"/> 
-                <b>BÙSQUEDA</b> 
+                <b>Bùsqueda</b> 
             </router-link>
 
-            <router-link tag="span" to="/auth/login" class="float-right q-ml-md util-link-1" style="cursor: pointer;">
+            <div v-if="userData">
+              <router-link tag="span" to="/auth/logout" class="float-right q-ml-md util-link-1" style="cursor: pointer;" >
+                <q-icon name="fas fa-sign-out-alt util-1"/>
+                  <b>Cerrar Sesión</b> 
+              </router-link>
+            </div>
+
+            <router-link tag="span" :to="userData ? '/perfil' : '/auth/login'" class="float-right q-ml-md util-link-1" style="cursor: pointer;">
               <q-icon name="fas fa-user util-1"/>
-                <b>{{userData ? userData.first_name : 'INICIAR SESIÒN' }}</b> 
+                <b>{{userData ? userData.first_name : 'Iniciar Sesión' }}</b> 
             </router-link>
 
             <router-link tag="span" to="/pqrs" class="float-right q-ml-md util-link-1" style="cursor: pointer;">
