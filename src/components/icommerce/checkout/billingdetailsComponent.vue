@@ -49,6 +49,7 @@
 </template>
 
 <script type="text/javascript">
+	import {helper} from '@imagina/qhelper/_plugins/helper'
 	import addressesComponent from 'src/components/icommerce/addresses'
 
 	export default {
@@ -57,11 +58,22 @@
 		},
 		data(){
 			return {
+				userData: false,
 				addresses: [],
 				address : '',
 				differentAddress: 'yes',
-				
 			}
+		},
+		mounted(){
+			this.setData()
+		},
+		methods:{
+			setData(){
+      	helper.storage.get.item('userData').then(response => {
+        	this.userData = response
+      	})
+    	},
 		}
+
 	}
 </script>
