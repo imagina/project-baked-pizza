@@ -36,14 +36,16 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-4">
 						<div class="col-count-product">
-	  						<span>Cantidad:</span> 
-	  						<input type="number" class="input-count-product" float-label="Seleccione un producto" min="0"  v-model="quantity" style="width: 80px">
+	  						<div class="row">
+								<span class="col-md-4">Cantidad:</span> 
+	  							<input type="number" class="input-count-product col-xs-12 col-sm-12 col-md-8" float-label="Seleccione un producto" min="0"  v-model="quantity" style="width: 80px">
+							</div>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-8">
 						<div class="col-count-product">
-							<div class="div-select__product" style="width: 200px">
-									<pre>{{option}}</pre>
+							<div class="porduct-option-content" style="width: 200px">
+									<!-- <pre>{{option}}</pre> -->
 									<options-component :product="product.product.id" :parent="0" id="options"/>
 	    					</div>
 						</div>
@@ -53,7 +55,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-4">
 				<div class="row">
 					<div class="col-12 col-count-product">
-							<span>Valor Total:</span>
+						<span>Valor Total:</span>
 	  					<input type="text" class="input-count-product" :value="product.product.price" readonly>
 	  				</div>
 					<div class="col-12">

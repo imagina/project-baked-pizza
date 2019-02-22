@@ -2,14 +2,27 @@
 	<div>
 		<div v-for="(option, index) in options" :key="index">
 			<div v-if="option.productOptionValues.length">
-			<label>{{option.option_description}}</label>
+			<!-- <label>{{option.option_description}}</label>
 			<select v-model="option.selected" @change="updateOption(option)">
 				<option></option>
 				<option v-for="(value, index) in option.productOptionValues" :key="index" :value="value.id">
 					{{value.option_value}}
 				</option>
-			</select>
+			</select> -->
+			<div class="row">
+				<span class="col-md-4 product-option-name">{{option.option_description}}: </span>
+				<q-select
+				@input="updateOption(option)"
+				v-model="option.selected"
+				style="background: transparent;"
+				class="col-xs-12 col-sm-12 col-md-8"
+				radio
+				:options="resetOptions(option.productOptionValues)"
+				/>
+			</div>
+
 			<div v-if="option.selected != ''">
+			<br>
 		  	<options-values-component :product="product" :parent="option.option_id" :parentOptionValueId="option.selected"/>
 			</div>
 
@@ -76,7 +89,7 @@
 				this.valueSelected = event
 			},
 			updateOption(option){
-
+				console.log('Hola');
 				this.selected = option
 				let data = {
 					'product_option_id' : option.id,
@@ -85,6 +98,17 @@
 
 				this.$root.$emit('updateoptions', data)
 
+			},
+			resetOptions(options){
+				let newArray = [];
+				for (let index = 0; index < options.length; index++) {
+					newArray.push({ label: options[index].option_value , value: options[index].id });
+				}
+
+				return newArray;
+			},
+			test(){
+				console.log(1)
 			}
 
 		}
