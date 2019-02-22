@@ -139,6 +139,7 @@
     },
     watch: {},
     created(){
+      this.$root.$on("sesionStart", this.setData);
       this.$root.$on("updateCart", this.updateCart);
       this.$root.$on("deleteItemCart", this.deleteItemCart);
     },
