@@ -142,6 +142,10 @@
 	.product-type-description
 		color #723d3d
 		font-size 1rem
+	
+	.product-option-name
+		margin-top .6rem
+		
 
 	.product-type-grid .radio { 
 	position: absolute;
@@ -223,6 +227,14 @@
 
 		.im-mt-1{
 			margin-top: 1rem;
+		}
+
+		.porduct-option-content{
+			width: 100%!important;
+		}
+
+		.input-count-product{
+			width: 100%!important;
 		}
 	}
 </style>
