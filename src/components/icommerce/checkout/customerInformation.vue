@@ -33,7 +33,7 @@
 			
 				<div class="row">
 				<q-list class="col-xs-12 col-sm-12 col-md-12 q-mb-lg">
-					<q-collapsible group="somegroup" icon="shopping_cart" label="Invitado" >
+					<q-collapsible group="somegroup" label="Invitado" >
 						<div class="row">
 					
 							<div class="col-xs-12 col-sm-12 col-md-12">	
@@ -50,7 +50,7 @@
 							</div>
 						</div>
 					</q-collapsible>
-					<q-collapsible group="somegroup" icon="fa fa-user" label="Crear cuenta">
+					<q-collapsible group="somegroup"  label="Crear cuenta">
 						<div class="row">
 
 							<div class="col-xs-12 col-sm-12 col-md-12">	
@@ -73,11 +73,10 @@
 							</div>
 						</div>
 					</q-collapsible>
-					<q-collapsible opened group="somegroup" icon="fas fa-key" label="Soy usuario">
+					<q-collapsible opened group="somegroup" label="Soy usuario">
 
 						<!--== START INICIO DE SESION == -->
 						<div class="row">
-
 							<div class="col-xs-12 col-sm-12 col-md-12">
 								<q-input type="email" v-model="form.username" :after="[{ icon: 'fas fa-envelope', }]" float-label="Email" style="background: transparent;" class="no-shadow" :error="$v.form.username.$error"/>
 							</div>
@@ -85,12 +84,12 @@
 								<q-input type="password" float-label="Clave" v-model="form.password" :after="[{ icon: 'fas fa-key', }]" style="background: transparent;" class="no-shadow" :error="$v.form.password.$error"/>
 							</div>									
 							<div class="col-sm-12 col-md-12 q-my-md" align="center">
-									<q-btn label="Iniciar Sesión"  @click="authenticate()" :loading="loading_login">
-										<span slot="loading">
-	          					<q-spinner-oval class="on-left"/>
-	          					Validando ...
-	        					</span>
-									</q-btn>
+								<q-btn label="Iniciar Sesión"  @click="authenticate()" :loading="loading_login">
+									<span slot="loading">
+	          				<q-spinner-oval class="on-left"/>
+	          				Validando ...
+	        				</span>
+								</q-btn>
 							</div>
 							<!--== END INICIO DE SESION == -->
 						</div>
@@ -132,6 +131,9 @@
 	      password: {required}
 	    }
 	  },
+	 	created(){
+  		this.$root.$on("sesionStart", this.setData);
+		},
 	  mounted(){
 			this.setData()
 		},
@@ -141,6 +143,21 @@
         	this.userData = response
       	})
     	},
+    	async authenticate() {
+        this.$v.$touch();
+
+        if (this.$v.$error) {
+          alert.error('Please review fields again.', 'bottom');
+        } else {
+          this.loading_login = !this.loading_login;
+          const {username, password} = this.form;
+
+          this.$store.dispatch("auth/AUTH_REQUEST", {username, password}).then(response => {
+            this.loading_login = !this.loading_login;
+            this.$root.$emit('sesionStart')
+          });
+        }
+      },
 		}
 
 	}
@@ -150,5 +167,4 @@
 	.q-collapsible {
    border-bottom: 1px solid #8080803b;
 	}
-
 </style>

@@ -1,25 +1,79 @@
 <template>
-	<div class="col-xs-12 col-sm-12 col-md-4 section-1 ">
-		<q-card class="no-shadow">
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12" align="center">
-				<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Detalles de facturación</div>
+	<div class="col-xs-12 col-sm-12 col-md-4 section-1">
+
+		<q-card class="no-shadow" v-if="userData">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12" align="center">
+					<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Detalles de facturación</div>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12 q-py-lg">
-				<q-select
-					radio
-				  style="background: transparent;"
-				  v-model="address"
-				  float-label="Direcciones"
-				  :options="addresses"
-				/>
+			<div class="row">
+				<div class="col-md-12 q-py-lg">
+
+					<q-card v-for="(address, index) in addresses" :key="index" class="no-shadow" v-if="address.default">
+						  <q-card-title>
+					    Direccion de Facturaciòn
+					  </q-card-title>
+					  <q-card-separator />
+					  <q-card-main>
+					    <b>Nombre: </b> {{address.first_name}} {{address.last_name}}<br>
+					    <b>Direccion  1: </b> {{address.address_1}}<br>
+					    <b>Direccion  2: </b> {{address.address_2}}<br>
+					    <b>Empresa: </b> {{address.company}}<br>
+					  </q-card-main>
+					</q-card>
+
+				</div>
 			</div>
-		</div>
-		<addresses-component></addresses-component>
+			<addresses-component></addresses-component>
 		</q-card>
-		<q-card class="no-shadow">
+
+		<q-card class="no-shadow" v-else>
+
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12" align="center">
+					<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Detalles de facturación</div>
+				</div>
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<q-input type="text" v-model="billCompanyName"  float-label="Nombre de empresa" style="background: transparent;" class="no-shadow" />
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<q-input type="text" v-model="billCompanyName"  float-label="Nombre" style="background: transparent;" class="no-shadow" />
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<q-input type="text" v-model="billCompanyName"  float-label="Apellido" style="background: transparent;" class="no-shadow" />
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<q-input type="text" v-model="billCompanyName"  float-label="Direccion 1" style="background: transparent;" class="no-shadow" />
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<q-input type="text" v-model="billCompanyName"  float-label="Direccion 2" style="background: transparent;" class="no-shadow" />
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<q-input type="text" v-model="billCompanyName"  float-label="Ciudad" style="background: transparent;" class="no-shadow" />
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<q-input type="text" v-model="billCompanyName"  float-label="Zip Code" style="background: transparent;" class="no-shadow" />
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<q-input type="text" v-model="billCompanyName"  float-label="País" style="background: transparent;" class="no-shadow" />
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<q-input type="text" v-model="billCompanyName"  float-label="Departamento" style="background: transparent;" class="no-shadow" />
+			</div>
+		</q-card>
+
+		<q-card class="no-shadow" >
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 q-mb-md" align="center">
 					<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Dirección de Envío</div>
@@ -31,25 +85,77 @@
 					/>
 				</div>
 			</div>
+
 			<transition name="component-fade" mode="out-in">
 				<div class="row" v-if="differentAddress == 'no'">
-					<div class="col-md-12 q-pb-lg">
-				  	<q-select
-						  radio
-						  style="background: transparent;"
-						  v-model="address"
-						  float-label="Direcciones"
-						  :options="addresses"
-						/>
+
+					<div class="col-md-12 q-pb-lg" v-if="userData">
+
+					<q-card v-for="(address, index) in addresses" :key="index" class="no-shadow" v-if="address.default">
+						  <q-card-title>
+					    Direccion de Facturaciòn
+					  </q-card-title>
+					  <q-card-separator />
+					  <q-card-main>
+					    <b>Nombre: </b> {{address.first_name}} {{address.last_name}}<br>
+					    <b>Direccion  1: </b> {{address.address_1}}<br>
+					    <b>Direccion  2: </b> {{address.address_2}}<br>
+					    <b>Empresa: </b> {{address.company}}<br>
+					  </q-card-main>
+					</q-card>
+
 					</div>
+
+					<div v-else class="row">
+
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billCompanyName"  float-label="Nombre de empresa" style="background: transparent;" class="no-shadow" />
+						</div>
+
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billCompanyName"  float-label="Nombre" style="background: transparent;" class="no-shadow" />
+						</div>
+
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billCompanyName"  float-label="Apellido" style="background: transparent;" class="no-shadow" />
+						</div>
+
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billCompanyName"  float-label="Direccion 1" style="background: transparent;" class="no-shadow" />
+						</div>
+
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billCompanyName"  float-label="Direccion 2" style="background: transparent;" class="no-shadow" />
+						</div>
+
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billCompanyName"  float-label="Ciudad" style="background: transparent;" class="no-shadow" />
+						</div>
+
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billCompanyName"  float-label="Zip Code" style="background: transparent;" class="no-shadow" />
+						</div>
+
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billCompanyName"  float-label="País" style="background: transparent;" class="no-shadow" />
+						</div>
+
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<q-input type="text" v-model="billCompanyName"  float-label="Departamento" style="background: transparent;" class="no-shadow" />
+						</div>
+					</div>
+
 				</div>
 			</transition>
 		</q-card>
+
 	</div>
 </template>
 
 <script type="text/javascript">
+	import {helper} from '@imagina/qhelper/_plugins/helper'
 	import addressesComponent from 'src/components/icommerce/addresses'
+	import profileService from 'src/services/profile'
 
 	export default {
 		components:{
@@ -57,11 +163,48 @@
 		},
 		data(){
 			return {
+				userData: true,
 				addresses: [],
 				address : '',
 				differentAddress: 'yes',
-				
+				billCompanyName: '',
 			}
+		},
+		created(){
+  		this.$root.$on("sesionStart", this.setData);
+		},
+		mounted(){
+			this.setData()
+		},
+		methods:{
+		  select(dataArray) {
+		    let response = []
+		    dataArray.forEach((item) => {
+		      let labelTitle = item.title ? item.title : (item['full_name'] ? item['full_name'] : 'default')
+
+		      response.push({
+		        label: labelTitle,
+		        value: item.id.toString()
+		      });
+		    })
+		    return response
+		  },
+			setData(){
+      	helper.storage.get.item('userData').then(response => {
+        	this.userData = response
+        	if (response != null) {
+        		this.getAddresses(response.id)
+        	}
+      	})
+    	},
+    	getAddresses(id){
+    		let include = 'addresses'
+    		profileService.show(id, include)
+    		.then(response => {
+    			this.addresses = (response.data.addresses)
+    		})
+      }
 		}
+
 	}
 </script>
