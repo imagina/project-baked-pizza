@@ -5,7 +5,7 @@
                 title="Mis Direcciones"
                 :data="tableData"
                 :columns="columns"
-                class="col-xs-12 col-sm-12 col-md-12"
+                class="col-xs-12 col-sm-12 col-md-12 table-white"
                 row-key="name"
             /> 
         </div>
@@ -22,7 +22,7 @@ export default {
                     {
                         name: 'desc',
                         required: true,
-                        label: 'Dessert (100g serving)',
+                        label: 'Dirección',
                         align: 'left',
                         field: 'name',
                         sortable: true,
@@ -68,5 +68,8 @@ export default {
 </script>
 
 <style lang="stylus">
-
+    .table-white
+        background-color white
+        border-top 3px solid #d2d6de
+        border-top-color #ed4400
 </style>

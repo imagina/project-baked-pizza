@@ -1,12 +1,12 @@
 <template>
-	<section class="container-fluid">
+	<section class="container-fluid perfil">
 		<!--== START BREADCRUMB ==-->
 		<breadcrumb-component name="Perfil" image="statics/header-pide.jpg"></breadcrumb-component>
 		<!--== END BREADCRUMB ==-->
 		<div class="container-section">
 			<div class="row">
 				<div class="col-md-12">
-					<h5>Perfil</h5>
+					<div class="q-display-1">Perfil</div>
 				</div>
 			</div>
 			<div class="row">
@@ -35,3 +35,8 @@ export default {
 	}
 }
 </script>
+
+<style lang="stylus">
+	
+</style>
+

@@ -1,21 +1,15 @@
 <template>
 	<div class="row">	
-        <q-card class="col-xs-12 col-sm-12 col-md-12">
-        <q-card-media>
-            <img src="../../../assets/image/logo-login.png" alt="">
-        </q-card-media>
-        <q-card-separator />
-        <q-card-title>
-            <span class="name">Imagina Colombia</span>
-        </q-card-title>
-        <q-card-separator />
-        <!-- Vertical actions -->
-        <q-card-actions vertical>
-        <q-btn flat label="Edit perfil" />
-        <q-btn flat label="Mis Orden" to="/orders"/>
-        <q-btn flat label="Desconectar" />
-        </q-card-actions>
-        </q-card>
+        <div class="box">
+            <div class="box-body box-profile">
+                <img class="profile-user-img img-responsive img-circle img-responsive" src="../../../assets/image/logo-login.png" alt="User profile picture">
+                <h3 class="profile-username text-center">Imagina Colombia</h3>
+                <hr>
+                <q-btn outline label="Edit perfil" class="full-width" />
+                <q-btn outline label="Mis Orden" to="/orders" class="full-width"/>
+                <q-btn outline label="Desconectar" class="full-width" />
+            </div>
+        </div>
 	</div>
 </template>
 
@@ -27,11 +21,48 @@ export default {
 </script>
 
 <style lang="stylus">
-   .name
-       font-size 1.5rem
-
-   .q-btn-inner
+    .perfil
+    .q-display-1
+        color: #8e7e7d;
+    .q-btn-inner
         font-size 1.1rem
+    .box
+        position relative
+        border-radius 3px
+        background #ffffff
+        border-top 3px solid #d2d6de
+        border-top-color #ed4400
+        margin-bottom 20px
+        width 100%
+        box-shadow 0 1px 1px rgba(0,0,0,0.1)
+        .profile-user-img
+            margin 0 auto
+            width 100px
+            padding 3px
+            border 3px solid #d2d6de
+        .img-circle
+            border-radius 50%
+            margin-top 1.2rem
+        .img-responsive
+            display block
+            max-width 100%
+            height auto
+        .profile-username
+            font-size 21px
+            margin-top 5px
+        .box-body 
+            border-top-left-radius 0
+            border-top-right-radius 0
+            border-bottom-right-radius 3px
+            border-bottom-left-radius 3px
+            padding 10px
+        .text-muted 
+	        color #777
+        .q-btn
+            border: 1px solid #80808047
+            margin-top .2rem
+        hr
+            border-top: 1px solid #80808047
 
 </style>
 

@@ -2,10 +2,7 @@
 	<div>
         <div class="row">
             <div class="col-md-6">
-                <h5>Mis Ordenes</h5>
-            </div>
-            <div class="col-md-6 text-right">
-                <q-btn type="button" label="Mi Perfil" size="md" to="/perfil" icon="fa fa-user" color="red" sence class="q-my-md round-borders-0"/>
+                <div class="q-display-1">Mis Ordenes</div>
             </div>
         </div>
         <div class="row">	
@@ -13,9 +10,13 @@
                 title="Mis Ordenes"
                 :data="tableData"
                 :columns="columns"
-                class="col-xs-12 col-sm-12 col-md-12"
+                class="col-xs-12 col-sm-12 col-md-12 table-white"
                 row-key="name"
-            /> 
+            >
+            <template slot="top-right" slot-scope="props">
+                <q-btn type="button" label="Mi Perfil" size="md" to="/perfil" icon="fa fa-user" color="red" sence class="q-my-md round-borders-0"/>
+            </template>
+            </q-table>
         </div>
     </div>
 </template>
@@ -30,7 +31,47 @@ export default {
                     {
                         name: 'desc',
                         required: true,
-                        label: 'Dessert (100g serving)',
+                        label: 'ID',
+                        align: 'left',
+                        field: 'name',
+                        sortable: true,
+                        classes: 'my-class',
+                        style: 'width: 500px'
+                    },
+                    {
+                        name: 'desc',
+                        required: true,
+                        label: 'Email',
+                        align: 'left',
+                        field: 'name',
+                        sortable: true,
+                        classes: 'my-class',
+                        style: 'width: 500px'
+                    },
+                    {
+                        name: 'desc',
+                        required: true,
+                        label: 'Total',
+                        align: 'left',
+                        field: 'name',
+                        sortable: true,
+                        classes: 'my-class',
+                        style: 'width: 500px'
+                    },
+                    {
+                        name: 'desc',
+                        required: true,
+                        label: 'Estatus',
+                        align: 'left',
+                        field: 'name',
+                        sortable: true,
+                        classes: 'my-class',
+                        style: 'width: 500px'
+                    },
+                    {
+                        name: 'desc',
+                        required: true,
+                        label: 'Creado el',
                         align: 'left',
                         field: 'name',
                         sortable: true,
