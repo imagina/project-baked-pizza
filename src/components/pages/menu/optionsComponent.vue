@@ -72,6 +72,15 @@
 				.then(response => {
 					this.loading = false
 					this.options =  response.data
+
+
+					this.options.forEach(item=>{
+						if (item.option_description == 'tamaños') {
+							this.$root.$emit('tamanos')
+						}
+					})
+
+
 				})
 			},
 			select(dataArray) {
@@ -89,15 +98,12 @@
 				this.valueSelected = event
 			},
 			updateOption(option){
-				console.log('Hola');
 				this.selected = option
 				let data = {
 					'product_option_id' : option.id,
 					'product_option_value_id' : option.selected,
 				}
-
 				this.$root.$emit('updateoptions', data)
-
 			},
 			resetOptions(options){
 				let newArray = [];

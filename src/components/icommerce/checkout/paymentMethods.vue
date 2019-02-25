@@ -3,7 +3,7 @@
 		<q-card class="no-shadow">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12" align="center">
-					<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Métodos de pago</div>
+					<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Métodos de Pago</div>
 				</div>
 			</div>
 			<div class="q-py-lg row">
@@ -21,7 +21,6 @@
 </template>
 
 <script type="text/javascript">
-	import detailsComponent from 'src/components/icommerce/checkout/detailsComponent'
 	import http from "axios"
 
 	export default {
@@ -36,17 +35,10 @@
 			}
 		},
 		mounted(){
-			this.getshippingMethods()
+			
 		},
 		methods:{
-			getshippingMethods(){
-				this.visible = true
-				http.get('https://icommerce.imagina.com.co/api/icommerce/v3/shipping-methods/calculations/all')
-				.then(response=>{
-					this.visible = false
-					this.shipMethods = response.data.data
-				})
-			},
+
 		}
 	}
 </script>
