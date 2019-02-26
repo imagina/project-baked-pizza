@@ -1,22 +1,12 @@
 <template>
 	<div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="q-display-1">Mis Ordenes</div>
-            </div>
-        </div>
         <div class="row">	
             <q-table
                 title="Mis Ordenes"
                 :data="tableData"
                 :columns="columns"
                 class="col-xs-12 col-sm-12 col-md-12 table-white"
-                row-key="name"
-            >
-            <template slot="top-right" slot-scope="props">
-                <q-btn type="button" label="Mi Perfil" size="md" to="/perfil" icon="fa fa-user" color="red" sence class="q-my-md round-borders-0"/>
-            </template>
-            </q-table>
+                row-key="name"/>
         </div>
     </div>
 </template>
@@ -117,6 +107,17 @@ export default {
 </script>
 
 <style lang="stylus">
+
+    .q-table-container
+        position relative
+        border-radius 3px
+        background #ffffff
+        border-top 3px solid #d2d6de
+        border-top-color #ed4400
+        margin-bottom 20px
+        width 100%
+        box-shadow 0 1px 1px rgba(0,0,0,0.1)
+
     .table-white
         background-color white
 </style>

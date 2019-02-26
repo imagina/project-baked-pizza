@@ -11,13 +11,16 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-4">
-					<usercardComponent @showuseredit="showuseredit = $event"/>
+					<usercardComponent @showview="showview = $event"/>
 				</div>
-				<div v-if="!showuseredit" class="col-xs-12 col-sm-12 col-md-8">
+				<div v-if="showview === 'showuserinfo'" class="col-xs-12 col-sm-12 col-md-8">
 					<showinfouserComponent/>
 				</div>
-				<div v-else class="col-xs-12 col-sm-12 col-md-8">
+				<div v-if="showview === 'showuseredit'" class="col-xs-12 col-sm-12 col-md-8">
 					<showedituserComponent/>
+				</div>
+				<div v-if="showview === 'showorders'" class="col-xs-12 col-sm-12 col-md-8">
+					<sordersComponent />
 				</div>
 			</div>
 		</div>
@@ -29,6 +32,7 @@
 import usercardComponent from 'src/components/icommerce/profile/usercard'
 import showinfouserComponent from 'src/components/icommerce/profile/showinfouser'
 import showedituserComponent from 'src/components/icommerce/profile/showedituser'
+import sordersComponent from 'src/components/icommerce/orders'
 import breadcrumbComponent from 'src/components/pages/sections/breadcrumb'
 
 export default {
@@ -37,11 +41,11 @@ export default {
 		breadcrumbComponent,
 		showinfouserComponent,
 		showedituserComponent,
+		sordersComponent,
 	},
 	data(){
 		return {
-			showuseredit: false,
-			mensaje: '',
+			showview: 'showuserinfo',
 		}
 	},
 }
