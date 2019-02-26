@@ -7,25 +7,13 @@
 					<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Detalles de facturación</div>
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="col-md-12 q-py-lg">
-
-					<q-card v-for="(address, index) in addresses" :key="index" class="no-shadow" v-if="address.default">
-						  <q-card-title>
-					    Direccion de Facturaciòn
-					  </q-card-title>
-					  <q-card-separator />
-					  <q-card-main>
-					    <b>Nombre: </b> {{address.first_name}} {{address.last_name}}<br>
-					    <b>Direccion  1: </b> {{address.address_1}}<br>
-					    <b>Direccion  2: </b> {{address.address_2}}<br>
-					    <b>Empresa: </b> {{address.company}}<br>
-					  </q-card-main>
-					</q-card>
-
+					<addresses-component></addresses-component>
 				</div>
 			</div>
-			<addresses-component></addresses-component>
+			
 		</q-card>
 
 		<q-card class="no-shadow" v-else>
@@ -91,18 +79,7 @@
 
 					<div class="col-md-12 q-pb-lg" v-if="userData">
 
-					<q-card v-for="(address, index) in addresses" :key="index" class="no-shadow" v-if="address.default">
-						  <q-card-title>
-					    Direccion de Facturaciòn
-					  </q-card-title>
-					  <q-card-separator />
-					  <q-card-main>
-					    <b>Nombre: </b> {{address.first_name}} {{address.last_name}}<br>
-					    <b>Direccion  1: </b> {{address.address_1}}<br>
-					    <b>Direccion  2: </b> {{address.address_2}}<br>
-					    <b>Empresa: </b> {{address.company}}<br>
-					  </q-card-main>
-					</q-card>
+						<addresses-component></addresses-component>
 
 					</div>
 

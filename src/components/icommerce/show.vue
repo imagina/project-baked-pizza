@@ -18,7 +18,8 @@
 				<span class="q-display-1 color-baked-title">{{product.product.name}}</span>
 				<p>{{product.product.description}}</p>
 				<p>${{product.product.price}}</p>
-				<div class="row">
+
+				<div class="row" v-if="showSizesprop">
 					<div class="col-md-4 product-type-grid" v-for="option of optionSize" :key="option.id">
 						<label>
 							<input v-model="productTypeOption" type="radio" name="test" :value="option.id" class="radio">
@@ -29,6 +30,7 @@
 						<p align="center" class="product-type-description">( {{ option.description }} )</p>
 					</div>
 				</div>
+
 			</div>
 		</div>
 		<div class="row">
@@ -82,6 +84,7 @@
 		},
 		data(){
 			return{
+				showSizesprop: false,
 				quantity : 1,
 				options: [],
 				cart: '',
@@ -110,6 +113,7 @@
 		created(){
   		this.$root.$on("updateoptions", this.updateOptions);
   		this.$root.$on("deleteoptions", this.deleteoptions);
+  		this.$root.$on("tamanos", this.showSizes);
 
 		},
 		computed:{
@@ -121,6 +125,9 @@
 			this.getcart()
 		},
 		methods:{
+			showSizes(){
+				this.showSizesprop = true
+			},
 			getcart(){
 				helper.storage.get.item('cart_server').then(res => {
           if (res !== null) {

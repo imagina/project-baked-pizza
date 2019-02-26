@@ -10,7 +10,7 @@
 			<div class="row"> <!--== COMPONENTS CHECKOUT ==-->
 				<customerinformation-component /> <!--==  CUSTOMER INFORMATION ==-->	
 				<billingdetails-component /> <!--==  BILLING DETAILS ==-->
-				<paymentmethods-component /> <!--==  DELIVERY METHODS ==-->
+				<deliverymethods-component /> <!--==  DELIVERY METHODS ==-->
 				<div class="col-12"> <!--== ACTION BUTTON ==-->
 					<div class="col-count-product text-right">
 						<q-btn type="submit" label="Comprar Ahora" size="lg" color="red" sence />
@@ -26,13 +26,13 @@
 	// COMPONENTS
 	import customerinformationComponent from 'src/components/icommerce/checkout/customerInformation'
 	import billingdetailsComponent from 'src/components/icommerce/checkout/billingdetailsComponent'
-	import paymentmethodsComponent from 'src/components/icommerce/checkout/paymentMethods'
+	import deliverymethodsComponent from 'src/components/icommerce/checkout/deliveryMethods'
 
 	export default{
 		components:{
 			customerinformationComponent,
 			billingdetailsComponent,
-			paymentmethodsComponent,
+			deliverymethodsComponent,
 		},
 	}
 </script>
