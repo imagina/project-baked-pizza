@@ -11,10 +11,13 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-4">
-					<usercardComponent/>
+					<usercardComponent @showuseredit="showuseredit = $event"/>
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-8">
-					<addressesComponent/>
+				<div v-if="!showuseredit" class="col-xs-12 col-sm-12 col-md-8">
+					<showinfouserComponent/>
+				</div>
+				<div v-else class="col-xs-12 col-sm-12 col-md-8">
+					<showedituserComponent/>
 				</div>
 			</div>
 		</div>
@@ -24,15 +27,23 @@
 <script>
 // componets
 import usercardComponent from 'src/components/icommerce/profile/usercard'
-import addressesComponent from 'src/components/icommerce/profile/addresses'
+import showinfouserComponent from 'src/components/icommerce/profile/showinfouser'
+import showedituserComponent from 'src/components/icommerce/profile/showedituser'
 import breadcrumbComponent from 'src/components/pages/sections/breadcrumb'
 
 export default {
 	components:{
 		usercardComponent,
-		addressesComponent,
-		breadcrumbComponent
-	}
+		breadcrumbComponent,
+		showinfouserComponent,
+		showedituserComponent,
+	},
+	data(){
+		return {
+			showuseredit: false,
+			mensaje: '',
+		}
+	},
 }
 </script>
 

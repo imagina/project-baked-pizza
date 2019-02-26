@@ -117,5 +117,6 @@ export default {
 </script>
 
 <style lang="stylus">
-
+    .table-white
+        background-color white
 </style>

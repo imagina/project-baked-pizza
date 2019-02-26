@@ -5,9 +5,23 @@
                 <img class="profile-user-img img-responsive img-circle img-responsive" src="../../../assets/image/logo-login.png" alt="User profile picture">
                 <h3 class="profile-username text-center">Imagina Colombia</h3>
                 <hr>
-                <q-btn outline label="Edit perfil" class="full-width" />
-                <q-btn outline label="Mis Orden" to="/orders" class="full-width"/>
-                <q-btn outline label="Desconectar" class="full-width" />
+                <div class="options-pc">
+                    <q-btn flat label="Edit perfil" class="full-width" v-on:click="showInfoEdit" />
+                    <q-btn outline label="Mis Orden" to="/orders" class="full-width"/>
+                    <q-btn outline label="Desconectar" class="full-width" />
+                </div>
+                <q-btn-dropdown label="OPCIONES" class="options-mobile">
+                    <!-- dropdown content -->
+                    <q-list link>
+                        <q-item>
+                            <q-item-main>
+                                <q-item-tile label><q-btn flat label="Edit perfil" class="full-width" v-on:click="showInfoEdit" /></q-item-tile>
+                                <q-item-tile label><q-btn flat label="OPCIONES" to="/orders" class="full-width"/></q-item-tile>
+                                <q-item-tile label><q-btn flat label="Desconectar" class="full-width" /></q-item-tile>
+                            </q-item-main>
+                        </q-item>
+                    </q-list>
+                </q-btn-dropdown>
             </div>
         </div>
 	</div>
@@ -15,8 +29,19 @@
 
 <script>
 
+
 export default {
     name: 'usercard',
+    data(){
+        return {
+            showuseredit: false
+        }
+    },
+    methods:{
+        showInfoEdit(){
+            this.$emit('showuseredit',true);
+        },
+    }
 }
 </script>
 
@@ -63,6 +88,22 @@ export default {
             margin-top .2rem
         hr
             border-top: 1px solid #80808047
+    .q-btn-dropdown
+        width 100%!important
+    .options-mobile
+        display none
+
+
+    @media only screen and (max-width: 600px) {
+		.perfil{
+            .options-mobile{
+                display: block!important;
+            }
+            .options-pc{
+                display: none!important;
+            }
+        }
+	}
 
 </style>
 
