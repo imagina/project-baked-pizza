@@ -16,11 +16,11 @@
 
             <div class="text-center">
               <div class="q-display-1 q-my-lg">¡ACEPTANDO PEDIDOS!</div>
-              <div class="q-display-2 q-my-lg">PARA LLEVAR <input class="toggle toggle__textless" type="checkbox"> DOMICILIO</div>
+              <div class="q-display-2 q-my-lg">PARA LLEVAR <input class="toggle toggle__textless" type="checkbox" v-model="checked" @change="stateDomicicle" > DOMICILIO</div>
               <div class="q-my-lg" style="font-family: Muli">(Para llevar te ahorra la fila y esperar)</div>
               <div class="q-my-lg" id="q-carousel-search">
-                <input type="text" required class="search">
-                <input type="button" value="RECOGER" class="button button-search">
+                <input type="text" required autofocus class="search" :disabled="!domicile">
+                <input type="button" value="RECOGER" class="button button-search" :disabled="!domicile">
               </div>
 
               <div class="q-my-lg" style="font-family: Muli">Paga tu pedido en línea de forma segura</div>
@@ -183,16 +183,28 @@
         </div>
       </div>
     </section>
-
   </div>
 </template>
 
 <script>
+
+  import store from 'src/store/cart/index'
+  import { mapState } from 'vuex'
+
   export default{
+    store,
     data(){
       return{
-        checked: false
+        checked: true
       }
+    },
+    methods: {
+      stateDomicicle(){
+        this.$store.state.domicile = this.checked
+      }
+    },
+    computed: {
+      ...mapState(['domicile'])
     }
   }
 </script>
@@ -403,6 +415,10 @@ input.toggle__outline:checked:after {
   margin: auto;
   border-width: 1px;
   padding: 10px 14px 8px 14px;
+}
+
+.button-search:disabled {
+    color: #ffffff7a !important;
 }
 
 .color-baked-title{

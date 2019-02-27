@@ -8,7 +8,7 @@
                 <div class="options-pc">
                     <q-btn flat label="Edit perfil" class="full-width" v-on:click="showView('showuseredit')" />
                     <q-btn outline label="Mis Orden" class="full-width" v-on:click="showView('showorders')" />
-                    <q-btn outline label="Desconectar" class="full-width" />
+                    <q-btn outline label="Desconectar" class="full-width" :to="{name:'auth.logout'}" />
                 </div>
                 <q-btn-dropdown label="OPCIONES" class="options-mobile">
                     <!-- dropdown content -->
