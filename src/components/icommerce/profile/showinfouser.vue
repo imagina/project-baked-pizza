@@ -1,7 +1,7 @@
 <template>
     <div class="showinfouser">
         <div class="row">	
-            <div class="col-md-12">
+            <div class="col-xs-12 col-sm-12 col-md-12">
                 <q-tabs>
                     <!-- Tabs - notice slot="title" -->
                     <q-tab default slot="title" label="Información" name="tab-1" />

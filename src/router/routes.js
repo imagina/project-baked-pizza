@@ -44,9 +44,6 @@ Route.view('/', master)
       Route.view('/perfil', require('../layouts/pages/perfil').default).options({
         name: 'perfil'
       })
-      Route.view('/orders', require('../layouts/pages/orders').default).options({
-        name: 'orders'
-      })
 
     }
   )

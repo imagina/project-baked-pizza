@@ -35,10 +35,22 @@
             <router-link  to="/inicio">
               <img src="statics/logo.png" class="float-left" id="header-logo">
             </router-link>
+<<<<<<< HEAD
             <div class="desktop-only__slide">            
               <router-link tag="a" to="/pedido" class="float-right q-ml-md nav-color desktop-only__slide__card">
                 <b> <span>{{cart.total_quantity ? cart.total_quantity : 0}}</span> MI PEDIDO</b>
+=======
+            <div class="desktop-only__slide">   
+
+              <router-link v-if="domicile" tag="a" to="/pedido" class="float-right q-ml-md nav-color desktop-only__slide__card myorders">
+                <b> <span>{{cant}}</span> MI PEDIDO</b>
+>>>>>>> a91d8ce673dd05ee7c71ba4959165a01451c3986
               </router-link>
+
+              <a v-else disabled href="javascript:void()" class="float-right q-ml-md nav-color desktop-only__slide__card myorders" style="color: gray!important">
+                <b> <span style="background: gray!important">{{cant}}</span> MI PEDIDO</b>
+              </a>
+
               <router-link tag="a" to="/donde-estamos" class="float-right q-ml-md nav-color">
               <b> DONDE ESTAMOS </b>
               </router-link>
@@ -128,7 +140,11 @@
 
   import cartService from 'src/services/cart';
 
+  import store from 'src/store/cart/index'
+  import { mapState, mapGetters, mapActions } from 'vuex'
+
   export default {
+    store,
     props: {},
     components: {
       informationHeader,
@@ -159,7 +175,7 @@
       }
     },
     computed: {
-
+      ...mapState(['domicile'])
     },
     methods: {
       setData(){
@@ -200,7 +216,10 @@
 
 <style lang="stylus">
   @import "~variables";
+
   #header
+    
+
     .btn-menu
       i
         font-size 30px

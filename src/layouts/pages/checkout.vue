@@ -67,7 +67,7 @@
 	::float-label { color: red; font-weight: bold; }
 	.disabled, [disabled]{
 		opacity: 1 !important;
-		color: #ec3800!important;
+		color: #ec3800;
 	}
 
 	.q-option-label{

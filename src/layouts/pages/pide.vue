@@ -4,7 +4,7 @@
 		<breadcrumb-component name="Pide en linea" image="statics/header-pide.jpg"></breadcrumb-component>
 		<!--== END BREADCRUMB ==-->
 		<div class="container-section">	
-			<div class="row">
+			<div class="row" v-if="domicile">
 				<!--== START CATETGORIES MENU ==-->
 				<div class="col-xs-12 col-sm-12 col-md-3">
 					<div class="label bg-deep-orange-7 text-white full-width title-menu">
@@ -39,8 +39,13 @@
 				<showComponent v-else :products="products" :product="selected"/>
 				<!--== END SHOW PRODUCTS ==-->
 				<!--== END GRIDS PRODUCTS ==-->
-				</div>
 			</div>
+			<div class="row" v-else align="center">
+				<div class="col-md-12">
+					<span class="q-display-1 color-baked-title">Comprobando dirección.</span>
+				</div>	
+			</div>
+		</div>
 	</section>
 </template>
 
@@ -53,12 +58,16 @@
 	import breadcrumbComponent from 'src/components/pages/sections/breadcrumb'
 	import menuCategoriesComponent from 'src/components/Menucategories';
 
+	import store from 'src/store/cart/index'
+	import { mapState } from 'vuex'
+
 	export default{
 		components:{
 			menuCategoriesComponent,
 			breadcrumbComponent,
 			showComponent,
 		},
+		store,
 		data(){
 			return{
 				products: [],
@@ -86,6 +95,9 @@
 				this.showProduct = true
 				this.selected.product = product
 			},
+		},
+		computed: {
+		...mapState(['domicile'])
 		}
 	}
 </script>

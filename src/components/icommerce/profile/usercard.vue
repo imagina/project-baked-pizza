@@ -2,21 +2,21 @@
 	<div class="row">	
         <div class="box">
             <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle img-responsive" src="../../../assets/image/logo-login.png" alt="User profile picture">
-                <h3 class="profile-username text-center">Imagina Colombia</h3>
+                <img class="profile-user-img img-responsive img-circle img-responsive" src="../../../assets/image/logo-login.png" alt="User profile picture" v-on:click="showView('showuserinfo')">
+                <h3 class="profile-username text-center">{{ userData.first_name }} {{ userData.last_name }}</h3>
                 <hr>
                 <div class="options-pc">
-                    <q-btn flat label="Edit perfil" class="full-width" v-on:click="showInfoEdit" />
-                    <q-btn outline label="Mis Orden" to="/orders" class="full-width"/>
-                    <q-btn outline label="Desconectar" class="full-width" />
+                    <q-btn flat label="Edit perfil" class="full-width" v-on:click="showView('showuseredit')" />
+                    <q-btn outline label="Mis Orden" class="full-width" v-on:click="showView('showorders')" />
+                    <q-btn outline label="Desconectar" class="full-width" :to="{name:'auth.logout'}" />
                 </div>
                 <q-btn-dropdown label="OPCIONES" class="options-mobile">
                     <!-- dropdown content -->
                     <q-list link>
                         <q-item>
                             <q-item-main>
-                                <q-item-tile label><q-btn flat label="Edit perfil" class="full-width" v-on:click="showInfoEdit" /></q-item-tile>
-                                <q-item-tile label><q-btn flat label="OPCIONES" to="/orders" class="full-width"/></q-item-tile>
+                                <q-item-tile label><q-btn flat label="Edit perfil" class="full-width" v-on:click="showView('showuseredit')" /></q-item-tile>
+                                <q-item-tile label><q-btn flat label="OPCIONES" class="full-width" v-on:click="showView('showorders')"/></q-item-tile>
                                 <q-item-tile label><q-btn flat label="Desconectar" class="full-width" /></q-item-tile>
                             </q-item-main>
                         </q-item>
@@ -29,23 +29,40 @@
 
 <script>
 
+import {helper} from '@imagina/qhelper/_plugins/helper';
 
 export default {
     name: 'usercard',
     data(){
         return {
-            showuseredit: false
+            showview: false,
+            userData: [],
         }
     },
+    props:{
+        setData: ['setdata'],
+    },
     methods:{
-        showInfoEdit(){
-            this.$emit('showuseredit',true);
+        showView(view){
+            this.$emit('showview',view);
         },
+        setData(){
+            return helper.storage.get.item('userData').then(response => {
+                return this.userData = response
+            })
+        },
+    },
+    mounted(){
+        this.setData()
     }
 }
 </script>
 
 <style lang="stylus">
+    .profile-user-img
+        cursor pointer 
+        cursor hand
+
     .perfil
     .q-display-1
         color: #8e7e7d;
