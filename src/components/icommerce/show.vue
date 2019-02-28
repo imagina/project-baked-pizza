@@ -73,6 +73,7 @@
 </template>
 
 <script>
+	import {alert} from '@imagina/qhelper/_plugins/alert'
 	import optionsComponent from 'src/components/pages/menu/optionsComponent';
 	import {helper} from '@imagina/qhelper/_plugins/helper';
 	import cartService from 'src/services/cart';
@@ -166,7 +167,7 @@
 				
     		cartService.create(formData)
     		.then(response=>{
-    			
+    			alert.success('Producto agregado')
     			helper.storage.set('cart_server', response.data.data.cart)
     			this.cart = response.data.data.cart
     			this.$root.$emit('updateCart',  response.data.data.cart)

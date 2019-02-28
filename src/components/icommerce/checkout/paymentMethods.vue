@@ -8,11 +8,12 @@
 			</div>
 			<div class="q-py-lg row">
 				<div class="col-xs-12 col-sm-12 col-md-12 q-py-xs" v-for="(shippingMethod, index) in shipMethods" :key="index">
-					<q-radio v-model="paymentMethod" :val="shippingMethod.id" :label="shippingMethod.title" />	
-				</div>
+					<q-radio v-model="paymentMethod" :val="shippingMethod.id" :label="shippingMethod.title" />				
+				</div>				
 			</div>
 		</q-card>
 
+		<deliverymethods-component />
 		<details-component /> <!--== START - DETAILS ==-->
    	<q-inner-loading :visible="visible" style="background: #f4f4f4;">
       <q-spinner size="50px" color="primary"></q-spinner>
@@ -21,11 +22,16 @@
 </template>
 
 <script type="text/javascript">
-	import http from "axios"
+	import deliverymethodsComponent from 'src/components/icommerce/checkout/deliveryMethods'
+	import detailsComponent from 'src/components/icommerce/checkout/detailsComponent'
+
+	import paymentMethods from 'src/services/payment-methods'
+
 
 	export default {
 		components:{
-			detailsComponent
+			detailsComponent,
+			deliverymethodsComponent
 		},
 		data(){
 			return {
@@ -35,10 +41,21 @@
 			}
 		},
 		mounted(){
-			
+			this.getshippingMethods()
 		},
 		methods:{
+			getshippingMethods(){
+				this.visible = true
 
+				paymentMethods.index()
+				.then(response=>{
+					this.visible = false
+					this.shipMethods = response.data
+				})
+
+				
+
+			},
 		}
 	}
 </script>

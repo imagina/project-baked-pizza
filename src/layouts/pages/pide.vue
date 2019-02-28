@@ -60,6 +60,7 @@
 
 	import store from 'src/store/cart/index'
 	import { mapState } from 'vuex'
+	import {alert} from '@imagina/qhelper/_plugins/alert'
 
 	export default{
 		components:{
