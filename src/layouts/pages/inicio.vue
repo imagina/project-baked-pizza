@@ -84,101 +84,7 @@
             <div class="q-display-3 color-baked-subtitle" align="center">CONOCE NUESTRO MENÚ</div>
           </div>
           <!-- start Categories -->
-          <div class="col-md-12 flex flex-center">
-            <div class="q-mx-sm" style="display: inline-block;">
-              <div class="flex flex-center text-white border">
-                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/entradas.jpg') no-repeat center;">
-                    Entradas
-                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-                  </div>
-              </div>
-            </div>
-
-            <div class="q-mx-sm" style="display: inline-block;">
-              <div class="flex flex-center text-white border">
-                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/pizzas.jpg') no-repeat center;">
-                    Pizzas
-                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-                  </div>
-              </div>
-            </div>
-
-            <div class="q-mx-sm" style="display: inline-block;">
-              <div class="flex flex-center text-white border">
-                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/hamburguesas.jpg') no-repeat center;">
-                    Hamburguesas
-                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-                  </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-12 flex flex-center">
-            <div class="q-mx-sm" style="display: inline-block;">
-              <div class="flex flex-center text-white border">
-                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/sandwiches.jpg') no-repeat center;">
-                    Sandwiches
-                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-                  </div>
-              </div>
-            </div>
-
-            <div class="q-mx-sm" style="display: inline-block;">
-              <div class="flex flex-center text-white border">
-                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/pastas.jpg') no-repeat center;">
-                    Pastas
-                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-                  </div>
-              </div>
-            </div>
-
-            <div class="q-mx-sm" style="display: inline-block;">
-              <div class="flex flex-center text-white border">
-                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/panzerottis.jpg') no-repeat center;">
-                    Panzerottis
-                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-                  </div>
-              </div>
-            </div>
-
-            <div class="q-mx-sm" style="display: inline-block;">
-              <div class="flex flex-center text-white border">
-                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/crepes.jpg') no-repeat center;">
-                    Crepes
-                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-                  </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-12 flex flex-center">
-            <div class="q-mx-sm" style="display: inline-block;">
-              <div class="flex flex-center text-white border">
-                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/postres.jpg') no-repeat center;">
-                    Postres
-                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-                  </div>
-              </div>
-            </div>
-
-            <div class="q-mx-sm" style="display: inline-block;">
-              <div class="flex flex-center text-white border">
-                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/bebidas.jpg') no-repeat center;">
-                    Bebidas
-                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-                  </div>
-              </div>
-            </div>
-
-            <div class="q-mx-sm" style="display: inline-block;">
-              <div class="flex flex-center text-white border">
-                  <div class="flex flex-center text-white circle" style="background: url('statics/categories/otros.jpg') no-repeat center;">
-                    Otros
-                    <q-btn label="pedir" color="red" rounded style="position: absolute; margin-top: 38px;"/>
-                  </div>
-              </div>
-            </div>
-          </div>
+            <categorieshomeComponent />
           <!-- End Categories -->
         </div>
       </div>
@@ -188,20 +94,27 @@
 
 <script>
 
+  //components
+  import categorieshomeComponent from 'src/components/icommerce/categorieshome'
+
   import store from 'src/store/cart/index'
   import { mapState } from 'vuex'
 
   export default{
+    components:{
+      categorieshomeComponent,
+    },
     store,
     data(){
       return{
-        checked: true
+        checked: true,
+        categories: [],
       }
     },
     methods: {
       stateDomicicle(){
         this.$store.state.domicile = this.checked
-      }
+      },
     },
     computed: {
       ...mapState(['domicile'])
