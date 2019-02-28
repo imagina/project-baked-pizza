@@ -42,9 +42,9 @@
                 <b> <span>{{cart.total_quantity ? cart.total_quantity : 0}}</span> MI PEDIDO</b>
               </router-link>
 
-              <router-link tag="a" class="float-right q-ml-md nav-color desktop-only__slide__card myorders" v-else style="color: gray!important">
-                <b> <span style="background: gray !important">{{cart.total_quantity}}</span> MI PEDIDO</b>
-              </router-link>
+              <a v-else disabled href="javascript:void()" class="float-right q-ml-md nav-color desktop-only__slide__card myorders" style="color: gray!important">
+                <b> <span style="background: gray!important">{{cart.total_quantity ? cart.total_quantity : 0}}</span> MI PEDIDO</b>
+              </a>
 
               <router-link tag="a" to="/donde-estamos" class="float-right q-ml-md nav-color">
                 <b> DONDE ESTAMOS </b>
