@@ -37,7 +37,7 @@
             </router-link>
             <div class="desktop-only__slide">            
               <router-link tag="a" to="/pedido" class="float-right q-ml-md nav-color desktop-only__slide__card">
-                <b> <span>{{cant}}</span> MI PEDIDO</b>
+                <b> <span>{{cart.total_quantity ? cart.total_quantity : 0}}</span> MI PEDIDO</b>
               </router-link>
               <router-link tag="a" to="/donde-estamos" class="float-right q-ml-md nav-color">
               <b> DONDE ESTAMOS </b>
@@ -140,8 +140,8 @@
     watch: {},
     created(){
       this.$root.$on("sesionStart", this.setData);
-      this.$root.$on("updateCart", this.updateCart);
-      this.$root.$on("deleteItemCart", this.deleteItemCart);
+      this.$root.$on("updateCart", this.getcart);
+      this.$root.$on("deleteItemCart", this.getcart);
     },
     mounted() {
       this.$nextTick(function () {
@@ -155,6 +155,7 @@
         cant:0,
         cart_id:0,
         userData : false,
+        cart: [],
       }
     },
     computed: {
@@ -183,7 +184,12 @@
       getcart(){
         helper.storage.get.item('cart_server').then(res => {
           if (res !== null) {
-            this.cant = res.products_cant
+            this.visible = true
+            cartService.show(res.id)
+            .then(response=>{
+              this.cart = response.data
+              this.visible = false
+            })
           }
         })
       },

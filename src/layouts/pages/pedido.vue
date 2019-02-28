@@ -54,7 +54,7 @@
 							<tfoot>
 								<tr>
 							  	<td colspan="3"></td>
-							    <td>TOTAL: <span class="table-price__total">$ 10.000</span></td>
+							    <td>TOTAL: <span class="table-price__total">$ {{cart.total}}</span></td>
 							  </tr>
 							</tfoot>
 						</table>
@@ -100,6 +100,7 @@
           	.then(response=>{
           		this.cart = response.data
           		this.visible = false
+          		this.$root.$emit('updateCart')
           	})
           }
         })
