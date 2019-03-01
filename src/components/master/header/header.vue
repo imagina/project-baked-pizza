@@ -38,7 +38,7 @@
 
             <div class="desktop-only__slide">
 
-              <router-link tag="a" to="/pedido" class="float-right q-ml-md nav-color desktop-only__slide__card" v-if="domicile">
+              <router-link tag="a" to="/pedido" class="float-right q-ml-md nav-color desktop-only__slide__card" v-if="validaddress">
                 <b> <span>{{cart.total_quantity ? cart.total_quantity : 0}}</span> MI PEDIDO</b>
               </router-link>
 
@@ -170,7 +170,7 @@
       }
     },
     computed: {
-      ...mapState(['domicile'])
+      ...mapState(['domicile','validaddress'])
     },
     methods: {
       setData(){

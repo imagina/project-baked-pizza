@@ -1,4 +1,5 @@
 export default {
 	items: [],
-	domicile: true,
+	domicile	: true,
+	validaddress: true, 
 }
