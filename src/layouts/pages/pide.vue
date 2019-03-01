@@ -78,22 +78,24 @@
 			}
 		},
 		mounted(){
-			this.getProducts(2)
+			console.log(this.$route.params.id)
+			this.getProducts(this.$route.params.id)
 		},
 		methods:{
-			getProducts(id){
+			getProducts(id = 2){
 				let filter = {"categories":[id]}
 				productService.index(
 					filter,'', '', '', '', true
 					)
 				.then(response =>{
-					this.products = response.data
-					this.showProduct = false
+					this.products 		= response.data
+					this.showProduct 	= false
+					window.history.pushState(null, null, '/#/pide-en-linea/' + id);
 				})
 			},
 			productSelected(product){
-				this.showProduct = true
-				this.selected.product = product
+				this.showProduct 		= true
+				this.selected.product 	= product
 			},
 		},
 		computed: {

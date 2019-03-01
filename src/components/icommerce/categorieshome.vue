@@ -1,6 +1,6 @@
 <template>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="row flex flex-center" v-for="(item, index) of body" :key="index">
+    <div>
+        <div class="row" v-for="(item, index) of body" :key="index">
             <categoryitemComponent :data="item.row" />
         </div>
         <!--<div class="row">
@@ -99,7 +99,7 @@
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>-->
     </div>
 </template>
 
@@ -109,7 +109,7 @@
   import categoryService from 'src/services/categories';
 
   //components
-  import categoryitemComponent from 'src/components/icommerce/itembody'
+  import categoryitemComponent from 'src/components/icommerce/categoryitembody'
   
 
 export default {
@@ -138,8 +138,9 @@ export default {
                 if(section === 1){
 
                     objeto.push({
-                        title: categories[index].title,
-                        img  : 'statics/categories/entradas.jpg'
+                        id      : categories[index].id,
+                        title   : categories[index].title,
+                        img     : 'statics/categories/entradas.jpg'
                     })
 
                     if (index + 1 === categories.length || i === 3) {
@@ -154,16 +155,18 @@ export default {
                 }else{
 
                     objeto.push({
-                        title: categories[index].title,
-                        img  : 'statics/categories/entradas.jpg'
+                        id      : categories[index].id,
+                        title   : categories[index].title,
+                        img     : 'statics/categories/entradas.jpg'
                     })
 
-                    if (index + 1 === categories.length || i === 4) {
+                    if (index + 1 === categories.length || i === 7) {
                         resul.push({type : '4' , row : objeto })
                         section = 1
                         i       = 1
                         objeto  = []
                     }
+                    i++
                     
                 }
             }

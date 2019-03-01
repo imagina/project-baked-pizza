@@ -17,7 +17,7 @@ Route.view('/', master)
       Route.view('/inicio', require('../layouts/pages/inicio').default).options({
         name: 'home'
       }),
-      Route.view('/pide-en-linea', require('../layouts/pages/pide').default).options({
+      Route.view('/pide-en-linea/:id?', require('../layouts/pages/pide').default).options({
         name: 'pide-en-linea'
       }),
       Route.view('/nosotros', require('../layouts/pages/about').default).options({

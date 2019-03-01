@@ -79,14 +79,15 @@
     <section class="container-fluid q-pb-lg" style="background: url('statics/textura.jpg')">
       <div class="container-section">
         <div class="row">        
-          <div class="col-md-12 q-py-xl">
+          <div class="col-xs-12 col-sm-12 col-md-12 q-py-xl">
             <div class="q-display-2 color-baked-title" align="center">¿Que quieres comer hoy?</div>
             <div class="q-display-3 color-baked-subtitle" align="center">CONOCE NUESTRO MENÚ</div>
           </div>
+        </div>
           <!-- start Categories -->
             <categorieshomeComponent />
           <!-- End Categories -->
-        </div>
+        
       </div>
     </section>
   </div>
