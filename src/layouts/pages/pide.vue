@@ -83,8 +83,13 @@
 			this.getProducts(this.$route.params.id)
 		},
 		methods:{
-			getProducts(id = 2){
-				let filter = {"categories":[id]}
+			getProducts(id = ''){
+				let filter = ''
+
+				if (id !== '') {
+					filter = {"categories":[id]}
+				}
+				
 				productService.index(
 					filter,'', '', '', '', true
 					)
