@@ -1,5 +1,5 @@
 <template>
-	<div class="col-xs-12 col-sm-12 col-md-4 section-1 section-3">
+
 		<q-card class="no-shadow">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12" align="center">
@@ -7,32 +7,22 @@
 				</div>
 			</div>
 			<div class="q-py-lg row">
-				<div class="col-xs-12 col-sm-12 col-md-12 q-py-xs" v-for="(shippingMethod, index) in shipMethods" :key="index">
-					<q-radio v-model="paymentMethod" :val="shippingMethod.id" :label="shippingMethod.title" />	
-				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12 q-py-xs" v-for="(item, index) in shippingMethods" :key="index">
+					<q-radio v-model="shippingMethod" :val="item.id" :label="item.title" />				
+				</div>				
 			</div>
 		</q-card>
 
-		<details-component /> <!--== START - DETAILS ==-->
-   	<q-inner-loading :visible="visible" style="background: #f4f4f4;">
-      <q-spinner size="50px" color="primary"></q-spinner>
-    </q-inner-loading>
-	</div>
 </template>
 
 <script type="text/javascript">
-	import detailsComponent from 'src/components/icommerce/checkout/detailsComponent'
-	import http from "axios"
+	import shippingMethodsService from 'src/services/shipping-methods'
 
 	export default {
-		components:{
-			detailsComponent
-		},
 		data(){
 			return {
-				visible: false,
-				shipMethods: [],
-				paymentMethod: '',
+				shippingMethods: [],
+				shippingMethod: '',
 			}
 		},
 		mounted(){
@@ -41,10 +31,10 @@
 		methods:{
 			getshippingMethods(){
 				this.visible = true
-				http.get('https://icommerce.imagina.com.co/api/icommerce/v3/shipping-methods/calculations/all')
+				shippingMethodsService.index()
 				.then(response=>{
 					this.visible = false
-					this.shipMethods = response.data.data
+					this.shippingMethods = response.data
 				})
 			},
 		}

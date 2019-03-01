@@ -1,14 +1,15 @@
 <template>
 	<div>
 		<breadcrumb name="Listado de Pedidos"></breadcrumb>
-		<div class="container-section">
+
+		<div class="container-section" >
 			<div class="row">
 				<div class="col-12">
-	    			<p class="q-display-2 color-baked-title" align="center">Listado de Pedidos</p>
+	    		<p class="q-display-2 color-baked-title" align="center">Listado de Pedidos</p>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-12">
+			<div class="row" >
+				<div class="col-12" >
 					<!--== START TABLE PRODUCTSO BY CATEGORI SELECTED ==-->
 					<div class="table-responsive">					
 						<table class="table">
@@ -28,8 +29,8 @@
 	    						</td>
 	    						<td class="table-description table-description--info">
 	    							<span class="q-display-1 color-baked-title d-block">{{item.name}}</span>
-									<p>Tamaño: Personal</p>
-									<p>Adicionales: 0</p>
+										<p>Tamaño: Personal</p>
+										<p>Adicionales: 0</p>
 	    						</td>
 	    						<td class="table-description table-description--boder">
 	    							<div class="row">
@@ -58,9 +59,6 @@
 							  </tr>
 							</tfoot>
 						</table>
-						<q-inner-loading :visible="visible" style="background-color: #f4f4f4c7">
-      				<q-spinner size="50px" color="primary"></q-spinner>
-    				</q-inner-loading>
 					</div>
 					<!--== EMD TABLE PRODUCTSO BY CATEGORI SELECTED ==-->
 				</div>
@@ -69,8 +67,8 @@
 					<q-btn type="button" label="CONTINUAR COMPRANDO" size="lg" color="red" sence class="q-my-md" to="/pide-en-linea" />
 				</div>
 			</div>
-
 		</div>
+
     <section-carting-app></section-carting-app>
 	</div>
 </template>
@@ -109,6 +107,7 @@
 				cartService.deleteProduct(item.id)
 				.then(response=>{
 					this.$root.$emit('deleteItemCart')
+					alert.success('Carrito Actualizado')
 					this.getcart()
 				})
     	},
@@ -124,6 +123,7 @@
 				formData['cart_id']  = this.cart.id
 				cartService.create(formData)
 				.then(response=>{
+					alert.success('Producto Actualizado')
 					this.getcart()
 				})
     	},

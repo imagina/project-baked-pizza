@@ -45,20 +45,23 @@
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-12">
-				<q-input type="text" v-model="billCompanyName"  float-label="Ciudad" style="background: transparent;" class="no-shadow" />
-			</div>
-
-			<div class="col-xs-12 col-sm-12 col-md-12">
 				<q-input type="text" v-model="billCompanyName"  float-label="Zip Code" style="background: transparent;" class="no-shadow" />
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-12">
-				<q-input type="text" v-model="billCompanyName"  float-label="País" style="background: transparent;" class="no-shadow" />
+				<q-select v-model="Shipping.country" placeholder="País" class="q-select--app col-xs-12 col-sm-12 col-md-4" radio :options="countries"/>
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-12">
 				<q-input type="text" v-model="billCompanyName"  float-label="Departamento" style="background: transparent;" class="no-shadow" />
 			</div>
+
+
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<q-input type="text" v-model="billCompanyName"  float-label="Ciudad" style="background: transparent;" class="no-shadow" />
+			</div>
+
+
 		</q-card>
 
 		<q-card class="no-shadow" >
@@ -113,9 +116,12 @@
 							<q-input type="text" v-model="billCompanyName"  float-label="Zip Code" style="background: transparent;" class="no-shadow" />
 						</div>
 
+
 						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-input type="text" v-model="billCompanyName"  float-label="País" style="background: transparent;" class="no-shadow" />
+							<q-select v-model="Billing.country" placeholder="País" class="q-select--app col-xs-12 col-sm-12 col-md-4" radio :options="countries"/>
 						</div>
+
+
 
 						<div class="col-xs-12 col-sm-12 col-md-12">
 							<q-input type="text" v-model="billCompanyName"  float-label="Departamento" style="background: transparent;" class="no-shadow" />
@@ -134,17 +140,30 @@
 	import addressesComponent from 'src/components/icommerce/addresses'
 	import profileService from 'src/services/profile'
 
+	import locationsService from 'src/services/locations'
+
+
 	export default {
 		components:{
 			addressesComponent,
 		},
 		data(){
 			return {
+				countries: [],
 				userData: true,
 				addresses: [],
 				address : '',
 				differentAddress: 'yes',
 				billCompanyName: '',
+				
+				Billing: {
+					country: ''
+				},
+
+				Shipping: {
+					country: ''
+				},
+
 			}
 		},
 		created(){
@@ -152,12 +171,19 @@
 		},
 		mounted(){
 			this.setData()
+			this.getCountries()
 		},
 		methods:{
+			getCountries(){
+				locationsService.countries()
+				.then(response=>{
+					this.countries = this.select(response.data)
+				})
+			},
 		  select(dataArray) {
 		    let response = []
 		    dataArray.forEach((item) => {
-		      let labelTitle = item.title ? item.title : (item['full_name'] ? item['full_name'] : 'default')
+		      let labelTitle = item.title ? item.title : (item['currency'] ? item['currency'] : 'default')
 
 		      response.push({
 		        label: labelTitle,
