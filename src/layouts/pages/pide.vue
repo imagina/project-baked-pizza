@@ -4,7 +4,7 @@
 		<breadcrumb-component name="Pide en linea" image="statics/header-pide.jpg"></breadcrumb-component>
 		<!--== END BREADCRUMB ==-->
 		<div class="container-section">	
-			<div class="row" v-if="domicile">
+			<div class="row" v-if="validaddress">
 				<!--== START CATETGORIES MENU ==-->
 				<div class="col-xs-12 col-sm-12 col-md-3">
 					<div class="label bg-deep-orange-7 text-white full-width title-menu">
@@ -75,7 +75,7 @@
 				selected: {
 					product:[]
 				},
-				showProduct: false
+				showProduct: true,
 			}
 		},
 		mounted(){
@@ -83,8 +83,11 @@
 			this.getProducts(this.$route.params.id)
 		},
 		methods:{
-			getProducts(id = 2){
-				let filter = {"categories":[id]}
+			getProducts(id = ''){
+				let filter = ''
+				if (id !== '') {
+					filter = {"categories":[id]}
+				}
 				productService.index(
 					filter,'', '', '', '', true
 					)
@@ -100,7 +103,7 @@
 			},
 		},
 		computed: {
-		...mapState(['domicile'])
+		...mapState(['domicile','validaddress'])
 		}
 	}
 </script>

@@ -4,7 +4,7 @@
 		<div class="container-section">
 			<div class="row"> <!--== TITLE ==-->
 				<div class="col-xs-12 col-sm-12 col-md-12 q-mb-xl">
-					<div class="q-display-2 color-baked-title" align="center">Checkout</div>	
+					<div class="q-display-2 color-baked-title" align="center">Checkout</div>
 				</div>
 			</div>
 			<div class="row"> <!--== COMPONENTS CHECKOUT ==-->
