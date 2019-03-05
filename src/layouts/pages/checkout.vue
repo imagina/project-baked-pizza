@@ -8,12 +8,12 @@
 				</div>
 			</div>
 			<div class="row"> <!--== COMPONENTS CHECKOUT ==-->
-				<customerinformation-component /> <!--==  CUSTOMER INFORMATION ==-->	
-				<billingdetails-component /> <!--==  BILLING DETAILS ==-->
-				<paymentmethods-component /> <!--==  DELIVERY METHODS ==-->
+				<customerinformation-component :parentData="order.customerInformation"/> <!--==  CUSTOMER INFORMATION ==-->	
+				<billingdetails-component :parentData="order.addreses"/> <!--==  BILLING DETAILS ==-->
+				<paymentmethods-component :parentData="order.shippingAndPay"/> <!--==  DELIVERY METHODS ==-->
 				<div class="col-12"> <!--== ACTION BUTTON ==-->
 					<div class="col-count-product text-right">
-						<q-btn type="submit" label="Comprar Ahora" size="lg" color="red" sence />
+						<q-btn type="submit" label="Comprar Ahora" size="lg" color="red" sence @click="saveOrder"/>
 					</div>
 				</div>
 			</div>
@@ -28,12 +28,77 @@
 	import billingdetailsComponent from 'src/components/icommerce/checkout/billingdetailsComponent'
 	import paymentmethodsComponent from 'src/components/icommerce/checkout/paymentMethods'
 
+	import orderService from 'src/services/order'
+
 	export default{
 		components:{
 			customerinformationComponent,
 			billingdetailsComponent,
 			paymentmethodsComponent,
 		},
+		data(){
+			return{
+				order:{
+					customerInformation: {
+						userData: 0,
+						name: '',
+						lastName: '',
+						email: '',
+						phone: '',
+						password: '',
+						confirmPassword: '',
+					},
+					addreses:{
+						billing: {
+							address_id: 0,
+							companyname: '',
+							name: '',
+							last_name: '',
+							address1: '',
+							address2: '',
+							zip_code: '',
+							country: '',
+							province: '',
+							city: '',
+						},
+						shipping: {
+							differentAddress: true,
+							address_id: 0,
+							companyname: '',
+							name: '',
+							last_name: '',
+							address1: '',
+							address2: '',
+							zip_code: '',
+							country: '',
+							province: '',
+							city: '',
+						}
+					},
+					shippingAndPay:{
+						paymentMethod_id: 0,
+						shippingMethod_id: 0,
+						details:{
+							distance: '',
+							commentary: '',
+							coupon: '',
+							total: '',
+						}
+					},				
+					cart_id: 0,
+				}
+			}
+		},
+		methods:{
+			saveOrder(){
+				// PREPARING DATA
+
+				orderService.create(this.order)
+				.then(response=>{
+					// PROCESING RESPONSE
+				})
+			}
+		}
 	}
 </script>
 

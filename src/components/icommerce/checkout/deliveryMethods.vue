@@ -8,7 +8,7 @@
 			</div>
 			<div class="q-py-lg row">
 				<div class="col-xs-12 col-sm-12 col-md-12 q-py-xs" v-for="(item, index) in shippingMethods" :key="index">
-					<q-radio v-model="shippingMethod" :val="item.id" :label="item.title" />				
+					<q-radio v-model="parentData.shippingMethod_id" :val="item.id" :label="item.title" />				
 				</div>				
 			</div>
 		</q-card>
@@ -19,6 +19,7 @@
 	import shippingMethodsService from 'src/services/shipping-methods'
 
 	export default {
+		props: ['parentData'],
 		data(){
 			return {
 				shippingMethods: [],

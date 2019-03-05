@@ -64,6 +64,7 @@
 	import profileService from 'src/services/profile'
 
 	export default {
+		props: ['parentData'],
 		data(){
 			return {
 				visible: false,
@@ -81,6 +82,7 @@
 		methods:{
 			changeAddressSelected(item){
 				this.addressSelected = item
+				this.parentData.address_id = item
 				this.opened = false
 			},
 			setData(){

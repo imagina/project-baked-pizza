@@ -1,6 +1,6 @@
 <template>
 
-		<div class=" col-md-4  col-xs-12 col-sm-12 section-1" v-if="userData">
+		<div class=" col-md-4  col-xs-12 col-sm-12 section-1" v-if="parentData.userData">
 			<q-card class="no-shadow">
 				<q-card-main>
 					<div class="row">
@@ -10,13 +10,13 @@
 					</div>
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12">	
-							<q-input type="text" v-model="userData.first_name" float-label="Nombre" style="background: transparent;" class="no-shadow" readonly/>
+							<q-input type="text" v-model="parentData.userData.first_name" float-label="Nombre" style="background: transparent;" class="no-shadow" readonly/>
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-input type="text" float-label="Apellidos" v-model="userData.last_name" style="background: transparent;" class="no-shadow" readonly/>
+							<q-input type="text" float-label="Apellidos" v-model="parentData.userData.last_name" style="background: transparent;" class="no-shadow" readonly/>
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-input type="email" v-model="userData.email"  float-label="E-mail" style="background: transparent;" class="no-shadow" readonly/>
+							<q-input type="email" v-model="parentData.userData.email"  float-label="E-mail" style="background: transparent;" class="no-shadow" readonly/>
 						</div>
 					</div>	
 				</q-card-main>
@@ -30,23 +30,23 @@
 						<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Información del cliente</div>
 					</div>
 				</div>
-			
+
 				<div class="row">
 				<q-list class="col-xs-12 col-sm-12 col-md-12 q-mb-lg">
 					<q-collapsible group="somegroup" label="Invitado" >
 						<div class="row">
 					
 							<div class="col-xs-12 col-sm-12 col-md-12">	
-								<q-input type="text" v-model="name" :after="[{ icon: 'fas fa-user', }]" float-label="Nombre" style="background: transparent;" class="no-shadow" />
+								<q-input type="text" v-model="parentData.name" :after="[{ icon: 'fas fa-user', }]" float-label="Nombre" style="background: transparent;" class="no-shadow" />
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12">
-								<q-input type="text" float-label="Apellidos" v-model="lastName" :after="[{ icon: 'fas fa-user', }]" style="background: transparent;" class="no-shadow" />
+								<q-input type="text" float-label="Apellidos" v-model="parentData.lastName" :after="[{ icon: 'fas fa-user', }]" style="background: transparent;" class="no-shadow" />
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12">
-								<q-input type="email" v-model="email" :after="[{ icon: 'fas fa-envelope', }]" float-label="E-mail" style="background: transparent;" class="no-shadow" />
+								<q-input type="email" v-model="parentData.email" :after="[{ icon: 'fas fa-envelope', }]" float-label="E-mail" style="background: transparent;" class="no-shadow" />
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12">
-								<q-input type="text" float-label="Número de Teléfono" v-model="phone" :after="[{ icon: 'fas fa-phone', }]" style="background: transparent;" class="no-shadow" />
+								<q-input type="text" float-label="Número de Teléfono" v-model="parentData.phone" :after="[{ icon: 'fas fa-phone', }]" style="background: transparent;" class="no-shadow" />
 							</div>
 						</div>
 					</q-collapsible>
@@ -54,22 +54,22 @@
 						<div class="row">
 
 							<div class="col-xs-12 col-sm-12 col-md-12">	
-								<q-input type="text" v-model="name" :after="[{ icon: 'fas fa-user', }]" float-label="Nombre" style="background: transparent;" class="no-shadow" />
+								<q-input type="text" v-model="parentData.name" :after="[{ icon: 'fas fa-user', }]" float-label="Nombre" style="background: transparent;" class="no-shadow" />
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12">
-								<q-input type="text" float-label="Apellidos" v-model="lastName" :after="[{ icon: 'fas fa-user', }]" style="background: transparent;" class="no-shadow" />
+								<q-input type="text" float-label="Apellidos" v-model="parentData.lastName" :after="[{ icon: 'fas fa-user', }]" style="background: transparent;" class="no-shadow" />
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12">
-								<q-input type="email" v-model="email" :after="[{ icon: 'fas fa-envelope', }]" float-label="E-mail" style="background: transparent;" class="no-shadow" />
+								<q-input type="email" v-model="parentData.email" :after="[{ icon: 'fas fa-envelope', }]" float-label="E-mail" style="background: transparent;" class="no-shadow" />
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12">
-								<q-input type="text" float-label="Número de Teléfono" v-model="phone" :after="[{ icon: 'fas fa-phone', }]" style="background: transparent;" class="no-shadow" />
+								<q-input type="text" float-label="Número de Teléfono" v-model="parentData.phone" :after="[{ icon: 'fas fa-phone', }]" style="background: transparent;" class="no-shadow" />
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12">
-								<q-input type="password" v-model="password" :after="[{ icon: 'fas fa-key', }]" float-label="Clave" style="background: transparent;" class="no-shadow" />
+								<q-input type="password" v-model="parentData.password" :after="[{ icon: 'fas fa-key', }]" float-label="Clave" style="background: transparent;" class="no-shadow" />
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12">
-								<q-input type="password" float-label="Confirmar clave" v-model="confirmPassword" :after="[{ icon: 'fas fa-key', }]" style="background: transparent;" class="no-shadow" />
+								<q-input type="password" float-label="Confirmar clave" v-model="parentData.confirmPassword" :after="[{ icon: 'fas fa-key', }]" style="background: transparent;" class="no-shadow" />
 							</div>
 						</div>
 					</q-collapsible>
@@ -102,31 +102,23 @@
 
 </template>
 
-<script type="text/javascript">
+<script>
 	import {required, email, numeric, minLength} from 'vuelidate/lib/validators';
 	import {helper} from '@imagina/qhelper/_plugins/helper'
 	
 	export default {
+		props: ['parentData'],
 		data(){
 			return {
-				userData : false,
-			 	form: {
+				form: {
 	        username: null,
 	        password: null
 	      },
-	      name: '',
-				lastName: '',
-				email: '',
-				phone: '',
-				password: '',
-				confirmPassword: '',
-				registeredEmail: '',
-				registeredPassword: '',
 				loading_login: false,
 			}
 		},
 		validations: {
-	    form: {
+	    form: {	
 	      username: {required},
 	      password: {required}
 	    }
@@ -140,18 +132,16 @@
 		methods:{
 			setData(){
       	helper.storage.get.item('userData').then(response => {
-        	this.userData = response
+        	this.parentData.userData = response
       	})
     	},
     	async authenticate() {
         this.$v.$touch();
-
         if (this.$v.$error) {
-          alert.error('Please review fields again.', 'bottom');
+          //alert.error('Please review fields again.', 'bottom');
         } else {
           this.loading_login = !this.loading_login;
           const {username, password} = this.form;
-
           this.$store.dispatch("auth/AUTH_REQUEST", {username, password}).then(response => {
             this.loading_login = !this.loading_login;
             this.$root.$emit('sesionStart')

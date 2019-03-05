@@ -7,16 +7,16 @@
 		</div>
 		<div class="q-py-lg row">
 			<div class="col-sm-12 col-md-12">
-				<q-input type="text" float-label="Distancia del pedido" v-model="distance" :after="[{ icon: 'motorcycle', }]" style="background: transparent;" class="no-shadow" />
+				<q-input type="text" float-label="Distancia del pedido" v-model="parentData.distance" :after="[{ icon: 'motorcycle', }]" style="background: transparent;" class="no-shadow" />
 			</div>
 			<div class="col-sm-12 col-md-12">
-				<q-input type="text" float-label="Escribe aquí..." v-model="commentary" :after="[{ icon: 'fas fa-comment', }]" style="background: transparent;" class="no-shadow" />
+				<q-input type="text" float-label="Escribe aquí..." v-model="parentData.commentary" :after="[{ icon: 'fas fa-comment', }]" style="background: transparent;" class="no-shadow" />
 			</div>
 			<div class="col-sm-12 col-md-12">
-				<q-input type="text" float-label="Añadir cupones" v-model="coupon" :after="[{ icon: 'fa fa-tag', }]" style="background: transparent;" class="no-shadow" />
+				<q-input type="text" float-label="Añadir cupones" v-model="parentData.coupon" :after="[{ icon: 'fa fa-tag', }]" style="background: transparent;" class="no-shadow" />
 			</div>
 			<div class="col-sm-12 col-md-12">
-				<q-input type="text" float-label="Valor Total" v-model="total" :after="[{ icon: 'fas fa-thumbs-up', }]"   style="background: transparent;" :disable="true" class="no-shadow" />
+				<q-input type="text" float-label="Valor Total" v-model="parentData.total" :after="[{ icon: 'fas fa-thumbs-up', }]"   style="background: transparent;" :disable="true" class="no-shadow" />
 			</div>
 		</div>
 	</q-card>
@@ -24,6 +24,7 @@
 
 <script type="text/javascript">
 	export default {
+		props: ['parentData'],
 		data(){
 			return {
 				distance: '',

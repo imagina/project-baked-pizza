@@ -8,13 +8,13 @@
 			</div>
 			<div class="q-py-lg row">
 				<div class="col-xs-12 col-sm-12 col-md-12 q-py-xs" v-for="(shippingMethod, index) in shipMethods" :key="index">
-					<q-radio v-model="paymentMethod" :val="shippingMethod.id" :label="shippingMethod.title" />				
+					<q-radio v-model="parentData.paymentMethod_id" :val="shippingMethod.id" :label="shippingMethod.title" />				
 				</div>				
 			</div>
 		</q-card>
 
-		<deliverymethods-component />
-		<details-component /> <!--== START - DETAILS ==-->
+		<deliverymethods-component :parentData="parentData"/>
+		<details-component :parentData="parentData.details"/> <!--== START - DETAILS ==-->
    	<q-inner-loading :visible="visible" style="background: #f4f4f4;">
       <q-spinner size="50px" color="primary"></q-spinner>
     </q-inner-loading>
@@ -29,6 +29,7 @@
 
 
 	export default {
+		props: ['parentData'],
 		components:{
 			detailsComponent,
 			deliverymethodsComponent

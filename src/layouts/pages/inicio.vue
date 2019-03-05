@@ -19,8 +19,8 @@
               <div class="q-display-2 q-my-lg">PARA LLEVAR <input class="toggle toggle__textless" type="checkbox" v-model="checked" @change="stateDomicicle" > DOMICILIO</div>
               <div class="q-my-lg" style="font-family: Muli">(Para llevar te ahorra la fila y esperar)</div>
               <div class="q-my-lg" id="q-carousel-search">
-                <input type="text" required autofocus class="search" :disabled="!domicile">
-                <input type="button" value="RECOGER" class="button button-search" :disabled="!domicile">
+                <input type="text" required autofocus class="search" :disabled="!domicile" v-model="address">
+                <input type="button" value="RECOGER" class="button button-search" :disabled="!domicile" @click="getMapArea()">
               </div>
 
               <div class="q-my-lg" style="font-family: Muli">Paga tu pedido en línea de forma segura</div>
@@ -96,6 +96,7 @@
 <script>
 
   //components
+  import mapAreaService from 'src/services/maparea'
   import categorieshomeComponent from 'src/components/icommerce/categorieshome'
 
   import store from 'src/store/cart/index'
@@ -110,9 +111,48 @@
       return{
         checked: true,
         categories: [],
+        address: '',
       }
     },
+    mounted(){
+
+    },
     methods: {
+      getMapArea(){
+
+
+        var geocoder = new google.maps.Geocoder();
+
+        let location = {
+          lat: '',
+          lng: ''
+        }
+
+        geocoder.geocode( { 'address': this.address}, (results, status) =>{
+          if (status == google.maps.GeocoderStatus.OK) {
+            location.lat = results[0].geometry.location.lat()
+            location.lng = results[0].geometry.location.lng()
+
+
+            let include = 'store'
+            mapAreaService.index(location, '', '', '', '', include)
+            .then(response=>{
+              
+            })
+
+
+
+
+          }          
+        })
+
+
+
+
+
+
+
+      },
       stateDomicicle(){
         this.$store.state.domicile = this.checked
       },

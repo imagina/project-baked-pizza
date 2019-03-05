@@ -1,0 +1,47 @@
+export default {
+	order: {
+		customerInformation: [
+			user_id: 0,
+			name: '',
+			lastName: '',
+			email: '',
+			phone: '',
+			password: '',
+			confirmPassword: '',
+		],
+		adressBilling: [
+			billing_address_id: 0,
+			companyname: '',
+			name: '',
+			last_name: '',
+			address1: '',
+			address2: '',
+			zip_code: '',
+			country: '',
+			province: '',
+			city: '',
+		],
+		adreessShipping: [
+			sameBilling: false,
+			shipping_address_id: 0,
+			companyname: '',
+			name: '',
+			last_name: '',
+			address1: '',
+			address2: '',
+			zip_code: '',
+			country: '',
+			province: '',
+			city: '',
+		],
+		paymentMethod_id: 0,
+		shippingMethod_id: 0,
+		cart_id: 0,
+		Details:[
+			distance: '',
+			commentary: '',
+			coupon: '',
+			total: '',
+		],
+	}
+}
