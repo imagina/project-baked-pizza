@@ -45,11 +45,11 @@
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-12">
-				<q-input type="text" v-model="billCompanyName"  float-label="Zip Code" style="background: transparent;" class="no-shadow" />
+				<q-input type="text" v-model="billZipCode"  float-label="Zip Code" style="background: transparent;" class="no-shadow" v-on:blur="priceMethodsShipping" />
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-12">
-				<q-select v-model="Shipping.country" placeholder="País" class="q-select--app col-xs-12 col-sm-12 col-md-4" radio :options="countries"/>
+				<q-select v-model="Shipping.country" placeholder="País" class="q-select--app col-xs-12 col-sm-12 col-md-4" v-on:blur="priceMethodsShipping" radio :options="countries"/>
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-12">
@@ -71,14 +71,14 @@
 					<q-checkbox
 						v-model="differentAddress"
 						label="Mis direcciones de envío y facturación son las mismas."
-						true-value="yes"
-						false-value="no"
+						true-value="no"
+						false-value="yes"
 					/>
 				</div>
 			</div>
 
 			<transition name="component-fade" mode="out-in">
-				<div class="row" v-if="differentAddress == 'no'">
+				<div class="row" v-if="differentAddress == 'yes'">
 
 					<div class="col-md-12 q-pb-lg" v-if="userData">
 
@@ -113,14 +113,13 @@
 						</div>
 
 						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-input type="text" v-model="billCompanyName"  float-label="Zip Code" style="background: transparent;" class="no-shadow" />
+							<q-input type="text" v-model="differentBillZipCode"  float-label="Zip Code" style="background: transparent;" class="no-shadow" v-on:blur="priceMethodsShipping" />
 						</div>
 
 
 						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-select v-model="Billing.country" placeholder="País" class="q-select--app col-xs-12 col-sm-12 col-md-4" radio :options="countries"/>
+							<q-select v-model="Billing.country" placeholder="País" class="q-select--app col-xs-12 col-sm-12 col-md-4" radio :options="countries" v-on:blur="priceMethodsShipping" />
 						</div>
-
 
 
 						<div class="col-xs-12 col-sm-12 col-md-12">
@@ -136,11 +135,16 @@
 </template>
 
 <script type="text/javascript">
-	import {helper} from '@imagina/qhelper/_plugins/helper'
-	import addressesComponent from 'src/components/icommerce/addresses'
-	import profileService from 'src/services/profile'
 
+	import cartService from 'src/services/cart';
+	import profileService from 'src/services/profile'
 	import locationsService from 'src/services/locations'
+	import shippingMetodsService from 'src/services/shipping-methods';
+
+	import {helper} from '@imagina/qhelper/_plugins/helper';
+	import EventBus from 'src/utils/event-bus';
+
+	import addressesComponent from 'src/components/icommerce/addresses'
 
 
 	export default {
@@ -153,8 +157,12 @@
 				userData: true,
 				addresses: [],
 				address : '',
-				differentAddress: 'yes',
+				differentAddress: 'no',
 				billCompanyName: '',
+				billZipCode: '',
+				differentBillZipCode: '',
+				products : [],
+				shippingMethods : [],
 				
 				Billing: {
 					country: ''
@@ -172,6 +180,7 @@
 		mounted(){
 			this.setData()
 			this.getCountries()
+			this.getcart()
 		},
 		methods:{
 			getCountries(){
@@ -180,33 +189,95 @@
 					this.countries = this.select(response.data)
 				})
 			},
-		  select(dataArray) {
-		    let response = []
-		    dataArray.forEach((item) => {
-		      let labelTitle = item.title ? item.title : (item['currency'] ? item['currency'] : 'default')
+			select(dataArray) {
+				let response = []
+				dataArray.forEach((item) => {
+				let labelTitle = item.title ? item.title : (item['currency'] ? item['currency'] : 'default')
 
-		      response.push({
-		        label: labelTitle,
-		        value: item.id.toString()
-		      });
-		    })
-		    return response
-		  },
+				response.push({
+					label: labelTitle,
+					value: item.iso_2.toString()
+				});
+				})
+				return response
+			},
 			setData(){
-      	helper.storage.get.item('userData').then(response => {
-        	this.userData = response
-        	if (response != null) {
-        		this.getAddresses(response.id)
-        	}
-      	})
-    	},
-    	getAddresses(id){
-    		let include = 'addresses'
-    		profileService.show(id, include)
-    		.then(response => {
-    			this.addresses = (response.data.addresses)
-    		})
-      }
+				helper.storage.get.item('userData').then(response => {
+					this.userData = response
+					if (response != null) {
+						this.getAddresses(response.id)
+					}
+				})
+			},
+			getAddresses(id){
+				let include = 'addresses'
+				profileService.show(id, include)
+				.then(response => {
+					this.addresses = (response.data.addresses)
+				})
+			},
+			getcart(){
+				helper.storage.get.item('cart_server').then(res => {
+				if (res !== null) {
+					cartService.show(res.id)
+					.then(response=>{
+						this.products = this.createObjectProducts(response.data)
+					})
+				}
+				})
+			},
+			createObjectProducts(data){
+				let products 	  	= data.products
+				let arrayproducts 	= []
+				arrayproducts.total	= data.total
+				arrayproducts.items = []
+
+				for (let index = 0; index < products.length; index++) {
+					let item = {
+						title: products[index].name,
+						price: products[index].price,
+						weight: 1,
+						width: 1,
+						height: 1,
+						length: 1,
+						freeshipping: 0,
+						quantity: 1,
+					}
+					arrayproducts.items.push(item)
+				}
+				return  {...arrayproducts} 
+			},
+			priceMethodsShipping(){
+				if(this.differentAddress == 'no'){
+					this.concatInfoShipping(this.billZipCode,this.Shipping.country,this.products.total,this.products.items)
+				}else{
+					this.concatInfoShipping(this.differentBillZipCode,this.Billing.country,this.products.total,this.products.items)
+				}
+			},
+			concatInfoShipping(zipcode = '', country = '', total = 0 , products = {}){
+				var object = []
+				if(zipcode != '' && country != ''){
+					object = {
+						options : {
+							countryCode : country,
+							postalCode	: zipcode,
+						},
+						products :{
+							total : total,
+							items : products,
+						}
+					}
+					shippingMetodsService.calculateShipping(object)
+					.then(response=>{
+						this.shippingMethods = response.data
+						EventBus.$emit('calculateshipping', this.shippingMethods)
+					})
+				}else{
+					this.shippingMethods = []
+					EventBus.$emit('calculateshipping', this.shippingMethods)
+				}
+			
+			},
 		}
 
 	}

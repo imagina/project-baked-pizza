@@ -28,4 +28,19 @@ export default {
         });
     });
   },
+  calculateShipping(params) {
+
+    let get = '?options[countryCode]=' + params.options.countryCode + '&options[postalCode]=' + params.options.postalCode + '&products[total]=' + params.products.total + '&products[items]=' + JSON.stringify(params.products.items)
+
+    return new Promise((resolve, reject) => {
+        return http.get(config('api.base_url') + '/api/icommerce/v3/shipping-methods/calculations/all' + get, {
+        params: {},
+      }).then(response => {
+        resolve(response.data);
+      })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
 }
