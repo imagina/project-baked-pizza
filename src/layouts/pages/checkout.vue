@@ -7,6 +7,7 @@
 					<div class="q-display-2 color-baked-title" align="center">Checkout</div>
 				</div>
 			</div>
+
 			<div class="row"> <!--== COMPONENTS CHECKOUT ==-->
 				<customerinformation-component :parentData="order.customerInformation"/> <!--==  CUSTOMER INFORMATION ==-->	
 				<billingdetails-component :parentData="order.addreses"/> <!--==  BILLING DETAILS ==-->
@@ -18,6 +19,7 @@
 				</div>
 			</div>
 		</div>
+		
 		<section-carting-app></section-carting-app> <!--== COMPONENTS BANNER CATERGIN INFO ==-->
 	</section>
 </template>
@@ -27,7 +29,7 @@
 	import customerinformationComponent from 'src/components/icommerce/checkout/customerInformation'
 	import billingdetailsComponent from 'src/components/icommerce/checkout/billingdetailsComponent'
 	import paymentmethodsComponent from 'src/components/icommerce/checkout/paymentMethods'
-
+	import {helper} from '@imagina/qhelper/_plugins/helper';
 	import orderService from 'src/services/order'
 
 	export default{
@@ -78,6 +80,7 @@
 					shippingAndPay:{
 						paymentMethod_id: 0,
 						shippingMethod_id: 0,
+						shippingMethod_name: 0,
 						details:{
 							distance: '',
 							commentary: '',
@@ -89,15 +92,33 @@
 				}
 			}
 		},
+		mounted(){
+			this.getcart()
+		},
 		methods:{
 			saveOrder(){
 				// PREPARING DATA
+				let fotData = {
+					"cart_id": this.order.cart_id,
+					"address_payment_id": this.order.addreses.billing.address_id,
+					"address_shipping_id": (this.order.addreses.shipping.differentAddress ? this.order.addreses.billing.address_id : this.order.addreses.shipping.address_id),
+					"payment_id": this.order.shippingAndPay.paymentMethod_id,
+					"shipping_name": this.order.shippingAndPay.shippingMethod_name
+				}
 
-				orderService.create(this.order)
+				orderService.create(fotData)
 				.then(response=>{
 					// PROCESING RESPONSE
 				})
-			}
+			},
+			getcart(){
+        helper.storage.get.item('cart_server').then(res => {
+          if (res !== null) {
+          	this.order.cart_id = res.id
+          	
+          }
+        })
+      },
 		}
 	}
 </script>

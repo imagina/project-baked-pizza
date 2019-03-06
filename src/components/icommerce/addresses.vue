@@ -82,7 +82,7 @@
 		methods:{
 			changeAddressSelected(item){
 				this.addressSelected = item
-				this.parentData.address_id = item
+				this.parentData.address_id = item.id
 				this.opened = false
 			},
 			setData(){
@@ -103,6 +103,7 @@
   				response.data.addresses.forEach(item=>{
   					if (item.default) {
   						this.addressSelected = item
+  						this.parentData.address_id = item.id
   					}
   				})
   			})
