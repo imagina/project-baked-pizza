@@ -41,7 +41,7 @@
 	import EventBus from 'src/utils/event-bus';
 
 	export default {
-		props: ['parentData'],
+		props: ['parentData', 'sippingprice'],
 		data(){
 			return {
 				shippingMethods: [],
@@ -49,7 +49,6 @@
 				priceMethods: [],
 			}
 		},
-		props: ['sippingprice'],
 		mounted(){
 			this.getshippingMethods()
 

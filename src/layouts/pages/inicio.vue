@@ -19,13 +19,9 @@
               <div class="q-display-2 q-my-lg">PARA LLEVAR <input class="toggle toggle__textless" type="checkbox" v-model="checkdomicile" @change="stateDomicicle" :value="domicile"> DOMICILIO</div>
               <div class="q-my-lg" style="font-family: Muli">(Para llevar te ahorra la fila y esperar)</div>
               <div class="q-my-lg" id="q-carousel-search">
-<<<<<<< HEAD
-                <input type="text" required autofocus class="search" :disabled="!domicile" v-model="address">
-                <input type="button" value="RECOGER" class="button button-search" :disabled="!domicile" @click="getMapArea()">
-=======
+
                 <input type="text"  v-model="domicileaddress" required autofocus class="search" :disabled="!validaddress">
                 <input type="button" value="RECOGER" class="button button-search" :disabled="!validaddress" @click="checkValidAddress">
->>>>>>> ca42a0c9b42f49bda8c0bd3e214309da51c45872
               </div>
 
               <div class="q-my-lg" style="font-family: Muli">Paga tu pedido en línea de forma segura</div>

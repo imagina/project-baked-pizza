@@ -18,49 +18,7 @@
 					<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Detalles de facturación</div>
 				</div>
 			</div>
-<<<<<<< HEAD
 			<billingaddress-component :formData="parentData.billing" />
-=======
-
-			<div class="col-xs-12 col-sm-12 col-md-12">
-				<q-input type="text" v-model="billCompanyName"  float-label="Nombre de empresa" style="background: transparent;" class="no-shadow" />
-			</div>
-
-			<div class="col-xs-12 col-sm-12 col-md-12">
-				<q-input type="text" v-model="billCompanyName"  float-label="Nombre" style="background: transparent;" class="no-shadow" />
-			</div>
-
-			<div class="col-xs-12 col-sm-12 col-md-12">
-				<q-input type="text" v-model="billCompanyName"  float-label="Apellido" style="background: transparent;" class="no-shadow" />
-			</div>
-
-			<div class="col-xs-12 col-sm-12 col-md-12">
-				<q-input type="text" v-model="billCompanyName"  float-label="Direccion 1" style="background: transparent;" class="no-shadow" />
-			</div>
-
-			<div class="col-xs-12 col-sm-12 col-md-12">
-				<q-input type="text" v-model="billCompanyName"  float-label="Direccion 2" style="background: transparent;" class="no-shadow" />
-			</div>
-
-			<div class="col-xs-12 col-sm-12 col-md-12">
-				<q-input type="text" v-model="billZipCode"  float-label="Zip Code" style="background: transparent;" class="no-shadow" v-on:blur="priceMethodsShipping" />
-			</div>
-
-			<div class="col-xs-12 col-sm-12 col-md-12">
-				<q-select v-model="Shipping.country" placeholder="País" class="q-select--app col-xs-12 col-sm-12 col-md-4" v-on:blur="priceMethodsShipping" radio :options="countries"/>
-			</div>
-
-			<div class="col-xs-12 col-sm-12 col-md-12">
-				<q-input type="text" v-model="billCompanyName"  float-label="Departamento" style="background: transparent;" class="no-shadow" />
-			</div>
-
-
-			<div class="col-xs-12 col-sm-12 col-md-12">
-				<q-input type="text" v-model="billCompanyName"  float-label="Ciudad" style="background: transparent;" class="no-shadow" />
-			</div>
-
-
->>>>>>> ca42a0c9b42f49bda8c0bd3e214309da51c45872
 		</q-card>
 		<q-card class="no-shadow">
 			<div class="row">
@@ -69,71 +27,18 @@
 					<q-checkbox
 						v-model="parentData.shipping.differentAddress"
 						label="Mis direcciones de envío y facturación son las mismas."
-<<<<<<< HEAD
 						:true-value="true"
 						:false-value="false"
-=======
-						true-value="no"
-						false-value="yes"
->>>>>>> ca42a0c9b42f49bda8c0bd3e214309da51c45872
 					/>
 				</div>
 			</div>
 			<transition name="component-fade" mode="out-in">
-<<<<<<< HEAD
 				<div class="row" v-if="parentData.shipping.differentAddress == false">
-=======
-				<div class="row" v-if="differentAddress == 'yes'">
-
->>>>>>> ca42a0c9b42f49bda8c0bd3e214309da51c45872
 					<div class="col-md-12 q-pb-lg" v-if="userData">
 						<addresses-component :parentData="parentData.shipping"/>
 					</div>
-<<<<<<< HEAD
 					<div v-else class="row">		
 						<billingaddress-component :formData="parentData.shipping" />
-=======
-
-					<div v-else class="row">
-
-						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-input type="text" v-model="billCompanyName"  float-label="Nombre de empresa" style="background: transparent;" class="no-shadow" />
-						</div>
-
-						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-input type="text" v-model="billCompanyName"  float-label="Nombre" style="background: transparent;" class="no-shadow" />
-						</div>
-
-						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-input type="text" v-model="billCompanyName"  float-label="Apellido" style="background: transparent;" class="no-shadow" />
-						</div>
-
-						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-input type="text" v-model="billCompanyName"  float-label="Direccion 1" style="background: transparent;" class="no-shadow" />
-						</div>
-
-						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-input type="text" v-model="billCompanyName"  float-label="Direccion 2" style="background: transparent;" class="no-shadow" />
-						</div>
-
-						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-input type="text" v-model="billCompanyName"  float-label="Ciudad" style="background: transparent;" class="no-shadow" />
-						</div>
-
-						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-input type="text" v-model="differentBillZipCode"  float-label="Zip Code" style="background: transparent;" class="no-shadow" v-on:blur="priceMethodsShipping" />
-						</div>
-
-
-						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-select v-model="Billing.country" placeholder="País" class="q-select--app col-xs-12 col-sm-12 col-md-4" radio :options="countries" v-on:blur="priceMethodsShipping" />
-						</div>
-
-
-						<div class="col-xs-12 col-sm-12 col-md-12">
-							<q-input type="text" v-model="billCompanyName"  float-label="Departamento" style="background: transparent;" class="no-shadow" />
-						</div>
->>>>>>> ca42a0c9b42f49bda8c0bd3e214309da51c45872
 					</div>
 				</div>
 			</transition>
@@ -141,28 +46,16 @@
 	</div>
 </template>
 
-<<<<<<< HEAD
 <script>
 	import billingaddressComponent from 'src/components/icommerce/checkout/billingaddressComponent'
 	import addressesComponent from 'src/components/icommerce/addresses'
 	import {helper} from '@imagina/qhelper/_plugins/helper'
 	import profileService from 'src/services/profile'
-
-=======
-<script type="text/javascript">
-
 	import cartService from 'src/services/cart';
-	import profileService from 'src/services/profile'
 	import locationsService from 'src/services/locations'
 	import shippingMetodsService from 'src/services/shipping-methods';
-
-	import {helper} from '@imagina/qhelper/_plugins/helper';
 	import EventBus from 'src/utils/event-bus';
 
-	import addressesComponent from 'src/components/icommerce/addresses'
-
-
->>>>>>> ca42a0c9b42f49bda8c0bd3e214309da51c45872
 	export default {
 		props: ['parentData'],
 		components:{
@@ -175,24 +68,6 @@
 				userData: true,
 				addresses: [],
 				address : '',
-<<<<<<< HEAD
-=======
-				differentAddress: 'no',
-				billCompanyName: '',
-				billZipCode: '',
-				differentBillZipCode: '',
-				products : [],
-				shippingMethods : [],
-				
-				Billing: {
-					country: ''
-				},
-
-				Shipping: {
-					country: ''
-				},
-
->>>>>>> ca42a0c9b42f49bda8c0bd3e214309da51c45872
 			}
 		},
 		created(){
@@ -200,24 +75,6 @@
 		},
 		mounted(){
 			this.setData()
-<<<<<<< HEAD
-		},
-		methods:{
-		  select(dataArray) {
-		    let response = []
-		    dataArray.forEach((item) => {
-		      let labelTitle = item.title ? item.title : (item['name'] ? item['name'] : 'default')
-
-		      response.push({
-		        label: labelTitle,
-		        value: item.id.toString()
-		      });
-		    })
-		    return response
-		  },
-=======
-			this.getCountries()
-			this.getcart()
 		},
 		methods:{
 			getCountries(){
@@ -238,7 +95,6 @@
 				})
 				return response
 			},
->>>>>>> ca42a0c9b42f49bda8c0bd3e214309da51c45872
 			setData(){
 				helper.storage.get.item('userData').then(response => {
 					this.userData = response
