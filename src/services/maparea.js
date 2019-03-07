@@ -21,7 +21,7 @@ export default {
             include: include
           }
         })
-      }, false).then(response => {
+      }, true).then(response => {
 
         // START - IF EXISTE LATLNG IN POLYGON ZONE
 
@@ -33,15 +33,16 @@ export default {
           
           setTimeout(function() {
             let  result = google.maps.geometry.poly.containsLocation(address, poligon);
-            console.log(result);
-            return
 
             if (result) {
+              
               console.log(result, el);
-              resolve(el)
+              resolve(result,el)
             } else {
-              resolve('No existe en ningun poligono')
+              resolve(result)
             }
+
+
           }, 2000);
         })
         // END - IF EXISTE LATLNG IN POLYGON ZONE
