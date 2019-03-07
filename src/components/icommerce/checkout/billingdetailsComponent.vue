@@ -18,7 +18,7 @@
 					<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg">Detalles de facturación</div>
 				</div>
 			</div>
-			<billingaddress-component :formData="parentData.billing" />
+			<billingaddress-component :type="1" :different="parentData.shipping.differentAddress" :formData="parentData.billing" />
 		</q-card>
 		<q-card class="no-shadow">
 			<div class="row">
@@ -38,7 +38,7 @@
 						<addresses-component :parentData="parentData.shipping"/>
 					</div>
 					<div v-else class="row">		
-						<billingaddress-component :formData="parentData.shipping" />
+						<billingaddress-component :type="2" :different="parentData.shipping.differentAddress" :formData="parentData.shipping" />
 					</div>
 				</div>
 			</transition>
@@ -68,6 +68,8 @@
 				userData: true,
 				addresses: [],
 				address : '',
+				products: [],
+				totalCart: 0,
 			}
 		},
 		created(){
@@ -75,6 +77,12 @@
 		},
 		mounted(){
 			this.setData()
+
+			this.getCart()
+
+			EventBus.$on('onblurmethodshipping', (data) => {
+				this.priceMethodsShipping(data)
+			})
 		},
 		methods:{
 			getCountries(){
@@ -110,12 +118,13 @@
 					this.addresses = (response.data.addresses)
 				})
 			},
-			getcart(){
+			getCart(){
 				helper.storage.get.item('cart_server').then(res => {
 				if (res !== null) {
 					cartService.show(res.id)
 					.then(response=>{
-						this.products = this.createObjectProducts(response.data)
+						this.products 	= this.createObjectProducts(response.data)
+						this.totalCart 	= response.data.total
 					})
 				}
 				})
@@ -123,13 +132,11 @@
 			createObjectProducts(data){
 				let products 	  	= data.products
 				let arrayproducts 	= []
-				arrayproducts.total	= data.total
-				arrayproducts.items = []
 
 				for (let index = 0; index < products.length; index++) {
 					let item = {
 						title: products[index].name,
-						price: products[index].price,
+						price: parseFloat(products[index].price),
 						weight: 1,
 						width: 1,
 						height: 1,
@@ -137,16 +144,14 @@
 						freeshipping: 0,
 						quantity: 1,
 					}
-					arrayproducts.items.push(item)
+					arrayproducts.push(item)
 				}
+
+				
 				return  {...arrayproducts} 
 			},
-			priceMethodsShipping(){
-				if(this.differentAddress == 'no'){
-					this.concatInfoShipping(this.billZipCode,this.Shipping.country,this.products.total,this.products.items)
-				}else{
-					this.concatInfoShipping(this.differentBillZipCode,this.Billing.country,this.products.total,this.products.items)
-				}
+			priceMethodsShipping(data){
+				this.concatInfoShipping(data.zip_code,data.country,this.totalCart,this.products)
 			},
 			concatInfoShipping(zipcode = '', country = '', total = 0 , products = {}){
 				var object = []

@@ -1,6 +1,5 @@
 <template>
-	<div class="">
-
+	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12">
 				<q-input 
 					type="text" 
@@ -52,7 +51,8 @@
 					v-model="formData.zip_code"  
 					float-label="Zip Code" 
 					style="background: transparent;" 
-					class="no-shadow" />
+					class="no-shadow"
+					v-on:blur="getDataShipping" />
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-12 q-my-md">
@@ -63,6 +63,7 @@
 					radio 
 					:options="countries"
 					@input="getProvinces()"
+					v-on:blur="getDataShipping"
 					class="q-select--app col-xs-12 col-sm-12 col-md-4" />
 			</div>
 
@@ -92,9 +93,10 @@
 
 <script>
 	import locationsService from 'src/services/locations'
+	import EventBus from 'src/utils/event-bus';
 
 	export default {
-		props:['formData'],
+		props:['formData','type','different'],
 		data(){
 			return {
 				countries: [],
@@ -134,11 +136,24 @@
 
 		      response.push({
 		        label: labelTitle,
-		        value: item.id.toString()
+		        value: item.iso_2.toString()
 		      });
 		    })
 		    return response
-		  }
+			},
+			getDataShipping(){
+				let data = {
+					zip_code 	: this.formData.zip_code,
+					country		: this.formData.country,
+				}
+				if(this.type == 1 && this.different == true){
+					EventBus.$emit('onblurmethodshipping', data)
+				}
+				
+				if(this.type == 2 && this.different == false){
+					EventBus.$emit('onblurmethodshipping', data)
+				}
+			}
 		}
 	}
 </script>
