@@ -94,7 +94,7 @@
 				.then(response =>{
 					this.products 		= response.data
 					this.showProduct 	= false
-					window.history.pushState(null, null, '/#/pide-en-linea/' + id);
+					//window.history.pushState(null, null, 'app/#/pide-en-linea/' + id);
 				})
 			},
 			productSelected(product){
