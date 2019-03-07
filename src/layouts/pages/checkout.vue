@@ -42,7 +42,7 @@
 			return{
 				order:{
 					customerInformation: {
-						userData: 0,
+						userData: false,
 						name: '',
 						lastName: '',
 						email: '',
@@ -98,6 +98,28 @@
 		methods:{
 			saveOrder(){
 				// PREPARING DATA
+
+				//validar si no esta autenticado
+				if (this.order.customerInformation.userData) {
+
+					let form = {
+						name: '',
+						lastName: '',
+						email: '',
+						phone: '',
+						password: '',
+						confirmPassword: '',
+					}
+					//register user
+
+
+					//start sesion
+
+					// register address
+
+				}
+
+				// data preparada, lista para enviar
 				let fotData = {
 					"cart_id": this.order.cart_id,
 					"address_payment_id": this.order.addreses.billing.address_id,
@@ -111,6 +133,18 @@
 					// PROCESING RESPONSE
 				})
 			},
+    	async authenticate() {
+        this.$v.$touch();
+        if (this.$v.$error) {
+          //alert.error('Please review fields again.', 'bottom');
+        } else {
+          const {username, password} = this.form;
+          this.$store.dispatch("auth/AUTH_REQUEST", {username, password}).then(response => {
+            this.loading_login = !this.loading_login;
+            this.$root.$emit('sesionStart')
+          });
+        }
+      },
 			getcart(){
         helper.storage.get.item('cart_server').then(res => {
           if (res !== null) {

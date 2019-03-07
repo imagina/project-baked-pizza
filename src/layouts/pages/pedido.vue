@@ -2,7 +2,7 @@
 	<div>
 		<breadcrumb name="Listado de Pedidos"></breadcrumb>
 
-		<div class="container-section" >
+		<div class="container-section" v-if="products.length">
 			<div class="row">
 				<div class="col-12">
 	    		<p class="q-display-2 color-baked-title" align="center">Listado de Pedidos</p>
@@ -69,6 +69,14 @@
 			</div>
 		</div>
 
+		<div class="container-section" v-else>
+				<div class="row" >
+					<div class="col-12" align="center">
+						<p class="q-display-2 color-baked-title" align="center">No ha agregado productos al carro</p>
+					</div>
+				</div>
+		</div>
+
     <section-carting-app></section-carting-app>
 	</div>
 </template>
@@ -83,7 +91,7 @@
 			return{
 				visible: false,
 				cart: [],
-				products: [],
+				products: false,
 			}
 		},
 		mounted(){
@@ -97,6 +105,7 @@
           	cartService.show(res.id)
           	.then(response=>{
           		this.cart = response.data
+          		this.products = response.data.products
           		this.visible = false
           		this.$root.$emit('updateCart')
           	})

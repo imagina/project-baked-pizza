@@ -3,7 +3,7 @@
 
 		<q-card class="no-shadow">
 			  <q-card-title>
-		    Direccion de Facturaciòn
+		    Direcciones
 		  </q-card-title>
 		  <q-card-separator />
 		  <q-card-main>
@@ -34,11 +34,22 @@
 		      </q-toolbar-title>
 		    </q-toolbar>
 		    <div class="layout-padding">
-					<q-card v-for="(address, index) in addresses" :key="index" class="no-shadow" >
-						  <q-card-title>
-					    Direccion de Facturaciòn
-					  </q-card-title>
-					  <q-card-separator />
+
+				
+					<q-card class="no-shadow">		    	
+						<q-card-main>
+							
+							<q-btn label=" Nueva dirección" size="xs" class="float-left" color="red" no-caps @click="formNewAddres = true"/>
+							<br><br>
+							<billingaddressComponent :formData="newAddres" v-if="formNewAddres"/>
+							<q-btn label="Guardar" size="xs" class="float-left" color="red" no-caps v-if="formNewAddres"/>
+							<br v-if="formNewAddres"><br v-if="formNewAddres">
+
+		    		</q-card-main>
+		    	</q-card>
+
+
+					<q-card v-for="(address, index) in addresses" :key="index" class="no-shadow">
 					  <q-card-main>
 					  	<div class="col-md-12 q-mt-sm">
 								<q-btn label=" Seleccionar" size="xs" class="float-right" color="red" no-caps @click="changeAddressSelected(address)"/>
@@ -60,17 +71,33 @@
 	</div>
 </template>
 <script>
+	import billingaddressComponent from 'src/components/icommerce/checkout/billingaddressComponent'
 	import {helper} from '@imagina/qhelper/_plugins/helper'
 	import profileService from 'src/services/profile'
 
 	export default {
+		components:{
+			billingaddressComponent
+		},
 		props: ['parentData'],
 		data(){
 			return {
 				visible: false,
 				opened: false,
-				addresses: [],
+				addresses: {
+					companyname: '',
+					name: '',
+					last_name: '',
+					address1: '',
+					address2: '',
+					zip_code: '',
+					country: '',
+					province: '',
+					city: '',
+				},
+				newAddres: false,
 				addressSelected: [],
+				formNewAddres: false,
 			}
 		},
 		created(){
