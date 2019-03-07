@@ -21,10 +21,11 @@
               <div class="q-my-lg" id="q-carousel-search">
 
                 <input type="text"  v-model="domicileaddress" required autofocus class="search" :disabled="!validaddress">
-                <input type="button" value="RECOGER" class="button button-search" :disabled="!validaddress" @click="checkValidAddress">
+                <input type="button" value="RECOGER" class="button button-search" :disabled="!validaddress" @click="getMapArea()">
               </div>
 
               <div class="q-my-lg" style="font-family: Muli">Paga tu pedido en línea de forma segura</div>
+              <pre>{{latlng}}</pre>
               <img src="statics/cards2.png">
             </div>
 
@@ -103,6 +104,7 @@
   import { Notify } from 'quasar'
   import store from 'src/store/cart/index'
   import { mapState } from 'vuex'
+  import http from 'axios'
 
   export default{
     components:{
@@ -115,6 +117,7 @@
         domicileaddress: '',
         categories: [],
         address: '',
+        latlng: false,
       }
     },
     mounted(){
@@ -123,38 +126,18 @@
     methods: {
       getMapArea(){
 
+        this.getLatLng(this.domicileaddress.replace(/ /g, "+"))
+        
+      },
+      getLatLng(address){
+        http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address+'+bogota,CO&key='+env('KEY_GOOGLE_MAPS'))
+        .then(response=>{
 
-        var geocoder = new google.maps.Geocoder();
+          this.latlng = response.data.results[0].geometry.location
+          console.log(response.data.results[0].geometry.location)
+          mapAreaService.index(new google.maps.LatLng(response.data.results[0].geometry.location))
 
-        let location = {
-          lat: '',
-          lng: ''
-        }
-
-        geocoder.geocode( { 'address': this.address}, (results, status) =>{
-          if (status == google.maps.GeocoderStatus.OK) {
-            location.lat = results[0].geometry.location.lat()
-            location.lng = results[0].geometry.location.lng()
-
-
-            let include = 'store'
-            mapAreaService.index(location, '', '', '', '', include)
-            .then(response=>{
-              
-            })
-
-
-
-
-          }          
         })
-
-
-
-
-
-
-
       },
       stateDomicicle(){
         this.$store.state.domicile = this.checkdomicile
