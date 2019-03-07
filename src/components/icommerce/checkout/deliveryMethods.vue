@@ -7,29 +7,21 @@
 				</div>
 			</div>
 			<div class="q-py-lg row">
-				<div class="col-xs-12 col-sm-12 col-md-12 q-py-xs" v-for="(item, index) in shippingMethods" :key="index">
-					<q-radio v-model="parentData.shippingMethod_name" :val="item.name" :label="item.title" />				
-				</div>				
-			</div>
-			<div class="q-py-lg row">
-				<div class="col-z-xs-12 col-sm-12 col-md-12">
-					{{ sippingprice }}
-					<div v-if="priceMethods.length > 0">
-						<div class="q-display-1 csh3__catering_title q-mt-xl q-mb-lg text-center">
-							Costo de Envio
-						</div>
-						<div v-for="(item, index) of priceMethods" :key="index">
-							<div v-if="item.calculations.status === 'success'" class="row item">
-								<div class="col-md-6">
-									<div class="q-title">{{ item.title }}</div>
-								</div>
-								<div class="col-md-6 text-right">
-									$ {{ item.calculations.price }}
-								</div>
+				<div v-if="priceMethods.length > 0" class="col-xs-12 col-sm-12 col-md-12 q-py-xs">
+					<div v-for="(item, index) of priceMethods" :key="index">
+						<div v-if="item.calculations.status === 'success'" class="row">
+							<div class="col-md-6">
+								<q-radio v-model="shippingMethodSelected" :val="item.name" :label="item.title" />
+							</div>
+							<div class="col-md-6 text-right">
+								$ {{ item.calculations.price }}
 							</div>
 						</div>
 					</div>
 				</div>
+				<div v-else class="col-xs-12 col-sm-12 col-md-12 q-py-xs" v-for="(item, index) in shippingMethods" :key="index">
+					<div class="q-title">{{ item.title }}</div>			
+				</div>				
 			</div>
 		</q-card>
 
@@ -47,13 +39,18 @@
 				shippingMethods: [],
 				shippingMethod: '',
 				priceMethods: [],
+				shippingMethodSelected: '',
 			}
 		},
 		mounted(){
+
 			this.getshippingMethods()
 
 			EventBus.$on('calculateshipping', (data) => {
 				this.priceMethods = data
+				if(this.priceMethods.length === 0){
+					this.shippingMethodSelected = ''
+				}
 			})
 		},
 		methods:{

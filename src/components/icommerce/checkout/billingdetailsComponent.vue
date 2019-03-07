@@ -155,7 +155,8 @@
 			},
 			concatInfoShipping(zipcode = '', country = '', total = 0 , products = {}){
 				var object = []
-				if(zipcode != '' && country != ''){
+
+				if(zipcode != '' && country != '' && Object.keys(products).length > 0){
 					object = {
 						options : {
 							countryCode : country,
