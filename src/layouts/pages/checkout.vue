@@ -79,7 +79,7 @@
 					},
 					shippingAndPay:{
 						paymentMethod_id: 0,
-						shippingMethod_id: 0,
+						shippingMethod_id: 1,
 						shippingMethod_name: 0,
 						details:{
 							distance: '',
@@ -128,7 +128,7 @@
 					"shipping_name": this.order.shippingAndPay.shippingMethod_name
 				}
 
-				orderService.create(fotData)
+				orderService.create({attributes: fotData})
 				.then(response=>{
 					// PROCESING RESPONSE
 				})

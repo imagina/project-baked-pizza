@@ -3,7 +3,7 @@
 
     <section class="row">
       <div class="col-xs-12 col-md-12">
-        <q-carousel 
+        <q-carousel  
           class="text-white" 
           arrows 
           infinite 
@@ -19,13 +19,15 @@
               <div class="q-display-2 q-my-lg">PARA LLEVAR <input class="toggle toggle__textless" type="checkbox" v-model="checkdomicile" @change="stateDomicicle" :value="domicile"> DOMICILIO</div>
               <div class="q-my-lg" style="font-family: Muli">(Para llevar te ahorra la fila y esperar)</div>
               <div class="q-my-lg" id="q-carousel-search">
+<pre>{{test}}</pre>
+                <input type="text"  v-model="domicileaddress" required autofocus class="search" :disabled="!validaddress" id="domicileaddress">
 
-                <input type="text"  v-model="domicileaddress" required autofocus class="search" :disabled="!validaddress">
+
                 <input type="button" value="RECOGER" class="button button-search" :disabled="!validaddress" @click="getMapArea()">
               </div>
 
               <div class="q-my-lg" style="font-family: Muli">Paga tu pedido en línea de forma segura</div>
-              <pre>{{latlng}}</pre>
+
               <img src="statics/cards2.png">
             </div>
 
@@ -100,7 +102,9 @@
   //components
   import mapAreaService from 'src/services/maparea'
   import categorieshomeComponent from 'src/components/icommerce/categorieshome'
+  import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
+  import {helper} from '@imagina/qhelper/_plugins/helper'
   import { Notify } from 'quasar'
   import store from 'src/store/cart/index'
   import { mapState } from 'vuex'
@@ -109,24 +113,34 @@
   export default{
     components:{
       categorieshomeComponent,
+      VueGoogleAutocomplete
     },
     store,
     data(){
       return{
         checkdomicile: this.$store.state.domicile,
         domicileaddress: '',
+        validaddress: true,
+        domicile:  true,
         categories: [],
         address: '',
         latlng: false,
+        test: [],
       }
     },
-    mounted(){
-
+    created(){
+      
     },
     methods: {
       getMapArea(){
 
-        this.getLatLng(this.domicileaddress.replace(/ /g, "+"))
+
+        mapAreaService.evalAdrres(this.domicileaddress)
+        .then(response=>{
+          this.test = response
+        })
+        
+        //this.getLatLng(this.domicileaddress.replace(/ /g, "+").replace('#', ""))
         
       },
       getLatLng(address){
@@ -153,19 +167,17 @@
       
     },
     computed: {
-      ...mapState(['domicile','validaddress'])
+      
     }
   }
 </script>
 
 <style >
 
-
  .yellow-texture{
 
   background: #F8b41c url('/statics/appbaked.png') no-repeat top right;
   background-size: 45%;
-
  }
 
  .red-texture{
@@ -173,7 +185,6 @@
 
   background: #C02400 url('/statics/textura6.png') no-repeat right top;  
  }
-
 
   .diagonal-texture{
     background: linear-gradient(to right bottom, #F5A613 50%, #C02400 50%);

@@ -4,3 +4,4 @@ export default ({ app, router, Vue }) => {
   autocompleteGoogle.setAttribute('src', 'https://maps.googleapis.com/maps/api/js?offset=5&key='+env('GOOGLE_APY_KEY')+'&libraries=geometry&places')
   document.head.appendChild(autocompleteGoogle)
 }
+

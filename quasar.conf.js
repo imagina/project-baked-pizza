@@ -11,6 +11,7 @@ module.exports = function (ctx) {
     // app plugins (/src/plugins)
     plugins: [
       'VueGoogleMaps',
+      
       'i18n',
       'vuelidate',
       'axios',
