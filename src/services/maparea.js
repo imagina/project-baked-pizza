@@ -23,8 +23,7 @@ export default {
           }
         })
       }, true).then(response => {
-
-
+        // >> START <<
         response.data.forEach( el => {
           let poligon = new google.maps.Polygon({paths: el.polygon})
           setTimeout(function() {
@@ -38,8 +37,7 @@ export default {
           }, 1000);
           return false
         })
-      
-
+        // >> END <<
       })
       .catch(error => {
         reject(error);
@@ -47,38 +45,43 @@ export default {
     });
   },
 
+  mapareas(filter, take, page, fields, include, refresh) {
+    filter = JSON.stringify(filter);
+    let key = ":" + JSON.stringify(filter + take + page + fields + include);
+    key = key == ":null" ? "" : key;
+    return new Promise((resolve, reject) => {
+      remember.async("mapareas" + key, 3600 * 3, () => {
+        return http.get(config('api.api_url') + '/icommerce/v3/mapareas', {
+          params: {
+            filter: filter,
+            take: take,
+            page: page,
+            fields: fields,
+            include: include
+          }
+        })
+      }, refresh).then(response => {
+        resolve(response);
+      })
+      .catch(error => {
+        reject(error);
+      });
+    });
+  },
 
-  evalAdrres(address){
+  latLng(address){
     let addressFormated = address.replace(/ /g, "+").replace('#', "")
     let resulsEval = {'status': false, 'data': []}
-    
-    new Promise((resolve, reject) => {
-    
-    http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+addressFormated+'+bogota,CO&key='+env('KEY_GOOGLE_MAPS'))
-    .then(response=>{
-      http.get(config('api.api_url') + '/icommerce/v3/mapareas')
-      .then(res=>{
-        res.data.data.forEach( el => {
-          let poligon = new google.maps.Polygon({paths: el.polygon})
-          setTimeout(function() {
-            let result = google.maps.geometry.poly.containsLocation(new google.maps.LatLng(response.data.results[0].geometry.location), poligon);
-            if (result) {
-              
-              resolve({result, el})
-            }
-          }, 500);
-        })
-
+    return new Promise((resolve, reject) => {
+      http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+addressFormated+'+bogota,CO&key='+env('KEY_GOOGLE_MAPS'))
+      .then(response=>{
+        resolve(new google.maps.LatLng(response.data.results[0].geometry.location)); // >>>THIS IS TE ADDRES IN LATLNG FORMAT
       })
-    })
-    
+      .catch(error => {
+        reject(error);
+      })
     });
-  }
+  },
 
-
-
-
-
+  // ... More functionss
 }
-
-

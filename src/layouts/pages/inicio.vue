@@ -13,44 +13,9 @@
           :height="this.$q.platform.is.desktop ? '880px' : '350px'"
           >
           <q-carousel-slide img-src="statics/sliders/1.jpg" class="flex flex-center">
-
-            <div class="text-center">
-              <div class="q-display-1 q-my-lg">¡ACEPTANDO PEDIDOS!</div>
-              <div class="q-display-2 q-my-lg">PARA LLEVAR <input class="toggle toggle__textless" type="checkbox" v-model="checkdomicile" @change="stateDomicicle" :value="domicile"> DOMICILIO</div>
-              <div class="q-my-lg" style="font-family: Muli">(Para llevar te ahorra la fila y esperar)</div>
-              <div class="q-my-lg" id="q-carousel-search">
-<pre>{{test}}</pre>
-                <input type="text"  v-model="domicileaddress" required autofocus class="search" :disabled="!validaddress" id="domicileaddress">
-
-
-                <input type="button" value="RECOGER" class="button button-search" :disabled="!validaddress" @click="getMapArea()">
-              </div>
-
-              <div class="q-my-lg" style="font-family: Muli">Paga tu pedido en línea de forma segura</div>
-
-              <img src="statics/cards2.png">
-            </div>
-
-          </q-carousel-slide>
-          <q-carousel-slide img-src="statics/sliders/2.jpg" class="flex flex-center">
-            <div class="text-center">
-              <div class="q-display-3">Lorem ipsum dolor sit amet.</div>
-            </div>
-          </q-carousel-slide>
-          <q-carousel-slide img-src="statics/sliders/3.jpg" class="flex flex-center">
-            <div class="text-center">
-              <div class="q-display-3">Lorem ipsum dolor sit amet.</div>
-            </div>
-          </q-carousel-slide>
-          <q-carousel-slide img-src="statics/sliders/4.jpg" class="flex flex-center">
-            <div class="text-center">
-              <div class="q-display-3">Lorem ipsum dolor sit amet.</div>
-            </div>
-          </q-carousel-slide>
-          <q-carousel-slide img-src="statics/sliders/5.jpg" class="flex flex-center">
-            <div class="text-center">
-              <div class="q-display-3">Lorem ipsum dolor sit amet.</div>
-            </div>
+            <!--== START VALIDATE ADDRESS ==-->
+            <validateaddress-component/>
+            <!--== END VALIDATE ADDRESS ==-->
           </q-carousel-slide>
         </q-carousel>
       </div>
@@ -78,7 +43,9 @@
       </div>
     </section>
     
-    <section-carting-app></section-carting-app>
+    <!--== START CATERING ==-->
+    <section-carting-app />
+    <!--== END CATERING ==-->
 
     <section class="container-fluid q-pb-lg" style="background: url('statics/textura.jpg')">
       <div class="container-section">
@@ -88,87 +55,24 @@
             <div class="q-display-3 color-baked-subtitle" align="center">CONOCE NUESTRO MENÚ</div>
           </div>
         </div>
-          <!-- start Categories -->
-            <categorieshomeComponent />
-          <!-- End Categories -->
-        
+          <!--== START CATEGORIES ==-->
+          <categorieshomeComponent />
+          <!--== END CATEGORIES ==-->
       </div>
     </section>
+
   </div>
 </template>
 
 <script>
-
-  //components
-  import mapAreaService from 'src/services/maparea'
   import categorieshomeComponent from 'src/components/icommerce/categorieshome'
-  import VueGoogleAutocomplete from 'vue-google-autocomplete'
-
-  import {helper} from '@imagina/qhelper/_plugins/helper'
-  import { Notify } from 'quasar'
-  import store from 'src/store/cart/index'
-  import { mapState } from 'vuex'
-  import http from 'axios'
-
+  import validateaddressComponent from 'src/components/icommerce/validateAddress'
+  
   export default{
     components:{
       categorieshomeComponent,
-      VueGoogleAutocomplete
+      validateaddressComponent,
     },
-    store,
-    data(){
-      return{
-        checkdomicile: this.$store.state.domicile,
-        domicileaddress: '',
-        validaddress: true,
-        domicile:  true,
-        categories: [],
-        address: '',
-        latlng: false,
-        test: [],
-      }
-    },
-    created(){
-      
-    },
-    methods: {
-      getMapArea(){
-
-
-        mapAreaService.evalAdrres(this.domicileaddress)
-        .then(response=>{
-          this.test = response
-        })
-        
-        //this.getLatLng(this.domicileaddress.replace(/ /g, "+").replace('#', ""))
-        
-      },
-      getLatLng(address){
-        http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address+'+bogota,CO&key='+env('KEY_GOOGLE_MAPS'))
-        .then(response=>{
-
-          this.latlng = response.data.results[0].geometry.location
-          console.log(response.data.results[0].geometry.location)
-          mapAreaService.index(new google.maps.LatLng(response.data.results[0].geometry.location))
-
-        })
-      },
-      stateDomicicle(){
-        this.$store.state.domicile = this.checkdomicile
-      },
-      checkValidAddress(){
-        if(this.domicileaddress !== '' && this.$store.state.domicile){
-          this.$store.state.validaddress = false
-          setTimeout(() => this.$store.state.validaddress = true, 4000);
-        }
-      },
-    },
-    mounted() {
-      
-    },
-    computed: {
-      
-    }
   }
 </script>
 
@@ -227,268 +131,268 @@
     border: 2px #EB3800 solid;
   }
 
-
-input.toggle {
-  position: relative;
-  width: 90px;
-  height: 42px;
-  -webkit-appearance: initial;
-  -moz-appearance: initial;
-  appearance: initial;
-  border-radius: 21px;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  outline: none;
-  cursor: pointer;
-  transition: all .3s ease;
-}
-input.toggle:before, input.toggle:after {
-  transition: all .3s ease;
-}
-input.toggle:before {
-  content: "";
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  top: 50%;
-  left: calc(0% + 8px);
-  transform: translate3d(0, -50%, 0);
-  border-radius: 50%;
-}
-input.toggle:after {
-  content: "OFF";
-  position: absolute;
-  top: 50%;
-  left: calc(0% + 24px + 16px);
-  transform: translate3d(0, -50%, 0);
-  font-size: 20px;
-}
-input.toggle:checked {
-  border-bottom-color: #0facf3;
-}
-input.toggle:checked:before {
-  left: calc(100% - 24px - 8px);
-  transform: translate3d(0, -50%, 0);
-  border-radius: 50%;
-}
-input.toggle:checked:after {
-  content: "ON";
-  left: calc(0% + 16px);
-}
-input.toggle__light {
-  background: #f0f1f2;
-  border-bottom: 2px solid #dddddd;
-  font-weight: 500;
-}
-input.toggle__light:before {
-  background: #3c4859;
-}
-input.toggle__light:after {
-  color: #3c4859;
-}
-input.toggle__light:checked {
-  border-color: #4cd964;
-}
-input.toggle__light:checked:before {
-  background: #4cd964;
-}
-input.toggle__light:checked:after {
-  color: #4cd964;
-}
-input.toggle__textless {
-  background: #f0f1f2;
-  border-bottom: 2px solid #ddd;
-  width: 80px;
-}
-input.toggle__textless:before {
-  background: #EC3800;
-  border: 2px solid #f0f1f2;
-  width: 28px;
-  height: 28px;
-}
-input.toggle__textless:after {
-  content: none;
-}
-input.toggle__textless:checked {
-  border-color: black;
-}
-input.toggle__textless:checked:before {
-  left: calc(100% - 30px - 8px);
-  background: #EC3800;
-}
-input.toggle__textless:checked:after {
-  content: none;
-}
-input.toggle__outline {
-  background: #transparent;
-  border: 2px solid #fff;
-}
-input.toggle__outline:before {
-  background: transparent;
-  border: 2px solid #f0f1f2;
-}
-input.toggle__outline:after {
-  color: #f0f1f2;
-}
-input.toggle__outline:checked {
-  border-color: #fff;
-}
-input.toggle__outline:checked:before {
-  border: 2px solid #fff;
-  left: calc(100% - 28px - 8px);
-  background: #fff;
-}
-input.toggle__outline:checked:after {
-  color: #fff;
-}
-
-@media screen and (min-width: 700px)
-{
-  #q-carousel-search
-  {
-    width: 600px;
-    max-width: 100%;
+  input.toggle {
+    position: relative;
+    width: 90px;
+    height: 42px;
+    -webkit-appearance: initial;
+    -moz-appearance: initial;
+    appearance: initial;
+    border-radius: 21px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    outline: none;
+    cursor: pointer;
+    transition: all .3s ease;
   }
-}
+  input.toggle:before, input.toggle:after {
+    transition: all .3s ease;
+  }
+  input.toggle:before {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    left: calc(0% + 8px);
+    transform: translate3d(0, -50%, 0);
+    border-radius: 50%;
+  }
+  input.toggle:after {
+    content: "OFF";
+    position: absolute;
+    top: 50%;
+    left: calc(0% + 24px + 16px);
+    transform: translate3d(0, -50%, 0);
+    font-size: 20px;
+  }
+  input.toggle:checked {
+    border-bottom-color: #0facf3;
+  }
+  input.toggle:checked:before {
+    left: calc(100% - 24px - 8px);
+    transform: translate3d(0, -50%, 0);
+    border-radius: 50%;
+  }
+  input.toggle:checked:after {
+    content: "ON";
+    left: calc(0% + 16px);
+  }
+  input.toggle__light {
+    background: #f0f1f2;
+    border-bottom: 2px solid #dddddd;
+    font-weight: 500;
+  }
+  input.toggle__light:before {
+    background: #3c4859;
+  }
+  input.toggle__light:after {
+    color: #3c4859;
+  }
+  input.toggle__light:checked {
+    border-color: #4cd964;
+  }
+  input.toggle__light:checked:before {
+    background: #4cd964;
+  }
+  input.toggle__light:checked:after {
+    color: #4cd964;
+  }
+  input.toggle__textless {
+    background: #f0f1f2;
+    border-bottom: 2px solid #ddd;
+    width: 80px;
+  }
+  input.toggle__textless:before {
+    background: #EC3800;
+    border: 2px solid #f0f1f2;
+    width: 28px;
+    height: 28px;
+  }
+  input.toggle__textless:after {
+    content: none;
+  }
+  input.toggle__textless:checked {
+    border-color: black;
+  }
+  input.toggle__textless:checked:before {
+    left: calc(100% - 30px - 8px);
+    background: #EC3800;
+  }
+  input.toggle__textless:checked:after {
+    content: none;
+  }
+  input.toggle__outline {
+    background: #transparent;
+    border: 2px solid #fff;
+  }
+  input.toggle__outline:before {
+    background: transparent;
+    border: 2px solid #f0f1f2;
+  }
+  input.toggle__outline:after {
+    color: #f0f1f2;
+  }
+  input.toggle__outline:checked {
+    border-color: #fff;
+  }
+  input.toggle__outline:checked:before {
+    border: 2px solid #fff;
+    left: calc(100% - 28px - 8px);
+    background: #fff;
+  }
+  input.toggle__outline:checked:after {
+    color: #fff;
+  }
 
-.search {
-  padding: 14px 14px 10px 14px;
-  width: 75%;
-  border:0px solid #dbdbdb;
-  border-radius: 7px 0px 0px 7px;
-}
-
-.button {
-  position:relative;
-  padding:6px 15px;
-  left:-8px;
-  width: 25%;
-  border:2px solid #EC3800;
-  border-radius: 0px 7px 7px 0px;
-  background-color:#EC3800;
-  color:#fafafa;
-  cursor: pointer;
-}
-.button-search
-{
-  font-size: 1.4rem;
-  left: 0px;
-  margin: auto;
-  border-width: 1px;
-  padding: 10px 14px 8px 14px;
-}
-
-.button-search:disabled {
-    color: #ffffff7a !important;
-}
-
-.color-baked-title{
-  color: #EB3800;
-}
-
-.color-baked-subtitle{
-  color: #723D3D;
-}
-
-.color-baked-subtitle-1{
-  color: #F5A613;
-}
-
-
-.q-carousel-quick-nav
-{
-    text-align: right;
-    background-color: transparent;
-}
-.q-carousel-quick-nav .q-btn-dense
-{
-    border: 2px solid white;
-    opacity: 1;
-    height: 2rem;
-    width: 2rem;
-    margin: 8px;
-}
-.q-carousel-quick-nav .q-btn-dense.inactive
-{
-  opacity: 1;
-}
-.q-carousel-quick-nav .q-btn-dense:not(.inactive),
-.q-carousel-quick-nav .q-btn-dense:hover,
-.q-carousel-quick-nav .q-btn-dense:hover .q-btn-inner,
-.q-carousel-quick-nav .q-btn-dense:not(.inactive) .q-btn-inner 
-{
-  border-color: #f44336;
-  color: #f44336;
-}
-
-.vertical-align-center {
-    display: flex;
-    align-items: center;
-}
-.csh3
-{
-  background-image: url('/statics/textura7.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-.csh3__app_col
-{
-    display: flex;
-    align-items: center;
-}
-.csh3__catering_col
-{
-  background-position: right;
-  padding-left: 2rem;
-    display: flex;
-    align-items: center;
-}
-.csh3__catering_title,
-.csh3__catering_email
-{
-  color: #F8B41C;
-}
-.csh3__app_col .csh3__content
-{
-  width: 50%;
-  padding-left: 2rem;
-}
-.csh3__app_col .csh3__content,
-.csh3__catering_col .csh3__content
-{
-  padding-top: 60px;
-  padding-bottom: 60px;
-  
-}
-.csh3__catering_col .csh3__content
-{
-  width: 80%;
-}
-.csh3 > .row
-{
-  min-height: 100%;
-}
-@media screen and (max-width: 768px)
-{
-  .csh3 .container-section
+  @media screen and (min-width: 700px)
   {
-    padding: 0px !important;
+    #q-carousel-search
+    {
+      width: 600px;
+      max-width: 100%;
+    }
+  }
+
+  .search {
+    padding: 14px 14px 10px 14px;
+    width: 75%;
+    border:0px solid #dbdbdb;
+    border-radius: 7px 7px 7px 7px;
+  }
+
+  .button {
+    position:relative;
+    padding:6px 15px;
+    left:-8px;
+    width: 30%;
+    border:2px solid #EC3800;
+    border-radius: 7px 7px 7px 7px;
+    background-color:#EC3800;
+    color:#fafafa;
+    cursor: pointer;
+  }
+  .button-search
+  {
+    font-size: 1.4rem;
+    left: 0px;
+    margin: auto;
+    margin-top: 10px;
+    border-width: 1px;
+    padding: 10px 14px 8px 14px;
+  }
+
+  .button-search:disabled {
+      color: #ffffff7a !important;
+  }
+
+  .color-baked-title{
+    color: #EB3800;
+  }
+
+  .color-baked-subtitle{
+    color: #723D3D;
+  }
+
+  .color-baked-subtitle-1{
+    color: #F5A613;
+  }
+
+
+  .q-carousel-quick-nav
+  {
+      text-align: right;
+      background-color: transparent;
+  }
+  .q-carousel-quick-nav .q-btn-dense
+  {
+      border: 2px solid white;
+      opacity: 1;
+      height: 2rem;
+      width: 2rem;
+      margin: 8px;
+  }
+  .q-carousel-quick-nav .q-btn-dense.inactive
+  {
+    opacity: 1;
+  }
+  .q-carousel-quick-nav .q-btn-dense:not(.inactive),
+  .q-carousel-quick-nav .q-btn-dense:hover,
+  .q-carousel-quick-nav .q-btn-dense:hover .q-btn-inner,
+  .q-carousel-quick-nav .q-btn-dense:not(.inactive) .q-btn-inner 
+  {
+    border-color: #f44336;
+    color: #f44336;
+  }
+
+  .vertical-align-center {
+      display: flex;
+      align-items: center;
+  }
+  .csh3
+  {
+    background-image: url('/statics/textura7.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
   }
   .csh3__app_col
   {
-    background-image: url('/statics/textura4-md.png');
-    background-size: cover;
+      display: flex;
+      align-items: center;
   }
   .csh3__catering_col
   {
-    background-image: url('/statics/textura5.png');
+    background-position: right;
+    padding-left: 2rem;
+      display: flex;
+      align-items: center;
   }
-}
-@media screen and (max-width: 768px)
-{ 
-  .csh3
+  .csh3__catering_title,
+  .csh3__catering_email
   {
-    background-image: none;
+    color: #F8B41C;
   }
-}
+  .csh3__app_col .csh3__content
+  {
+    width: 50%;
+    padding-left: 2rem;
+  }
+  .csh3__app_col .csh3__content,
+  .csh3__catering_col .csh3__content
+  {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    
+  }
+  .csh3__catering_col .csh3__content
+  {
+    width: 80%;
+  }
+  .csh3 > .row
+  {
+    min-height: 100%;
+  }
+  @media screen and (max-width: 768px)
+  {
+    .csh3 .container-section
+    {
+      padding: 0px !important;
+    }
+    .csh3__app_col
+    {
+      background-image: url('/statics/textura4-md.png');
+      background-size: cover;
+    }
+    .csh3__catering_col
+    {
+      background-image: url('/statics/textura5.png');
+    }
+  }
+  @media screen and (max-width: 768px)
+  { 
+    .csh3
+    {
+      background-image: none;
+    }
+  }
 </style>
