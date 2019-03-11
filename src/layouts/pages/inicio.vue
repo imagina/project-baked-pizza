@@ -2,24 +2,14 @@
   <div>
 
     <section class="row">
-      <div class="col-xs-12 col-md-12">
-        <q-carousel  
-          class="text-white" 
-          arrows 
-          infinite 
-          color="white" 
-          quick-nav 
-          maximized 
-          :height="this.$q.platform.is.desktop ? '880px' : '350px'"
-          >
-          <q-carousel-slide img-src="statics/sliders/1.jpg" class="flex flex-center">
-
-            <div class="text-center">
-              <div class="q-display-1 q-my-lg">¡ACEPTANDO PEDIDOS!</div>
+      <div class="col-xs-12 col-md-12"  style="position: relative;">
+        <div class="islider-inner">
+          <div class="islider-inner-details text-white text-center">
+            <div class="q-display-1 q-my-lg">¡ACEPTANDO PEDIDOS!</div>
               <div class="q-display-2 q-my-lg">PARA LLEVAR <input class="toggle toggle__textless" type="checkbox" v-model="checkdomicile" @change="stateDomicicle" :value="domicile"> DOMICILIO</div>
               <div class="q-my-lg" style="font-family: Muli">(Para llevar te ahorra la fila y esperar)</div>
               <div class="q-my-lg" id="q-carousel-search">
-<pre>{{test}}</pre>
+              <pre>{{test}}</pre>
                 <input type="text"  v-model="domicileaddress" required autofocus class="search" :disabled="!validaddress" id="domicileaddress">
 
 
@@ -29,29 +19,22 @@
               <div class="q-my-lg" style="font-family: Muli">Paga tu pedido en línea de forma segura</div>
 
               <img src="statics/cards2.png">
-            </div>
-
-          </q-carousel-slide>
-          <q-carousel-slide img-src="statics/sliders/2.jpg" class="flex flex-center">
-            <div class="text-center">
-              <div class="q-display-3">Lorem ipsum dolor sit amet.</div>
-            </div>
-          </q-carousel-slide>
-          <q-carousel-slide img-src="statics/sliders/3.jpg" class="flex flex-center">
-            <div class="text-center">
-              <div class="q-display-3">Lorem ipsum dolor sit amet.</div>
-            </div>
-          </q-carousel-slide>
-          <q-carousel-slide img-src="statics/sliders/4.jpg" class="flex flex-center">
-            <div class="text-center">
-              <div class="q-display-3">Lorem ipsum dolor sit amet.</div>
-            </div>
-          </q-carousel-slide>
-          <q-carousel-slide img-src="statics/sliders/5.jpg" class="flex flex-center">
-            <div class="text-center">
-              <div class="q-display-3">Lorem ipsum dolor sit amet.</div>
-            </div>
-          </q-carousel-slide>
+          </div>
+        </div>
+        <q-carousel  
+          class="text-white" 
+          arrows 
+          infinite 
+          color="white" 
+          quick-nav 
+          maximized 
+          :height="this.$q.platform.is.desktop ? '880px' : '350px'"
+          >
+          <q-carousel-slide img-src="statics/sliders/1.jpg" class="flex flex-center"></q-carousel-slide>
+          <q-carousel-slide img-src="statics/sliders/2.jpg" class="flex flex-center"></q-carousel-slide>
+          <q-carousel-slide img-src="statics/sliders/3.jpg" class="flex flex-center"></q-carousel-slide>
+          <q-carousel-slide img-src="statics/sliders/4.jpg" class="flex flex-center"></q-carousel-slide>
+          <q-carousel-slide img-src="statics/sliders/5.jpg" class="flex flex-center"></q-carousel-slide>
         </q-carousel>
       </div>
     </section>
@@ -467,6 +450,14 @@ input.toggle__outline:checked:after {
 .csh3 > .row
 {
   min-height: 100%;
+}
+.islider-inner{
+  position: absolute;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
 }
 @media screen and (max-width: 768px)
 {
