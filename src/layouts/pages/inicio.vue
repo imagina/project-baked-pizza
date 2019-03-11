@@ -2,6 +2,7 @@
   <div>
 
     <section class="row">
+
       <div class="col-xs-12 col-md-12">
         <q-carousel  
           class="text-white" 
@@ -17,6 +18,7 @@
             <validateaddress-component/>
             <!--== END VALIDATE ADDRESS ==-->
           </q-carousel-slide>
+
         </q-carousel>
       </div>
     </section>
@@ -303,6 +305,7 @@
       text-align: right;
       background-color: transparent;
   }
+
   .q-carousel-quick-nav .q-btn-dense
   {
       border: 2px solid white;
@@ -311,10 +314,12 @@
       width: 2rem;
       margin: 8px;
   }
+
   .q-carousel-quick-nav .q-btn-dense.inactive
   {
     opacity: 1;
   }
+
   .q-carousel-quick-nav .q-btn-dense:not(.inactive),
   .q-carousel-quick-nav .q-btn-dense:hover,
   .q-carousel-quick-nav .q-btn-dense:hover .q-btn-inner,
@@ -324,10 +329,18 @@
     color: #f44336;
   }
 
+
   .vertical-align-center {
       display: flex;
       align-items: center;
   }
+  .csh3
+
+  .vertical-align-center {
+    display: flex;
+    align-items: center;
+  }
+
   .csh3
   {
     background-image: url('/statics/textura7.jpg');
@@ -337,41 +350,56 @@
   }
   .csh3__app_col
   {
-      display: flex;
-      align-items: center;
+    display: flex;
+    align-items: center;
   }
-  .csh3__catering_col
-  {
-    background-position: right;
-    padding-left: 2rem;
-      display: flex;
-      align-items: center;
-  }
-  .csh3__catering_title,
-  .csh3__catering_email
-  {
-    color: #F8B41C;
-  }
-  .csh3__app_col .csh3__content
-  {
-    width: 50%;
-    padding-left: 2rem;
-  }
-  .csh3__app_col .csh3__content,
-  .csh3__catering_col .csh3__content
-  {
-    padding-top: 60px;
-    padding-bottom: 60px;
-    
-  }
-  .csh3__catering_col .csh3__content
-  {
-    width: 80%;
-  }
-  .csh3 > .row
-  {
-    min-height: 100%;
-  }
+
+.csh3__catering_col
+{
+  background-position: right;
+  padding-left: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.csh3__catering_title,
+.csh3__catering_email
+{
+  color: #F8B41C;
+}
+
+.csh3__app_col .csh3__content
+{
+  width: 50%;
+  padding-left: 2rem;
+}
+
+.csh3__app_col .csh3__content,
+.csh3__catering_col .csh3__content
+{
+  padding-top: 60px;
+  padding-bottom: 60px;  
+}
+
+.csh3__catering_col .csh3__content
+{
+  width: 80%;
+}
+
+.csh3 > .row
+{
+  min-height: 100%;
+}
+.islider-inner{
+  position: absolute;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+
+
   @media screen and (max-width: 768px)
   {
     .csh3 .container-section
