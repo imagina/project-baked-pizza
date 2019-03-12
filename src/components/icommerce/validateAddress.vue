@@ -7,7 +7,8 @@
 			RECOGER EN TIENDA
 			<input 
 				class="toggle toggle__textless" 
-				type="checkbox" 
+				type="checkbox"
+				@change="handleChangeCheckbox()"
 				v-model="typeOrder"> 
 				DOMICILIO
 		</div>
@@ -62,26 +63,61 @@
 			</div>
 		</div>
 
-
-
 		<img src="statics/cards2.png">
 		<div class="" style="font-family: Muli">
 			Paga tu pedido en línea de forma segura
 		</div>
-		
+
+		<!--==================== MODAL  =============-->
+		<q-modal v-model="opened" :content-css="{minWidth: '80vw'}">
+			<q-modal-layout>
+				<q-toolbar slot="header">
+					<q-btn
+		        flat
+		        round
+		        dense
+		        v-close-overlay
+		        icon="close"
+		      />
+	      	<q-toolbar-title>
+	        	Cobertura
+	      	</q-toolbar-title>
+				</q-toolbar>
+				<div class="layout-padding">
+					<pre> {{areasValidated}}</pre>
+					<gmap-map
+			      :center="addresslatLng"
+			      :zoom="16"
+			      style="width:100%;  height: 380px;"
+			    	>
+      			<gmap-marker
+		        :key="index"
+		        v-for="(m, index) in markers"
+		        :label='m.label'
+		        :position="m.position"
+		        :icon='m.icon'
+		        :clickable="true"
+		        @click="center=m.position"
+		      ></gmap-marker>
+    			</gmap-map>
+				</div>
+			</q-modal-layout>
+		</q-modal>
+		<!--================ MODAL ==============-->
 
 	</div>
 </template>
 
 <script>
 
+	import {helper} from '@imagina/qhelper/_plugins/helper'
 	import {alert} from '@imagina/qhelper/_plugins/alert'
 	import mapAreaService from 'src/services/maparea'
 
 	export default {
 		data(){
 			return{
-				visible: false,
+				opened: false,
 				areas: [],
 				areasValidated: false,
 				typeOrder: false,
@@ -94,12 +130,15 @@
 					{name : 'Transversal'},
 					{name : 'Vía'},
 				],
+				addresslatLng: {lat:0, lng: 0},
+				markers: [],
 				typeStreet: '',
 				street: '',
 				number1: '',
 				number2: '',
+				map: false,
+				//
 			}
-			//
 		},
 		computed: {
 			fullAddress(){
@@ -108,7 +147,8 @@
 		},
 		mounted() {
 			this.$nextTick(() => {
-				this.getMapAreas()	
+				this.getMapAreas()
+				this.initCheckbox()
 			});
     },
 		methods: {
@@ -122,29 +162,48 @@
         })
       },
       evalAddress(){
-
         mapAreaService.latLng(this.fullAddress)
         .then(response=>{
-     	
-        	let areasValidated = []
+     			this.addresslatLng = response.coordenades
+     			helper.storage.set('addresslatLng', response.result)
+     			helper.storage.set('address', this.fullAddress)
+     			this.markers = [
+     				{ 
+     					position: { "lat": 4.6365976, "lng": -74.1658186 },
+     					icon: 'statics/favicon.png'
+     				}, 
+     				{ 
+     					position: response.coordenades,
+     				}
+     			]
+        	var areasValidated = []
           this.areas.forEach( area => {
-
             let poligon = new google.maps.Polygon({paths: area.polygon})
             setTimeout(function() {
-    				let result = google.maps.geometry.poly.containsLocation(response, poligon)
-    				if (result) {
-    					areasValidated.push({area: area, coberture: result});	
-    				}
+	    				let result = google.maps.geometry.poly.containsLocation(response.coordenades, poligon)
+	    				if (result) {
+	    					areasValidated.push({area: area.id, coberture: result});	
+	    				}
     				}, 1000)
-    				
           })
           this.areasValidated = areasValidated
-          
+          helper.storage.set('areasValidated', this.areasValidated)
+          this.opened = true
         })
         .catch(error=>{
           console.warn(error)
         })
       },
+      initCheckbox(){
+      	helper.storage.get.item('typeOrder').then(res => {
+          if (res !== null) {
+            this.typeOrder = res
+          }
+        })
+      },
+      handleChangeCheckbox(){
+      	helper.storage.set('typeOrder', this.typeOrder)
+      }
       //
 		}
 

@@ -70,12 +70,17 @@ export default {
   },
 
   latLng(address){
-    let addressFormated = address.replace(/ /g, "+").replace('#', "")
+    let addressFormated = address.replace(/ /g, "+").replace('#', "numero+")
     let resulsEval = {'status': false, 'data': []}
     return new Promise((resolve, reject) => {
       http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+addressFormated+'+bogota,CO&key='+env('KEY_GOOGLE_MAPS'))
       .then(response=>{
-        resolve(new google.maps.LatLng(response.data.results[0].geometry.location)); // >>>THIS IS TE ADDRES IN LATLNG FORMAT
+        resolve(
+          {
+            coordenades: new google.maps.LatLng(response.data.results[0].geometry.location), 
+            result: response.data.results[0].geometry.location
+          }
+        ); // >>>THIS IS TE ADDRES IN LATLNG FORMAT
       })
       .catch(error => {
         reject(error);
