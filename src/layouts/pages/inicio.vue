@@ -3,7 +3,14 @@
 
     <section class="row">
 
-      <div class="col-xs-12 col-md-12">
+      <div class="col-xs-12 col-md-12" style="position: relative;">
+        <div class="islider-inner">
+          <div class="islider-inner-details text-white text-center">
+            <!--== START VALIDATE ADDRESS ==-->
+            <validateaddress-component/>
+            <!--== END VALIDATE ADDRESS ==-->
+          </div>
+        </div>
         <q-carousel  
           class="text-white" 
           arrows 
@@ -13,11 +20,9 @@
           maximized 
           :height="this.$q.platform.is.desktop ? '880px' : '350px'"
           >
-          <q-carousel-slide img-src="statics/sliders/1.jpg" class="flex flex-center">
-            <!--== START VALIDATE ADDRESS ==-->
-            <validateaddress-component/>
-            <!--== END VALIDATE ADDRESS ==-->
-          </q-carousel-slide>
+          <q-carousel-slide img-src="statics/sliders/1.jpg" class="flex flex-center"></q-carousel-slide>
+          <q-carousel-slide img-src="statics/sliders/1.jpg" class="flex flex-center"></q-carousel-slide>
+          <q-carousel-slide img-src="statics/sliders/1.jpg" class="flex flex-center"></q-carousel-slide>
 
         </q-carousel>
       </div>
