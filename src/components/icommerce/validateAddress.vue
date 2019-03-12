@@ -84,11 +84,11 @@
 	      	</q-toolbar-title>
 				</q-toolbar>
 				<div class="layout-padding">
-					<pre> {{areasValidated}}</pre>
+					
 					<gmap-map
 			      :center="addresslatLng"
-			      :zoom="16"
-			      style="width:100%;  height: 380px;"
+			      :zoom="17.5"
+			      style="width:100%;  height: 700px;"
 			    	>
       			<gmap-marker
 		        :key="index"
@@ -149,6 +149,7 @@
 			this.$nextTick(() => {
 				this.getMapAreas()
 				this.initCheckbox()
+				this.initAddress()
 			});
     },
 		methods: {
@@ -162,11 +163,20 @@
         })
       },
       evalAddress(){
+
+
+
+
         mapAreaService.latLng(this.fullAddress)
         .then(response=>{
      			this.addresslatLng = response.coordenades
      			helper.storage.set('addresslatLng', response.result)
-     			helper.storage.set('address', this.fullAddress)
+     			helper.storage.set('address', {
+     				typeStreet: this.typeStreet,
+						street: this.street,
+						number1: this.number1,
+						number2: this.number2,
+     			})
      			this.markers = [
      				{ 
      					position: { "lat": 4.6365976, "lng": -74.1658186 },
@@ -188,16 +198,37 @@
           })
           this.areasValidated = areasValidated
           helper.storage.set('areasValidated', this.areasValidated)
-          this.opened = true
+          
+          
+          if (this.typeOrder) {
+      			console.log('show disponibilidad de envio')
+      		}else{
+      			this.opened = true
+					}
+
         })
         .catch(error=>{
           console.warn(error)
         })
+
+
       },
       initCheckbox(){
       	helper.storage.get.item('typeOrder').then(res => {
           if (res !== null) {
             this.typeOrder = res
+          }
+        })
+      },
+      initAddress(){
+      	helper.storage.get.item('address').then(res => {
+          if (res !== null) {
+            //this.typeOrder = res
+            console.log(res)
+          	this.typeStreet = res.typeStreet
+						this.street = res.street
+						this.number1 = res.number1
+						this.number2 = res.number2
           }
         })
       },
