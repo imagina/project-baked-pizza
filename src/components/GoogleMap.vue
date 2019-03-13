@@ -20,21 +20,13 @@ export default {
   name: "GoogleMap",
   data() {
     return {
-      // default to Montreal to keep it simple
-      // change this to whatever makes sense
       center: { lat: 4.6361606, lng: -74.16523990000002 },
       markers: [ { "position": { "lat": 4.6361606, "lng": -74.16523990000002 } } ],
       places: [],
       currentPlace: null
     };
   },
-
-  mounted() {
-
-  },
-
   methods: {
-    // receives a place object via the autocomplete component
     setPlace(place) {
       this.currentPlace = place;
     },
