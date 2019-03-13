@@ -139,6 +139,7 @@
 				this.getMapAreas()
 				this.initCheckbox()
 				this.initAddress()
+				this.initifcoberture()
 			});
     },
 		methods: {
@@ -153,7 +154,9 @@
       },
       evalAddress(){
       	helper.storage.set('areasValidated',{})
-      	
+      	helper.storage.set('ifcoberture', false)
+      	this.ifcoberture = false
+
       	this.areasValidated = [] 
 
         mapAreaService.latLng(this.fullAddress)
@@ -187,8 +190,10 @@
 	    				if (result) {
 	    					areasValidated.push({area: area.id, coberture: result});
 	    					helper.storage.set('areasValidated',{area: area, coberture: result})
+	    					helper.storage.set('ifcoberture', result)
 	    					console.log(result)
 	    					those.ifcoberture = result
+
 	    					those.areasValidated = areasValidated
 	    				}
     				}, 1000)
@@ -196,7 +201,6 @@
 
           })
                
-          
           if (this.typeOrder) {
       			console.log('show disponibilidad de envio')
       		}else{
@@ -206,6 +210,13 @@
         })
         .catch(error=>{
           console.warn(error)
+        })
+      },
+      initifcoberture(){
+      	helper.storage.get.item('ifcoberture').then(res => {
+          if (res !== null) {
+            this.ifcoberture = res
+          }
         })
       },
       initCheckbox(){
