@@ -68,26 +68,33 @@
 		        icon="close"
 		      />
 	      	<q-toolbar-title>
-	        	Cobertura
+	        	Tiendas disponibles
 	      	</q-toolbar-title>
 				</q-toolbar>
 				<div class="layout-padding">
+					<div class="row">
+						<div class="col-md-3">
+							List
+						</div>
+						<div class="col-md-9">
+							<gmap-map
+					      :center="addresslatLng"
+					      :zoom="15"
+					      style="width:100%;  height: 550px;"
+					    	>
+		      			<gmap-marker
+				        :key="index"
+				        v-for="(m, index) in markers"
+				        :label='m.label'
+				        :position="m.position"
+				        :icon='m.icon'
+				        :clickable="true"
+				        @click="center=m.position"
+				      ></gmap-marker>
+		    			</gmap-map>
+						</div>
+					</div>
 					
-					<gmap-map
-			      :center="addresslatLng"
-			      :zoom="16"
-			      style="width:100%;  height: 550px;"
-			    	>
-      			<gmap-marker
-		        :key="index"
-		        v-for="(m, index) in markers"
-		        :label='m.label'
-		        :position="m.position"
-		        :icon='m.icon'
-		        :clickable="true"
-		        @click="center=m.position"
-		      ></gmap-marker>
-    			</gmap-map>
 				</div>
 			</q-modal-layout>
 		</q-modal>
