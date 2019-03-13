@@ -8,7 +8,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12 q-py-lg">
-					<addresses-component :parentData="parentData.billing"/>
+					<addresses-component :type="1" :different="parentData.shipping.differentAddress" :parentData="parentData.billing"/>
 				</div>
 			</div>
 		</q-card>
@@ -35,7 +35,7 @@
 			<transition name="component-fade" mode="out-in">
 				<div class="row" v-if="parentData.shipping.differentAddress == false">
 					<div class="col-md-12 q-pb-lg" v-if="userData">
-						<addresses-component :parentData="parentData.shipping"/>
+						<addresses-component :type="2" :different="parentData.shipping.differentAddress" :parentData="parentData.shipping"/>
 					</div>
 					<div v-else class="row">		
 						<billingaddress-component :type="2" :different="parentData.shipping.differentAddress" :formData="parentData.shipping" />
@@ -73,12 +73,11 @@
 			}
 		},
 		created(){
-  		this.$root.$on("sesionStart", this.setData);
+		  this.$root.$on("sesionStart", this.setData);
+		  this.getCart()
 		},
 		mounted(){
 			this.setData()
-
-			this.getCart()
 
 			EventBus.$on('onblurmethodshipping', (data) => {
 				this.priceMethodsShipping(data)
@@ -155,7 +154,6 @@
 			},
 			concatInfoShipping(zipcode = '', country = '', total = 0 , products = {}){
 				var object = []
-
 				if(zipcode != '' && country != '' && Object.keys(products).length > 0){
 					object = {
 						options : {
