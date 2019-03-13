@@ -20,9 +20,9 @@
           maximized 
           :height="this.$q.platform.is.desktop ? '880px' : '350px'"
           >
+          <q-carousel-slide img-src="statics/sliders/3.jpg" class="flex flex-center"></q-carousel-slide>
           <q-carousel-slide img-src="statics/sliders/1.jpg" class="flex flex-center"></q-carousel-slide>
-          <q-carousel-slide img-src="statics/sliders/1.jpg" class="flex flex-center"></q-carousel-slide>
-          <q-carousel-slide img-src="statics/sliders/1.jpg" class="flex flex-center"></q-carousel-slide>
+          <q-carousel-slide img-src="statics/sliders/2.jpg" class="flex flex-center"></q-carousel-slide>
 
         </q-carousel>
       </div>

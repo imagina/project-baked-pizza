@@ -27,17 +27,21 @@
 		        </option>
 		      </select>
 		    </div>
-		    <div class="col-sm-2">
-		      <input type="text" v-model="street" class="search"> 
+		    <div class="col-sm-3">
+		      <input type="text" v-model="street" class="search" placeholder="86bis"> 
 		    </div>
 		    <div class="col-sm-1">
 		      <span>#</span>
 		    </div>
-		    <div class="col-sm-3">
-		      <input type="text" v-model="number1" class="search">
+		    <div class="col-sm-2">
+		      <input type="text" v-model="number1" class="search" placeholder="38">
 		    </div>
-		    <div class="col-sm-3">
-		      <input type="text" v-model="number2" class="search">
+		    <div class="col-sm-2">
+		      <input type="text" v-model="number2" class="search" placeholder="42">
+		    </div>
+		   	<div class="col-sm-1">
+		      <q-icon name="check_circle" color="green" size="25px" style="line-height: 35px" v-if="ifcoberture"/>
+		      <q-icon name="highlight_off" color="red" size="25px" style="line-height: 35px" v-else/>
 		    </div>
 		  </div>
 		  <input 
@@ -45,22 +49,6 @@
 		  	value="VERIFICAR COBERTURA" 
 		  	class="button button-search" 
 		  	@click="evalAddress()">
-		</div>
-
-		<div class="row q-my-md hidden" v-if="areasValidated.length">
-			<div class="col-sm-12" lass="q-my-xl" style="font-family: Muli">
-				Tiendas Disponibles
-				<br><br>
-			</div>
-			<div class="col-sm-12">
-				<select class="search">
-			    <option 
-			      v-for="(baked, index) in areasValidated" 
-			      :key="index">
-			      {{baked.area.price}}
-			    </option>
-			  </select>
-			</div>
 		</div>
 
 		<img src="statics/cards2.png">
@@ -87,8 +75,8 @@
 					
 					<gmap-map
 			      :center="addresslatLng"
-			      :zoom="17.5"
-			      style="width:100%;  height: 700px;"
+			      :zoom="16"
+			      style="width:100%;  height: 550px;"
 			    	>
       			<gmap-marker
 		        :key="index"
@@ -119,7 +107,8 @@
 			return{
 				opened: false,
 				areas: [],
-				areasValidated: false,
+				areasValidated: [],
+				ifcoberture: false,
 				typeOrder: false,
 				typesStreet:
 				[
@@ -132,7 +121,7 @@
 				],
 				addresslatLng: {lat:0, lng: 0},
 				markers: [],
-				typeStreet: '',
+				typeStreet: 'Carrera',
 				street: '',
 				number1: '',
 				number2: '',
@@ -163,12 +152,13 @@
         })
       },
       evalAddress(){
-
-
-
+      	helper.storage.set('areasValidated',{})
+      	
+      	this.areasValidated = [] 
 
         mapAreaService.latLng(this.fullAddress)
         .then(response=>{
+        	
      			this.addresslatLng = response.coordenades
      			helper.storage.set('addresslatLng', response.result)
      			helper.storage.set('address', {
@@ -189,16 +179,23 @@
         	var areasValidated = []
           this.areas.forEach( area => {
             let poligon = new google.maps.Polygon({paths: area.polygon})
+            var those = this;
+
             setTimeout(function() {
+
 	    				let result = google.maps.geometry.poly.containsLocation(response.coordenades, poligon)
 	    				if (result) {
-	    					areasValidated.push({area: area.id, coberture: result});	
+	    					areasValidated.push({area: area.id, coberture: result});
+	    					helper.storage.set('areasValidated',{area: area, coberture: result})
+	    					console.log(result)
+	    					those.ifcoberture = result
+	    					those.areasValidated = areasValidated
 	    				}
     				}, 1000)
+
+
           })
-          this.areasValidated = areasValidated
-          helper.storage.set('areasValidated', this.areasValidated)
-          
+               
           
           if (this.typeOrder) {
       			console.log('show disponibilidad de envio')
@@ -210,8 +207,6 @@
         .catch(error=>{
           console.warn(error)
         })
-
-
       },
       initCheckbox(){
       	helper.storage.get.item('typeOrder').then(res => {
@@ -223,8 +218,6 @@
       initAddress(){
       	helper.storage.get.item('address').then(res => {
           if (res !== null) {
-            //this.typeOrder = res
-            console.log(res)
           	this.typeStreet = res.typeStreet
 						this.street = res.street
 						this.number1 = res.number1
@@ -232,7 +225,16 @@
           }
         })
       },
+      initAreasValidated(){
+      	helper.storage.get.item('areasValidated').then(res => {
+          if (res !== null) {
+          	this.areasValidated = res
+          	this.coberture = true
+          }
+        })
+      },
       handleChangeCheckbox(){
+
       	helper.storage.set('typeOrder', this.typeOrder)
       }
       //
