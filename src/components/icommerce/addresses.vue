@@ -1,6 +1,5 @@
 <template>
 	<div>
-
 		<q-card class="no-shadow">
 			  <q-card-title>
 		    Direcciones
@@ -75,15 +74,18 @@
 	import {helper} from '@imagina/qhelper/_plugins/helper'
 	import profileService from 'src/services/profile'
 
+	import EventBus from 'src/utils/event-bus';
+
 	export default {
 		components:{
 			billingaddressComponent
 		},
-		props: ['parentData'],
+		props: ['parentData','type','different'],
 		data(){
 			return {
 				visible: false,
 				opened: false,
+				test: '',
 				addresses: {
 					companyname: '',
 					name: '',
@@ -135,6 +137,20 @@
   				})
   			})
       }
+		},
+		watch: {
+			addressSelected : function(val){
+				let data = {
+					zip_code 	: val.zip_code,
+					country		: val.country_id,
+				}
+				if(this.type == 1 && this.different == true){
+					EventBus.$emit('onblurmethodshipping', data)
+				}
+				if(this.type == 2 && this.different == false){
+					EventBus.$emit('onblurmethodshipping', data)
+				}
+			}
 		}
 	}
 </script>
