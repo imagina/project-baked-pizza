@@ -87,5 +87,17 @@ export default {
         });
     });
   },
+
+  createAddress(data) {  
+    return new Promise((resolve, reject) => {
+      http.post(config('api.api_url') + '/profile/address', data)
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
   
 }

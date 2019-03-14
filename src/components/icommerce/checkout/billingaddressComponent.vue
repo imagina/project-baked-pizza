@@ -1,5 +1,6 @@
 <template>
 	<div class="row">
+		{{formData}}
 		<div class="col-xs-12 col-sm-12 col-md-12">
 				<q-input 
 					type="text" 
@@ -87,7 +88,7 @@
 					:options="cities"
 					class="q-select--app col-xs-12 col-sm-12 col-md-4" />
 			</div>
-
+			<q-btn label="Guardar" size="xs" class="float-left" color="red" no-caps @click="createAddress"/>
 	</div>
 </template>
 
@@ -99,6 +100,7 @@
 		props:['formData','type','different'],
 		data(){
 			return {
+				name: '',
 				countries: [],
 				provinces: [],
 				cities: [],
@@ -153,6 +155,9 @@
 				if(this.type == 2 && this.different == false){
 					EventBus.$emit('onblurmethodshipping', data)
 				}
+			},
+			createAddress(){
+				EventBus.$emit('createAddress',this.formData)
 			}
 		}
 	}

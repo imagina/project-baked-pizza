@@ -41,7 +41,6 @@
 							<q-btn label=" Nueva dirección" size="xs" class="float-left" color="red" no-caps @click="formNewAddres = true"/>
 							<br><br>
 							<billingaddressComponent :formData="newAddres" v-if="formNewAddres"/>
-							<q-btn label="Guardar" size="xs" class="float-left" color="red" no-caps v-if="formNewAddres"/>
 							<br v-if="formNewAddres"><br v-if="formNewAddres">
 
 		    		</q-card-main>
@@ -85,7 +84,8 @@
 			return {
 				visible: false,
 				opened: false,
-				test: '',
+				test: {},
+				user_id: '',
 				addresses: {
 					companyname: '',
 					name: '',
@@ -97,7 +97,17 @@
 					province: '',
 					city: '',
 				},
-				newAddres: false,
+				newAddres: {
+					companyname: '',
+					name: '',
+					last_name: '',
+					address1: '',
+					address2: '',
+					zip_code: '',
+					country: '',
+					province: '',
+					city: '',
+				},
 				addressSelected: [],
 				formNewAddres: false,
 			}
@@ -107,6 +117,10 @@
 		},
 		mounted(){
 			this.setData()
+
+			EventBus.$on('createAddress', (data) => {
+				this.createAddress(data)
+			})
 		},
 		methods:{
 			changeAddressSelected(item){
@@ -115,28 +129,69 @@
 				this.opened = false
 			},
 			setData(){
-      	helper.storage.get.item('userData').then(response => {
-        	this.userData = response
-        	if (response != null) {
-        		this.getAddresses(response.id)
-        	}
-      	})
-    	},
-		  getAddresses(id){
+				helper.storage.get.item('userData').then(response => {
+					this.userData = response
+					if (response != null) {
+								this.getAddresses(response.id)
+								this.user_id = response.id
+					}
+				})
+    		},
+		  	getAddresses(id){
 		  	this.visible = true
   			let include = 'addresses'
-  			profileService.show(id, include)
-  			.then(response => {
-  				this.visible = false
-  				this.addresses = (response.data.addresses)
-  				response.data.addresses.forEach(item=>{
-  					if (item.default) {
-  						this.addressSelected = item
-  						this.parentData.address_id = item.id
-  					}
-  				})
-  			})
-      }
+				profileService.show(id, include)
+				.then(response => {
+					this.visible = false
+					this.addresses = (response.data.addresses)
+					response.data.addresses.forEach(item=>{
+						if (item.default) {
+							this.addressSelected = item
+							this.parentData.address_id = item.id
+						}
+					})
+				})
+			},
+			createAddress(data){
+				let newData = {
+							attributes : {
+								first_name	: data.name,
+								last_name	: data.last_name,
+								company		: data.companyname,
+								address_1	: data.address1,
+								address_2	: data.address2,
+								city_id		: data.city,
+								zip_code	: data.zip_code,
+								country_id	: data.country,
+								province_id	: data.province,
+								type		: 1, 
+								user_id		: this.user_id,
+							}
+				}
+				this.sendAddress(newData)
+			},
+			sendAddress(data){
+				profileService.createAddress(data)
+				.then(response => {
+					if(response.hasOwnProperty('success')){
+						this.newAddres = {
+							companyname	: '',
+							name		: '',
+							last_name	: '',
+							address1	: '',
+							address2	: '',
+							zip_code	: '',
+							country		: '',
+							province	: '',
+							city		: '',
+						}
+						this.setData()
+						console.log('Success...')
+					}else{
+						console.log('Error...')
+					}
+				})
+			}
 		},
 		watch: {
 			addressSelected : function(val){
