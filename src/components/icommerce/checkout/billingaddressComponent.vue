@@ -1,6 +1,5 @@
 <template>
 	<div class="row">
-		{{formData}}
 		<div class="col-xs-12 col-sm-12 col-md-12">
 				<q-input 
 					type="text" 
@@ -128,17 +127,18 @@
 				let filter = {"province_id": this.formData.province}
 				locationsService.cities(filter)
 				.then(response=>{
+					console.log(response)
 					this.cities = this.select(response.data)
 				})
 			},
 			select(dataArray) {
-		    let response = []
+				let response = []
 		    dataArray.forEach((item) => {
 		      let labelTitle = item.title ? item.title : (item['name'] ? item['name'] : 'default')
 
 		      response.push({
 		        label: labelTitle,
-		        value: item.iso_2.toString()
+		        value: item.id.toString()
 		      });
 		    })
 		    return response
