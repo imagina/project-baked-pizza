@@ -40,7 +40,7 @@
 							
 							<q-btn label=" Nueva dirección" size="xs" class="float-left" color="red" no-caps @click="formNewAddres = true"/>
 							<br><br>
-							<billingaddressComponent :formData="newAddres" v-if="formNewAddres"/>
+							<billingaddressComponent :formData="newAddres" :disabledForm="disabledForm" v-if="formNewAddres"/>
 							<br v-if="formNewAddres"><br v-if="formNewAddres">
 
 		    		</q-card-main>
@@ -110,6 +110,7 @@
 				},
 				addressSelected: [],
 				formNewAddres: false,
+				disabledForm: false,
 			}
 		},
 		created(){
@@ -171,9 +172,10 @@
 				this.sendAddress(newData)
 			},
 			sendAddress(data){
+				this.disabledForm = true
 				profileService.createAddress(data)
 				.then(response => {
-					if(response.hasOwnProperty('success')){
+					if(response.data.susses.code == "201"){
 						this.newAddres = {
 							companyname	: '',
 							name		: '',
@@ -186,10 +188,19 @@
 							city		: '',
 						}
 						this.setData()
-						console.log('Success...')
+						this.$q.notify({
+							message: 'Datos guardados.',
+							type: 'positive',
+							position: 'top-right'
+						})
 					}else{
-						console.log('Error...')
+						this.$q.notify({
+							message: 'Error al guardar los datos.',
+							type: 'negative',
+							position: 'top-right'
+						})
 					}
+					this.disabledForm = false
 				})
 			}
 		},

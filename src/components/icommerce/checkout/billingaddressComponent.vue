@@ -3,7 +3,7 @@
 		<div class="col-xs-12 col-sm-12 col-md-12">
 				<q-input 
 					type="text" 
-					v-model="formData.companyname"  
+					v-model="formData.companyname" 
 					float-label="Nombre de empresa" 
 					style="background: transparent;" 
 					class="no-shadow" />
@@ -13,6 +13,8 @@
 				<q-input 
 					type="text" 
 					v-model="formData.name"  
+					:error="$v.formData.$error"
+					@blur="$v.formData.$touch()"
 					float-label="Nombre" 
 					style="background: transparent;" 
 					class="no-shadow" />
@@ -22,6 +24,8 @@
 				<q-input 
 					type="text" 
 					v-model="formData.last_name"  
+					:error="$v.formData.$error"
+					@blur="$v.formData.$touch()"
 					float-label="Apellido" 
 					style="background: transparent;" 
 					class="no-shadow" />
@@ -30,7 +34,9 @@
 			<div class="col-xs-12 col-sm-12 col-md-12">
 				<q-input 
 					type="text" 
-					v-model="formData.address1"  
+					v-model="formData.address1"
+					:error="$v.formData.$error"
+					@blur="$v.formData.$touch()"
 					float-label="Direccion 1" 
 					style="background: transparent;" 
 					class="no-shadow" />
@@ -48,7 +54,9 @@
 			<div class="col-xs-12 col-sm-12 col-md-12">
 				<q-input 
 					type="text" 
-					v-model="formData.zip_code"  
+					v-model="formData.zip_code"
+					:error="$v.formData.$error"
+					@blur="$v.formData.$touch()" 
 					float-label="Zip Code" 
 					style="background: transparent;" 
 					class="no-shadow"
@@ -58,7 +66,9 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 q-my-md">
 				<q-select 
 					filter
-					v-model="formData.country" 
+					v-model="formData.country"
+					:error="$v.formData.$error"
+					@blur="$v.formData.$touch()"
 					placeholder="País" 
 					radio 
 					:options="countries"
@@ -87,7 +97,7 @@
 					:options="cities"
 					class="q-select--app col-xs-12 col-sm-12 col-md-4" />
 			</div>
-			<q-btn label="Guardar" size="xs" class="float-left" color="red" no-caps @click="createAddress"/>
+			<q-btn label="Guardar" size="xs" class="float-left" :disabled="disabledForm" color="red" no-caps @click="createAddress"/>
 	</div>
 </template>
 
@@ -95,14 +105,25 @@
 	import locationsService from 'src/services/locations'
 	import EventBus from 'src/utils/event-bus';
 
+	import { required } from 'vuelidate/lib/validators';
+
 	export default {
-		props:['formData','type','different'],
+		props:['formData','type','different','disabledForm'],
 		data(){
 			return {
 				name: '',
 				countries: [],
 				provinces: [],
 				cities: [],
+			}
+		},
+		validations:{
+			formData: {
+				name: {required},
+				last_name: {required},
+				address1: {required},
+				zip_code: {required},
+				country: {required}
 			}
 		},
 		mounted(){
@@ -127,7 +148,6 @@
 				let filter = {"province_id": this.formData.province}
 				locationsService.cities(filter)
 				.then(response=>{
-					console.log(response)
 					this.cities = this.select(response.data)
 				})
 			},
@@ -157,7 +177,16 @@
 				}
 			},
 			createAddress(){
-				EventBus.$emit('createAddress',this.formData)
+				this.$v.formData.$touch()
+				if (this.$v.formData.$error) {
+					this.$q.notify({
+						 position	: 'top-right',
+						 message	: 'Por favor revise los campos de nuevo.'
+					})
+					return
+				}else{
+					EventBus.$emit('createAddress',this.formData)
+				}
 			}
 		}
 	}
