@@ -174,6 +174,7 @@
 
 	.imgradio
 		cursor: pointer;
+		display inline-block;
 		-webkit-filter: grayscale(100%)
 	
 	.radio:checked + img

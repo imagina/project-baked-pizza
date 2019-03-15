@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div v-for="(option, index) in options" :key="index">
-			<div v-if="option.productOptionValues.length">
+			<div v-if="option.productOptionValues.length && option.option_description !== 'Tamaños'">
 			<!-- <label>{{option.option_description}}</label>
 			<select v-model="option.selected" @change="updateOption(option)">
 				<option></option>
@@ -36,6 +36,7 @@
 
 <script>
 	import option from 'src/services/product-option';
+	import EventBus from 'src/utils/event-bus';
 
 	export default {
 		name : 'optionsValuesComponent',
@@ -48,12 +49,11 @@
 				selected: [], 
 			}
 		},
-
 		watch: {
-    	parentOptionValueId(val){
-    		this.getOptions()	
-    	}
-  	},
+			parentOptionValueId(val){
+				this.getOptions()	
+			}
+		},
 		mounted(){
 			this.getOptions()
 		},
@@ -75,8 +75,8 @@
 
 
 					this.options.forEach(item=>{
-						if (item.option_description == 'tamaños') {
-							this.$root.$emit('tamanos')
+						if (item.option_description == 'Tamaños') {
+							EventBus.$emit('tamanos',item.productOptionValues)
 						}
 					})
 
@@ -113,10 +113,6 @@
 
 				return newArray;
 			},
-			test(){
-				console.log(1)
-			}
-
 		}
 	}
 </script>

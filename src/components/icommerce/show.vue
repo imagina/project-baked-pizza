@@ -1,6 +1,6 @@
 <template>
 
-	<div class="container-section--p2">	
+	<div class="col-md-9 container-section--p2">	
 		<div class="border-top">	
 			<div class="row q-mt-md">
 				<label for="" class="col-xs-12 col-sm-12 col-md-3 offset-5">Seleccione un producto:</label>
@@ -15,19 +15,23 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-7 im-mt-1">
-				<span class="q-display-1 color-baked-title">{{product.product.name}}</span>
-				<p>{{product.product.description}}</p>
-				<p>${{product.product.price}}</p>
+				<div class="row">
+					<div class="col-md-12">
+						<span class="q-display-1 color-baked-title">{{product.product.name}}</span>
+						<p>{{product.product.description}}</p>
+						<p>${{product.product.price}}</p>
 
-				<div class="row" v-if="showSizesprop">
-					<div class="col-md-4 product-type-grid" v-for="option of optionSize" :key="option.id">
-						<label>
-							<input v-model="productTypeOption" type="radio" name="test" :value="option.id" class="radio">
-							<img src="statics/logo.png" alt="" class="responsive m-w-100 imgradio">
-						</label>
-						
-						<p align="center" class="product-type-name">{{ option.name }}</p>
-						<p align="center" class="product-type-description">( {{ option.description }} )</p>
+						<div class="row" v-if="showSizesprop">
+							<div class="col-xs-12 col-sm-12 col-md-4 product-type-grid text-center" v-for="option of optionSize" :key="option.id">
+								<label>
+									<input v-model="productTypeOption" type="radio" name="test" :value="option.id" class="radio">
+									<img src="statics/logo.png" alt="" class="responsive m-w-100 imgradio">
+								</label>
+								
+								<p align="center" class="product-type-name">{{ option.name }}</p>
+								<p align="center" class="product-type-description">( {{ option.description }} )</p>
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -77,6 +81,7 @@
 	import optionsComponent from 'src/components/pages/menu/optionsComponent';
 	import {helper} from '@imagina/qhelper/_plugins/helper';
 	import cartService from 'src/services/cart';
+	import EventBus from 'src/utils/event-bus';
 
 	export default {
 		props :['products', 'product'],
@@ -92,30 +97,16 @@
 				user: '',
 				option: [],
 				productTypeOption:'',
-				optionSize:[
-					{
-						id: 1,
-						name: 'Personal',
-						description: '4 Porciones'
-					},
-					{
-						id: 2,
-						name: 'Mediana',
-						description: '8 Porciones'
-					},
-					{
-						id: 3,
-						name: 'Familiar',
-						description: '12 Porciones'
-					}
-				]
+				optionSize:[]
 			}
 		},
 		created(){
-  		this.$root.$on("updateoptions", this.updateOptions);
-  		this.$root.$on("deleteoptions", this.deleteoptions);
-  		this.$root.$on("tamanos", this.showSizes);
-
+			this.$root.$on("updateoptions", this.updateOptions);
+			this.$root.$on("deleteoptions", this.deleteoptions);
+			
+			EventBus.$on('tamanos', (data) => {
+				this.showSizes(data)
+			})
 		},
 		computed:{
 			selectProduts(){
@@ -126,7 +117,15 @@
 			this.getcart()
 		},
 		methods:{
-			showSizes(){
+			showSizes(data){
+				data.forEach(element => {
+					let item = {
+						id	: element.id,
+						name: element.option_value,
+						description: 'Description exaple'
+					}
+					this.optionSize.push(item)
+				});
 				this.showSizesprop = true
 			},
 			getcart(){
