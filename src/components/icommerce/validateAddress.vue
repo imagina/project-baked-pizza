@@ -74,7 +74,7 @@
 				<div class="layout-padding">
 					<div class="row">
 						<div class="col-md-3">
-							List
+							<pre>{{areas}}</pre>
 						</div>
 						<div class="col-md-9">
 							<gmap-map
@@ -138,7 +138,7 @@
 		},
 		computed: {
 			fullAddress(){
-				return this.typeStreet+' '+this.street+' '+this.number1+' '+this.number2
+				return this.typeStreet+' '+this.street+' Numero+'+this.number1+' '+this.number2
 			}
 		},
 		mounted() {
@@ -204,16 +204,12 @@
 	    					those.areasValidated = areasValidated
 	    				}
     				}, 1000)
-
-
           })
-               
           if (this.typeOrder) {
       			console.log('show disponibilidad de envio')
       		}else{
       			this.opened = true
 					}
-
         })
         .catch(error=>{
           console.warn(error)
@@ -252,7 +248,6 @@
         })
       },
       handleChangeCheckbox(){
-
       	helper.storage.set('typeOrder', this.typeOrder)
       }
       //

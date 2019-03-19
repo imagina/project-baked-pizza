@@ -81,10 +81,15 @@
 
 <script>
 
+
+import addressesComponent from 'src/components/icommerce/addresses'
 import {helper} from '@imagina/qhelper/_plugins/helper';
 
 export default {
     name: 'showedituser',
+    components:{
+        addressesComponent
+    },
     data(){
         return {
             password: '',
