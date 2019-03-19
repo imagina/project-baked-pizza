@@ -2,6 +2,8 @@
 	<div>
 		<div v-for="(option, index) in options" :key="index">
 			<div v-if="option.productOptionValues.length && option.option_description !== 'Tamaños'">
+
+				
 			<!-- <label>{{option.option_description}}</label>
 			<select v-model="option.selected" @change="updateOption(option)">
 				<option></option>
@@ -76,7 +78,7 @@
 
 					this.options.forEach(item=>{
 						if (item.option_description == 'Tamaños') {
-							EventBus.$emit('tamanos',item.productOptionValues)
+							EventBus.$emit('tamanos',item)
 						}
 					})
 
