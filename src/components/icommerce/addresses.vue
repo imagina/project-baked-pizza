@@ -2,6 +2,7 @@
 	<div class="row">
 
 		<div class="col-md-12 q-mb-md">
+			
 			<newComponent/>
 		</div>
 
@@ -51,7 +52,7 @@
 				addresses: [],
 				pagination: [],
 				page: 1,
-	    	take: 2,
+	    	take: 10,
 			}
 		},
 		created(){
