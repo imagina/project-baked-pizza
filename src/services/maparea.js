@@ -70,10 +70,10 @@ export default {
   },
 
   latLng(address){
-    let addressFormated = address.replace(/ /g, "+").replace('#', "numero+")
+    let addressFormated = address.replace(/ /g, "+")
     let resulsEval = {'status': false, 'data': []}
     return new Promise((resolve, reject) => {
-      http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+addressFormated+'+bogota,CO&key='+env('KEY_GOOGLE_MAPS'))
+      http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+addressFormated+'+,Bogotá,CO&key='+env('KEY_GOOGLE_MAPS'))
       .then(response=>{
         resolve(
           {

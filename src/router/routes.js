@@ -43,6 +43,18 @@ Route.view('/', master)
       }),
       Route.view('/perfil', require('../layouts/pages/perfil').default).options({
         name: 'perfil'
+      }),
+
+
+
+
+
+
+
+
+      // Ruta test, para probar componentes de manera separada de todos los demas componentes.
+      Route.view('/addresses', require('../layouts/test').default).options({
+        name: 'test'
       })
 
     }
