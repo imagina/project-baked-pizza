@@ -2,8 +2,6 @@
 	<div>
 		<div v-for="(option, index) in options" :key="index">
 			<div v-if="option.productOptionValues.length && option.option_description !== 'Tamaños'">
-
-				
 			<!-- <label>{{option.option_description}}</label>
 			<select v-model="option.selected" @change="updateOption(option)">
 				<option></option>
@@ -100,10 +98,18 @@
 				this.valueSelected = event
 			},
 			updateOption(option){
+				var price = 0;
+				let options = option.productOptionValues
+				options.forEach(element => {
+					if(element.id === option.selected){
+						price = element.price
+					}
+				})
 				this.selected = option
 				let data = {
 					'product_option_id' : option.id,
 					'product_option_value_id' : option.selected,
+					'price': price,
 				}
 				this.$root.$emit('updateoptions', data)
 			},

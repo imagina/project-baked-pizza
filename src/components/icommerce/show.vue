@@ -61,7 +61,7 @@
 				<div class="row">
 					<div class="col-12 col-count-product">
 						<span>Valor Total:</span>
-	  					<input type="text" class="input-count-product" :value="product.product.price" readonly>
+	  					<input type="text" class="input-count-product" :value="calculatePrice" readonly>
 	  				</div>
 					<div class="col-12">
 						<div class="col-count-product text-right">
@@ -110,6 +110,14 @@
 		computed:{
 			selectProduts(){
 				return this.select(this.products)
+			},
+			calculatePrice(){
+				var priceOptions = 0;
+				this.option.forEach(element => {
+					priceOptions += parseFloat(element.price)
+				})
+
+				return parseFloat(this.product.product.price) + priceOptions
 			}
 		},
 		mounted(){
@@ -123,7 +131,8 @@
 						product_option_value_id	: element.id,
 						name: element.option_value,
 						description: 'Description exaple',
-						product_option_id: data.id
+						product_option_id: data.id,
+						price: element.price,
 					}
 					this.optionSize.push(item)
 				});
@@ -175,7 +184,6 @@
     		})
 			},
 			updateOptions(event){
-
 				var found = this.option.find(function(element) {
   				return element.product_option_id === event.product_option_id;
 				});
@@ -200,6 +208,7 @@
 				let data = {
 					'product_option_id' : option.product_option_id,
 					'product_option_value_id' : option.product_option_value_id,
+					'price' : option.price,
 				}
 
 				this.updateOptions(data)
