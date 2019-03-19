@@ -7,7 +7,7 @@
 				<q-select v-model="product.product" placeholder="Seleccione un producto" class="q-select--app col-xs-12 col-sm-12 col-md-4" radio :options="selectProduts"/>
 			</div>
 		</div>
-
+	
 		<div class="row q-mt-lg">
 			<div class="col-xs-12 col-sm-12 col-md-5">
 				<div class="card-product-img im-mt-1">
@@ -20,11 +20,10 @@
 						<span class="q-display-1 color-baked-title">{{product.product.name}}</span>
 						<p>{{product.product.description}}</p>
 						<p>${{product.product.price}}</p>
-
 						<div class="row" v-if="showSizesprop">
 							<div class="col-xs-12 col-sm-12 col-md-4 product-type-grid text-center" v-for="option of optionSize" :key="option.id">
 								<label>
-									<input v-model="productTypeOption" type="radio" name="test" :value="option.id" class="radio">
+									<input v-model="productTypeOption" type="radio" name="test" :value="option.product_option_value_id" class="radio" @click="updateSize(option)">
 									<img src="statics/logo.png" alt="" class="responsive m-w-100 imgradio">
 								</label>
 								
@@ -118,11 +117,13 @@
 		},
 		methods:{
 			showSizes(data){
-				data.forEach(element => {
+				let options = data.productOptionValues
+				options.forEach(element => {
 					let item = {
-						id	: element.id,
+						product_option_value_id	: element.id,
 						name: element.option_value,
-						description: 'Description exaple'
+						description: 'Description exaple',
+						product_option_id: data.id
 					}
 					this.optionSize.push(item)
 				});
@@ -194,8 +195,15 @@
 				});
 				var index = this.option.indexOf(found);
 				this.option.splice(index, 1);
-			}
+			},
+			updateSize(option){
+				let data = {
+					'product_option_id' : option.product_option_id,
+					'product_option_value_id' : option.product_option_value_id,
+				}
 
+				this.updateOptions(data)
+			}
 		}
 	}
 </script>
