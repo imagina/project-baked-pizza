@@ -46,7 +46,7 @@
 				loading: false,
 				options:[],
 				valueSelected: null,
-				selected: [], 
+				selected: [],
 			}
 		},
 		watch: {
@@ -58,7 +58,7 @@
 			this.getOptions()
 		},
 		beforeDestroy(){
-			this.$root.$emit('deleteoptions', this.selected)
+			//this.$root.$emit('deleteoptions', this.selected)
 		},
 		methods:{
 			getOptions(){
@@ -72,8 +72,6 @@
 				.then(response => {
 					this.loading = false
 					this.options =  response.data
-
-
 					this.options.forEach(item=>{
 						if (item.option_description == 'Tamaños') {
 							EventBus.$emit('tamanos',item)
@@ -106,15 +104,19 @@
 					}
 				})
 				this.selected = option
+				
 				let data = {
+					'parent': this.parent,
+					'option_id': option.option_id,
 					'product_option_id' : option.id,
 					'product_option_value_id' : option.selected,
 					'price': price,
 				}
+
 				this.$root.$emit('updateoptions', data)
 			},
 			resetOptions(options){
-				let newArray = [];
+				let newArray = [{label: 'Sin opcion',value: -1}];
 				for (let index = 0; index < options.length; index++) {
 					newArray.push({ label: options[index].option_value , value: options[index].id });
 				}

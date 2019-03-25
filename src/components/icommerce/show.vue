@@ -23,8 +23,8 @@
 						<div class="row" v-if="showSizesprop">
 							<div class="col-xs-12 col-sm-12 col-md-4 product-type-grid text-center" v-for="option of optionSize" :key="option.id">
 								<label>
-									<input v-model="productTypeOption" type="radio" name="test" :value="option.product_option_value_id" class="radio" @click="updateSize(option)">
-									<img src="statics/logo.png" alt="" class="responsive m-w-100 imgradio">
+									<input v-model="productTypeOption" type="radio" :value="option.product_option_value_id" class="radio" @click="updateSize(option)">
+									<img :id="option.product_option_value_id" src="statics/logo.png" alt="" class="responsive m-w-100 imgradio">
 								</label>
 								
 								<p align="center" class="product-type-name">{{ option.name }}</p>
@@ -96,7 +96,8 @@
 				user: '',
 				option: [],
 				productTypeOption:'',
-				optionSize:[]
+				optionSize:[],
+				sizeSelected: { product_option_id: 0,  product_option_value_id: 0}
 			}
 		},
 		created(){
@@ -128,6 +129,8 @@
 				let options = data.productOptionValues
 				options.forEach(element => {
 					let item = {
+						parent: '',
+						option_id: element.option_id,
 						product_option_value_id	: element.id,
 						name: element.option_value,
 						description: 'Description exaple',
@@ -187,32 +190,92 @@
 				var found = this.option.find(function(element) {
   				return element.product_option_id === event.product_option_id;
 				});
-
+				var parent = event.option_id
 				if (!found) {
-					this.option.push(event)
+					if (event.product_option_value_id > -1) {
+						this.option.push(event)	
+					}
+					this.deleteoptions(parent)
 				} else {
 					var index = this.option.indexOf(found);
 					this.option.splice(index, 1);
-					this.option.push(event)
-				}
-							
+					this.deleteoptions(parent)
+					
+					if (event.product_option_value_id > -1) {
+						this.option.push(event)
+					}
+				}	
 			},
-			deleteoptions(event){
+			deleteoptions(parent){
+				var end 	= false
+				var options = this.option
+				while (!end) {
+				end = true
+					for (let index = 0; index < options.length; index++) {
+						if(parseInt(parent) === parseInt(options[index].parent)){
+							parent = options[index].option_id
+							this.option.splice(index, 1)
+							end = false
+						}
+					}
+				}
+			},
+			/*deleteoptions(event){
 				var found = this.option.find(function(element) {
   				return element.id === event.id;
 				});
 				var index = this.option.indexOf(found);
-				this.option.splice(index, 1);
+			},*/
+			deleteOptionsSize(element){
+				var i	= -1;
+				var options = this.option
+
+				for (let index = 0; index < options.length; index++) {
+					if(options[index].product_option_id === element.product_option_id){
+						this.option.splice(index, 1)
+						break
+					}
+				}
 			},
 			updateSize(option){
-				let data = {
-					'product_option_id' : option.product_option_id,
-					'product_option_value_id' : option.product_option_value_id,
-					'price' : option.price,
-				}
+				var id 		= option.product_option_value_id
+				var element = document.getElementById(id);
 
-				this.updateOptions(data)
-			}
+				if((this.sizeSelected.product_option_value_id == option.product_option_value_id)){
+
+					this.deleteOptionsSize(this.sizeSelected)
+
+					this.sizeSelected.product_option_id 		= 0
+					this.sizeSelected.product_option_value_id 	= 0
+
+					element.classList.remove("checkedImg");
+				}else{
+					this.deleteOptionsSize(this.sizeSelected)
+
+					this.sizeSelected.product_option_id 		= option.product_option_id
+					this.sizeSelected.product_option_value_id 	= option.product_option_value_id
+					//update data
+					let data = {
+						'parent': option.parent,
+						'option_id': option.option_id,
+						'product_option_id' : option.product_option_id,
+						'product_option_value_id' : option.product_option_value_id,
+						'price' : option.price,
+					}
+					this.updateOptions(data)
+					//end update data
+
+					//change color img
+					var elems = document.querySelectorAll(".checkedImg");
+					[].forEach.call(elems, function(el) {
+						el.classList.remove("checkedImg");
+					});
+					//end change color img
+
+  					element.classList.add("checkedImg");
+				}
+				
+			},
 		}
 	}
 </script>

@@ -79,7 +79,6 @@
 			}
 		},
 		mounted(){
-			console.log(this.$route.params.id)
 			this.getProducts(this.$route.params.id)
 		},
 		methods:{
@@ -177,7 +176,7 @@
 		display inline-block;
 		-webkit-filter: grayscale(100%)
 	
-	.radio:checked + img
+	.checkedImg
 		-webkit-filter: grayscale(0%)
 	
 	.border-top
