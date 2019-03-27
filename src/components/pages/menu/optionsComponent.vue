@@ -116,7 +116,7 @@
 				this.$root.$emit('updateoptions', data)
 			},
 			resetOptions(options){
-				let newArray = [{label: 'Sin opcion',value: -1}];
+				let newArray = [{label: '',value: -1}];
 				for (let index = 0; index < options.length; index++) {
 					newArray.push({ label: options[index].option_value , value: options[index].id });
 				}
