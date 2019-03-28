@@ -20,7 +20,7 @@ export default {
             include: include
           }
         })
-      }, refresh).then(response => {
+      }, true).then(response => {
         resolve(response);
       })
         .catch(error => {
