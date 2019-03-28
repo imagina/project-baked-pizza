@@ -166,7 +166,7 @@
 				var formatData = []
 					
 				for (let index = 0; index < options.length; index++) {
-					formatData.push({ product_option_id : options[index].product_option_id, product_option_value_id : options[index].product_option_value_id })
+					formatData.push({ product_option_id : parseInt(options[index].product_option_id), product_option_value_id : parseInt(options[index].product_option_value_id) })
 				}
 
 				let formData = {
