@@ -1,5 +1,5 @@
 <template>
-	<section class="container-fluid">
+	<section class="container-fluid" style="height: 800px">
 		<!--== START BREADCRUMB ==-->
 		<breadcrumb-component name="Pide en linea" image="statics/header-pide.jpg"></breadcrumb-component>
 		<!--== END BREADCRUMB ==-->
@@ -34,6 +34,9 @@
 							<span class="q-display-1 color-baked-title">No se encontraron resultados para esta categoría.</span>
 						</div>	
 					</div>
+					<q-inner-loading :visible="visible">
+			      <q-spinner size="50px" color="primary"></q-spinner>
+			    </q-inner-loading>
 				</div>
 				<!--== START SHOW PRODUCTS ==-->
 				<showComponent v-else :products="products" :product="selected"/>
@@ -46,6 +49,8 @@
 				</div>	
 			</div>
 		</div>
+	
+
 	</section>
 </template>
 
@@ -71,11 +76,12 @@
 		store,
 		data(){
 			return{
+				visible: false,
 				products: [],
 				selected: {
 					product:[]
 				},
-				showProduct: true,
+				showProduct: false,
 			}
 		},
 		mounted(){
@@ -83,6 +89,7 @@
 		},
 		methods:{
 			getProducts(id = ''){
+				this.visible = true
 				let filter = ''
 				if (id !== '') {
 					filter = {"categories":[id]}
@@ -93,6 +100,7 @@
 				.then(response =>{
 					this.products 		= response.data
 					this.showProduct 	= false
+					this.visible = false
 					//window.history.pushState(null, null, 'app/#/pide-en-linea/' + id);
 				})
 			},

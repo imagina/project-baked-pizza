@@ -184,7 +184,7 @@
 
 				if (this.user != '')
 					formData['user_id']  = this.user.id
-
+				console.log(formData)
 				
     		cartService.create(formData)
     		.then(response=>{
