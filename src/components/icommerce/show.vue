@@ -160,6 +160,14 @@
 				return response
 			},
 			addCart(){
+				
+				//Format data option
+				let options = this.option
+				var formatData = []
+					
+				for (let index = 0; index < options.length; index++) {
+					formatData.push({ product_option_id : options[index].product_option_id, product_option_value_id : options[index].product_option_value_id })
+				}
 
 				let formData = {
 					"cart_products": {
@@ -167,8 +175,9 @@
 					  "quantity": this.quantity,
 					  "price": this.product.product.price
 					},
-					"cart_product_option":this.option
+					"cart_product_option": formatData
 				}
+				//End format data option
 
 				if (this.cart != '')
 					formData['cart_id']  = this.cart.id
