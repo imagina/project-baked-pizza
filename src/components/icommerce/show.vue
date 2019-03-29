@@ -107,6 +107,7 @@
 			EventBus.$on('inicializeOptions',() => {
 				this.optionSize = []
 				this.option 	= []
+				
 			})
 
 			EventBus.$on('tamanos', (data) => {

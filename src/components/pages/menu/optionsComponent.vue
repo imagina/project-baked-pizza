@@ -49,6 +49,7 @@
 			product(){
 				EventBus.$emit('inicializeOptions')
 				this.getOptions()
+				
 			}
 		},
 		mounted(){
