@@ -1,34 +1,21 @@
 <template>
 	<div class="row">
-
 		<div class="col-md-12 q-mb-md">
-				<q-btn label="Nueva dirección" @click="opened = true" @hide="opened = false"/>
-
-				<q-modal v-model="opened">
-					<newComponent :user="user"/>
-				 </q-modal>
-
-			
+			<q-btn label="Nueva dirección" @click="opened = true" @hide="opened = false"/>
+			<q-modal v-model="opened">
+				<newComponent :user="user"/>
+			</q-modal>
 		</div>
-
 		<div class="col-md-12">
 			<q-card class="no-shadow" v-for="(address, index) in addresses" :key="index">
 				<q-card-main>
-					<!-- EDIT COMPONENT-->
-					<q-btn round no-caps class="float-right" color="red" icon="delete" flat @click="destroy(address.id)"/>
-
-					<!--DELETE COMPONENT -->
-					<q-btn round no-caps class="float-right" color="red" icon="edit" flat/>
-					
-					{{address.first_name}} {{address.last_name}} <q-icon name="star" v-if="address.default"/><br>
-					{{address.address_1}}<br>
-					{{address.address_2}}<br>
+					{{address.first_name}} {{address.last_name}}<q-icon name="star" v-if="address.default"/><br>
+					{{address.address_1.address}}<br>
 					{{address.company}}<br>
 				</q-card-main>
 			</q-card>
 		</div>
-
-		<div class="col-md-12">
+		<div class="col-md-12" v-if="paginated">
 			<q-pagination 
 				boundary-links  
 				v-model="page" 
@@ -37,11 +24,9 @@
 				@input="otherPageOrder()" 
 				:max-pages="5"/>
 		</div>
-
 		<q-inner-loading :visible="visible">
       <q-spinner size="50px" color="primary"></q-spinner>
     </q-inner-loading>
-
 	</div>
 </template>
 
@@ -51,6 +36,7 @@
 	import addresService from 'src/services/addresses'
 
 	export default {
+		props: ['paginated'],
 		components:{
 			newComponent
 		},
@@ -61,8 +47,15 @@
 				user:[],
 				addresses: [],
 				pagination: [],
-				page: 1,
-	    	take: 3,
+	    	checked: false,
+			}
+		},
+		computed:{
+			page(){
+				return this.paginated ? 1 : ''
+			},
+			take(){
+				return this.paginated ? 3 : ''
 			}
 		},
 		created(){

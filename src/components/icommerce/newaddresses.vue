@@ -50,6 +50,10 @@
 						class="no-shadow" />
 				</div>
 
+				<div class="col-md-12 q-px-sm" align="center">
+					<q-btn label="Validar dirección" color="red" />
+				</div>
+
 				<div class="col-sm-12 q-px-sm q-py-lg">
 					<gmap-map
 			      :center="center"
@@ -66,6 +70,7 @@
 			        </gmap-marker>
 		    		</gmap-map>
 				</div>
+				
 				<div class="col-sm-12">
 					<q-btn label="Guardar" class="full-width" color="red" @click="save"/>
 				</div>
