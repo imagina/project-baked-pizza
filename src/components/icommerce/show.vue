@@ -104,6 +104,11 @@
 			this.$root.$on("updateoptions", this.updateOptions);
 			this.$root.$on("deleteoptions", this.deleteoptions);
 			
+			EventBus.$on('inicializeOptions',() => {
+				this.optionSize = []
+				this.option 	= []
+			})
+
 			EventBus.$on('tamanos', (data) => {
 				this.showSizes(data)
 			})
@@ -117,7 +122,6 @@
 				this.option.forEach(element => {
 					priceOptions += parseFloat(element.price)
 				})
-
 				return parseFloat(this.product.product.price) + priceOptions
 			}
 		},

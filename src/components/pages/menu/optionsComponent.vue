@@ -2,13 +2,6 @@
 	<div>
 		<div v-for="(option, index) in options" :key="index">
 			<div v-if="option.productOptionValues.length && option.option_description !== 'Tamaños'">
-			<!-- <label>{{option.option_description}}</label>
-			<select v-model="option.selected" @change="updateOption(option)">
-				<option></option>
-				<option v-for="(value, index) in option.productOptionValues" :key="index" :value="value.id">
-					{{value.option_value}}
-				</option>
-			</select> -->
 			<div class="row">
 				<span class="col-md-4 product-option-name">{{option.option_description}}: </span>
 				<q-select
@@ -52,6 +45,10 @@
 		watch: {
 			parentOptionValueId(val){
 				this.getOptions()	
+			},
+			product(){
+				EventBus.$emit('inicializeOptions')
+				this.getOptions()
 			}
 		},
 		mounted(){
@@ -77,8 +74,6 @@
 							EventBus.$emit('tamanos',item)
 						}
 					})
-
-
 				})
 			},
 			select(dataArray) {
