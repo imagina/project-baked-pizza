@@ -107,7 +107,6 @@
 			EventBus.$on('inicializeOptions',() => {
 				this.optionSize = []
 				this.option 	= []
-				
 			})
 
 			EventBus.$on('tamanos', (data) => {
@@ -121,7 +120,11 @@
 			calculatePrice(){
 				var priceOptions = 0;
 				this.option.forEach(element => {
-					priceOptions += parseFloat(element.price)
+					if(element.price_prefix === '-'){
+						priceOptions -= parseFloat(element.price)
+					}else{
+						priceOptions += parseFloat(element.price)
+					}
 				})
 				return parseFloat(this.product.product.price) + priceOptions
 			}
@@ -133,14 +136,16 @@
 			showSizes(data){
 				let options = data.productOptionValues
 				options.forEach(element => {
+
 					let item = {
-						parent: '',
-						option_id: element.option_id,
+						parent					: '',
+						option_id				: element.option_id,
 						product_option_value_id	: element.id,
-						name: element.option_value,
-						description: 'Description exaple',
-						product_option_id: data.id,
-						price: element.price,
+						name					: element.option_value,
+						description				: 'Description exaple',
+						product_option_id		: data.id,
+						price					: element.price,
+						price_prefix 			: element.price_prefix
 					}
 					this.optionSize.push(item)
 				});
@@ -189,8 +194,7 @@
 
 				if (this.user != '')
 					formData['user_id']  = this.user.id
-				console.log(formData)
-				
+			
     		cartService.create(formData)
     		.then(response=>{
     			alert.success('Producto agregado')
@@ -270,12 +274,14 @@
 					this.sizeSelected.product_option_value_id 	= option.product_option_value_id
 					//update data
 					let data = {
-						'parent': option.parent,
-						'option_id': option.option_id,
-						'product_option_id' : option.product_option_id,
-						'product_option_value_id' : option.product_option_value_id,
-						'price' : option.price,
+						'parent'					: option.parent,
+						'option_id'					: option.option_id,
+						'product_option_id' 		: option.product_option_id,
+						'product_option_value_id' 	: option.product_option_value_id,
+						'price' 					: option.price,
+						'price_prefix' 				: option.price_prefix
 					}
+					console.log(data)
 					this.updateOptions(data)
 					//end update data
 

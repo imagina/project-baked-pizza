@@ -49,7 +49,6 @@
 			product(){
 				EventBus.$emit('inicializeOptions')
 				this.getOptions()
-				
 			}
 		},
 		mounted(){
@@ -92,21 +91,24 @@
 				this.valueSelected = event
 			},
 			updateOption(option){
-				var price = 0;
-				let options = option.productOptionValues
+				
+				var price 			= 0
+				var price_prefix 	= ''
+				let options 		= option.productOptionValues
 				options.forEach(element => {
 					if(element.id === option.selected){
-						price = element.price
+						price 			= element.price,
+						price_prefix 	= element.price_prefix
 					}
 				})
 				this.selected = option
-				
 				let data = {
-					'parent': this.parent,
-					'option_id': option.option_id,
-					'product_option_id' : option.id,
-					'product_option_value_id' : option.selected,
-					'price': price,
+					'parent'					: this.parent,
+					'option_id'					: option.option_id,
+					'product_option_id' 		: option.id,
+					'product_option_value_id' 	: option.selected,
+					'price'						: price,
+					'price_prefix' 				: price_prefix
 				}
 
 				this.$root.$emit('updateoptions', data)
