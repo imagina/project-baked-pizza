@@ -23,7 +23,7 @@ Route.view('/', master)
       Route.view('/nosotros', require('../layouts/pages/about').default).options({
         name: 'nosotros'
       }),
-      Route.view('/donde-estamos', require('../layouts/pages/franchise').default).options({
+      Route.view('/donde-estamos', require('../layouts/pages/dondeEstamos').default).options({
         name: 'donde-estamos'
       }),
       Route.view('/pedido', require('../layouts/pages/pedido').default).options({
