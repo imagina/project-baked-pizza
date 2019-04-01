@@ -7,8 +7,12 @@
 					<div class="q-display-2 color-baked-title" align="center">Checkout</div>
 				</div>
 			</div>
-
-			<div class="row"> <!--== COMPONENTS CHECKOUT ==-->
+			<div class="row" v-if="Object.keys(userData).length === 0">
+				<div class="col-md-12">
+					<div class="q-title text-center"><router-link to="/auth/login">Inicie Sesión</router-link> para ver esta página. </div>
+				</div>
+			</div>
+			<div class="row" v-else> <!--== COMPONENTS CHECKOUT ==-->
 				<customerinformation-component :parentData="order.customerInformation"/> <!--==  CUSTOMER INFORMATION ==-->	
 				<billingdetails-component :parentData="order.addreses"/> <!--==  BILLING DETAILS ==-->
 				<paymentmethods-component :parentData="order.shippingAndPay"/> <!--==  DELIVERY METHODS ==-->
@@ -40,6 +44,7 @@
 		},
 		data(){
 			return{
+				userData : false,
 				order:{
 					customerInformation: {
 						userData: false,
@@ -94,6 +99,7 @@
 		},
 		mounted(){
 			this.getcart()
+			this.setData()
 		},
 		methods:{
 			saveOrder(){
@@ -151,6 +157,11 @@
           	this.order.cart_id = res.id
           	
           }
+        })
+			},
+			setData(){
+        helper.storage.get.item('userData').then(response => {
+          this.userData = response
         })
       },
 		}
