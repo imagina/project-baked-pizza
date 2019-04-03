@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <section class="row">
+    <section class="row validateAddress-content">
 
       <div class="col-xs-12 col-md-12" style="position: relative;">
         <div class="islider-inner">
@@ -426,6 +426,34 @@
       .csh3
       {
         background-image: none;
+      }
+
+      .button-search{
+        width: 70%!important;
+      }
+
+      .validateAddress-content .q-display-2{
+        font-size: 20px!important;
+      }
+
+      .validateAddress-content .islider-inner{
+        width: 100%!important;
+      }
+
+      .validateAddress-content .q-display-1{
+        font-size: 20px!important;
+      }
+
+      .validateAddress-content .q-carousel-right-arrow,.q-carousel-left-arrow{
+        display: none;
+      }
+
+      .validateAddress-content .q-carousel-quick-nav{
+        display: none
+      }
+      
+      .validateAddress-content .search{
+        margin-top: 5px;
       }
     }
 </style>

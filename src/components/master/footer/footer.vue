@@ -6,7 +6,7 @@
           <div class="col-12 col-md-6 q-mb-lg">
             <div class="q-display-1 color-baked-subtitle">Permítenos atenderte</div>
             <div class="q-display-2 color-baked-title">¡VISÍTANOS PRONTO!</div>
-            <div style="width: 90%">
+            <div class="googlemap-container">
               <google-map/>
             </div>
           </div>
@@ -136,6 +136,8 @@
 
   .baked-icon-color
     color #EC3800
+  .googlemap-container
+    width 90%!important
 
 
   .hover-icon
@@ -167,5 +169,11 @@
     &:focus,
     &:hover
       color: #ec3800;
+  
+  @media only screen and (max-width: 600px) {
+		.googlemap-container{
+      width: 100%!important;
+    }
+	}
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<section class="container-fluid" style="height: 800px">
+	<section class="container-fluid">
 		<!--== START BREADCRUMB ==-->
 		<breadcrumb-component name="Pide en linea" image="statics/header-pide.jpg"></breadcrumb-component>
 		<!--== END BREADCRUMB ==-->
