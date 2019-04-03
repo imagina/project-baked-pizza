@@ -1,12 +1,12 @@
 <template>
 	<div class="row">
-		<div class="col-md-12 q-mb-md">
-			<q-btn label="Nueva dirección" @click="opened = true" @hide="opened = false"/>
+		<div class="col-xs-12 col-md-12 q-mb-md">
+			<q-btn label="Nueva dirección" class="m-wd-full" @click="opened = true" @hide="opened = false"/>
 			<q-modal v-model="opened">
 				<newComponent :user="user"/>
 			</q-modal>
 		</div>
-		<div class="col-md-12">
+		<div class="col-xs-12 col-sm-12 col-md-12">
 			<q-card class="no-shadow" v-for="(address, index) in addresses" :key="index">
 				<q-card-main>
 					{{address.first_name}} {{address.last_name}}<q-icon name="star" v-if="address.default"/><br>

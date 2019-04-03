@@ -64,8 +64,8 @@ export default {
         cursor hand
 
     .perfil
-    .q-display-1
-        color: #8e7e7d;
+        .q-display-1
+            color: #8e7e7d;
     .q-btn-inner
         font-size 1.1rem
     .box

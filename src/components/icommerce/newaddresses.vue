@@ -3,7 +3,7 @@
 		<q-card class="no-shadow col-sm-12">
 			<q-card-main class="row">
 				
-	  		<div class="col-md-6 q-px-sm q-pt-lg">	  			
+	  		<div class="col-xs-12 col-sm-12 col-md-6 q-px-sm q-pt-lg">	  			
 					<q-select 
 						filter
 						v-model="formData.country"
@@ -12,7 +12,7 @@
 						:options="countries"
 						@input="getProvinces()"/>
 				</div>
-				<div class="col-md-6 q-px-sm q-pt-lg">
+				<div class="col-xs-12 col-sm-12 col-md-6 q-px-sm q-pt-lg">
 					<q-select 
 						filter
 						v-model="formData.province" 
@@ -20,7 +20,7 @@
 						:options="provinces"
 						@input="getCities()"/>
 				</div>
-				<div class="col-sm-6 q-px-sm q-pt-lg">
+				<div class="col-xs-12 col-sm-12 col-sm-6 q-px-sm q-pt-lg">
 					<q-select 
 						filter
 						:error="$v.formData.$error"
@@ -28,7 +28,7 @@
 						placeholder="Ciudad *" 
 						:options="cities" />
 				</div>
-				<div class="col-md-6 q-px-sm">
+				<div class="col-xs-12 col-sm-12 col-md-6 q-px-sm">
 					<q-input 
 						type="text" 
 						v-model="formData.zip_code"
@@ -39,7 +39,7 @@
 						class="no-shadow"/>
 				</div>
 
-				<div class="col-md-12 q-px-sm">
+				<div class="col-xs-12 col-sm-12 col-md-12 q-px-sm">
 					<q-input 
 						type="text" 
 						v-model="formData.address1"
@@ -50,8 +50,8 @@
 						class="no-shadow" />
 				</div>
 
-				<div class="col-md-12 q-px-sm" align="center">
-					<q-btn label="Validar dirección" color="red" />
+				<div class="col-xs-12 col-sm-12 col-md-12 q-px-sm" align="center">
+					<q-btn label="Validar dirección" class="m-wd-full" color="red" />
 				</div>
 
 				<div class="col-sm-12 q-px-sm q-py-lg">
@@ -71,7 +71,7 @@
 		    		</gmap-map>
 				</div>
 				
-				<div class="col-sm-12">
+				<div class="col-xs-12 col-md-12 col-sm-12">
 					<q-btn label="Guardar" class="full-width" color="red" @click="save"/>
 				</div>
 			</q-card-main>

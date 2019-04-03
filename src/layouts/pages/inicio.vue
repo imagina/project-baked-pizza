@@ -428,6 +428,10 @@
         background-image: none;
       }
 
+      .m-wd-full{
+        width: 100%;
+      }
+
       .button-search{
         width: 70%!important;
       }
@@ -455,5 +459,6 @@
       .validateAddress-content .search{
         margin-top: 5px;
       }
+      
     }
 </style>
