@@ -57,6 +57,7 @@
 <script>
 	//services
 	import productService from 'src/services/products';
+	import categoryService from 'src/services/categories';
 
 	//components
 	import showComponent from 'src/components/icommerce/show'
@@ -66,6 +67,7 @@
 	import store from 'src/store/cart/index'
 	import { mapState } from 'vuex'
 	import {alert} from '@imagina/qhelper/_plugins/alert'
+	import EventBus from 'src/utils/event-bus';
 
 	export default{
 		components:{
@@ -85,10 +87,15 @@
 			}
 		},
 		mounted(){
-			this.getProducts(this.$route.params.id)
+			
+			this.detecteUrl(this.$route.params.slug)
+			
+			EventBus.$on('categorySlug', (data) => {
+				this.categorySlug(data)
+      		})
 		},
 		methods:{
-			getProducts(id = ''){
+			getProducts(id = '',showProduct = false){
 				this.visible = true
 				let filter = ''
 				if (id !== '') {
@@ -99,15 +106,42 @@
 					)
 				.then(response =>{
 					this.products 		= response.data
-					this.showProduct 	= false
-					this.visible = false
-					//window.history.pushState(null, null, 'app/#/pide-en-linea/' + id);
+					this.showProduct 	= showProduct
+					this.visible		= false
 				})
 			},
 			productSelected(product){
 				this.showProduct 		= true
 				this.selected.product 	= product
+				this.$router.push({ name: 'pide-en-linea/product' , params: { slug : product.slug } })
 			},
+			productSlug(slug){
+				this.visible = true
+				let filter = {slug: slug}
+				productService.show(' ',filter)
+				.then(response =>{
+					this.getProducts('',true)
+					this.showProduct 		= true
+					this.selected.product 	= response.data
+					this.visible = false
+				})
+			},
+			categorySlug(slug = ''){
+				this.visible = true
+				categoryService.index({slug: slug})
+				.then(response =>{
+					let id = (response.data.length > 0) ? response.data[0].id : ''
+					this.getProducts(id)
+				})
+			},
+			detecteUrl(slug){
+				var route = this.$route
+				if (route.name === 'pide-en-linea/category' || route.name === 'pide-en-linea') {
+					this.categorySlug(slug)
+				} else if(route.name === 'pide-en-linea/product') {
+					this.productSlug(slug)
+				}
+			}
 		},
 		computed: {
 		...mapState(['domicile','validaddress'])

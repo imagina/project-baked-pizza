@@ -2,7 +2,7 @@
 
 	<div class="col-md-9 container-section--p2">	
 		<div class="border-top">	
-			<div class="row q-mt-md">
+			<div class="row q-mt-lg">
 				<label for="" class="col-xs-12 col-sm-12 col-md-3 offset-5">Seleccione un producto:</label>
 				<q-select v-model="product.product" placeholder="Seleccione un producto" class="q-select--app col-xs-12 col-sm-12 col-md-4" radio :options="selectProduts"/>
 			</div>
@@ -17,7 +17,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-7 im-mt-1">
 				<div class="row">
 					<div class="col-md-12">
-						<span class="q-display-1 color-baked-title">{{product.product.name}}</span>
+						<span class="q-display-2 color-baked-title">{{product.product.name}}</span>
 						<p>{{product.product.description}}</p>
 						<p>${{product.product.price}}</p>
 						<div class="row" v-if="showSizesprop">
@@ -36,20 +36,20 @@
 
 			</div>
 		</div>
-		<div class="row">
+		<div class="row q-mt-lg">
 			<div class="col-xs-12 col-sm-12 col-md-8">
 				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-4">
+					<div class="col-xs-12 col-sm-12 col-md-5">
 						<div class="col-count-product">
 	  						<div class="row">
 								<span class="col-md-4">Cantidad:</span> 
-	  							<input type="number" class="input-count-product col-xs-12 col-sm-12 col-md-8" float-label="Seleccione un producto" min="0"  v-model="quantity" style="width: 80px">
+	  							<input type="number" class="input-count-product col-xs-12 col-sm-12 col-md-8" float-label="Seleccione un producto" min="0"  v-model="quantity">
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-12 col-sm-12 col-md-8">
+					<div class="col-xs-12 col-sm-12 col-md-7">
 						<div class="col-count-product">
-							<div class="porduct-option-content" style="width: 200px">
+							<div class="porduct-option-content">
 									<!-- <pre>{{option}}</pre> -->
 									<options-component :product="product.product.id" :parent="0" id="options"/>
 	    					</div>
@@ -59,12 +59,14 @@
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-4">
 				<div class="row">
-					<div class="col-12 col-count-product">
-						<span>Valor Total:</span>
-	  					<input type="text" class="input-count-product" :value="calculatePrice" readonly>
+					<div class="col-count-product col-md-12">
+						<div class="row">
+							<span class="col-xs-12 col-sm-12 col-md-5">Valor Total:</span>
+							<input type="text" class="input-count-product col-xs-12 col-sm-12 col-md-7" :value="calculatePrice" readonly>
+						</div>
 	  				</div>
 					<div class="col-12">
-						<div class="col-count-product text-right">
+						<div class=" text-right">
 							<q-btn type="submit" label="AÑADIR" size="lg" color="red" sence class="q-my-md round-borders-0" @click="addCart()"/>
 						</div>
 					</div>
@@ -281,7 +283,6 @@
 						'price' 					: option.price,
 						'price_prefix' 				: option.price_prefix
 					}
-					console.log(data)
 					this.updateOptions(data)
 					//end update data
 

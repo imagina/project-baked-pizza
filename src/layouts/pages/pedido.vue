@@ -3,10 +3,7 @@
 		<!--== START BREADCRUMB ==-->
 		<breadcrumb-component name="Listado de Pedidos" image="statics/header-pide.jpg"></breadcrumb-component>
 		<!--== END BREADCRUMB ==-->
-
-		<div class="bg-white">
-			<productsComponent/>
-		</div>
+		<productsComponent/>
 
     <section-carting-app></section-carting-app>
 	</div>
@@ -30,9 +27,9 @@
 	
 	.color-primary
 		color #EB3800
-
-	.bg-color-three
-		color #723D3D
+	
+	.q-btn-rectangle
+		border-radius 0px!important
 
 	@media only screen and (max-width: 600px) {
 		.cart-content .button-pedido{

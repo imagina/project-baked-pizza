@@ -29,12 +29,14 @@ export default {
     });
   },
 
-  show(id) {
+  show(id, filter) {
     let key = JSON.stringify(id);
+    
     return new Promise((resolve, reject) => {
       //remember.async(key, 3600 * 3, () => {
       return http.get(config('api.api_url') + '/icommerce/v3/products/' + id, {
         params: {
+          filter
         }
         /* })*/
       }).then(response => {

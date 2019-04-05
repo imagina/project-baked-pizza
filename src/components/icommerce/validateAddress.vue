@@ -30,7 +30,7 @@
 		    <div class="col-xs-6 col-sm-3">
 		      <input type="text" v-model="street" class="search" placeholder="86bis"> 
 		    </div>
-		    <div class="col-xs-6 col-sm-1 desktop-only">
+		    <div class="col-xs-6 col-sm-1 desktop-only" v-if="$q.platform.is.desktop">
 		      <span>#</span>
 		    </div>
 		    <div class="col-xs-6 col-sm-2">
@@ -39,7 +39,7 @@
 		    <div class="col-xs-6 col-sm-2">
 		      <input type="text" v-model="number2" class="search" placeholder="42">
 		    </div>
-		   	<div class="col-sm-1 desktop-only">
+		   	<div class="col-sm-1 desktop-only" v-if="$q.platform.is.desktop">
 		      <q-icon name="check_circle" color="green" size="25px" style="line-height: 35px" v-if="ifcoberture"/>
 		      <q-icon name="highlight_off" color="red" size="25px" style="line-height: 35px" v-else/>
 		    </div>
@@ -55,8 +55,8 @@
 			</div>
 		</div>
 
-		<img src="statics/cards2.png" class="desktop-only">
-		<div class="desktop-only" style="font-family: Muli">
+		<img src="statics/cards2.png" class="desktop-only" v-if="$q.platform.is.desktop">
+		<div class="desktop-only" style="font-family: Muli" v-if="$q.platform.is.desktop">
 			Paga tu pedido en línea de forma segura
 		</div>
 

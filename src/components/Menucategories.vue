@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-collapsible :label="category.title" v-for="category in categories" :key="category.id" @show="getdata(category.id)" class="pide-menu__category" :group="group">
+    <q-collapsible :label="category.title" v-for="category in categories" :key="category.id" @show="getdata(category)" class="pide-menu__category" :group="group">
       <div class="pide-menu__subcategory">
         <menu-menucategories :parent="category.id" @category="getdata" :group="category.title"/>
       </div>
@@ -14,6 +14,8 @@
 <script>
   import categoryService from 'src/services/categories';
   import menuCategories from 'src/components/Menucategories';
+
+  import EventBus from 'src/utils/event-bus';
 
   export default {
     name: 'menu-menucategories',
@@ -42,8 +44,9 @@
           this.visible = false
         })
       },
-      getdata(id){
-        this.$emit('category', id)
+      getdata(category){
+        EventBus.$emit('categorySlug',category.slug)
+        this.$router.push({ name: 'pide-en-linea/category' , params: { slug : category.slug } })
       },
     }
   }

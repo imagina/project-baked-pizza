@@ -7,7 +7,7 @@
                 </div>
             </div>
             <!-- Version desktop -->
-            <div class="row desktop-only">
+            <div class="row desktop-only" v-if="$q.platform.is.desktop">
                 <div class="col-12">
                     <!--== START TABLE PRODUCTSO BY CATEGORI SELECTED ==-->
                     <div class="table-responsive">					
@@ -62,14 +62,14 @@
                     <!--== EMD TABLE PRODUCTSO BY CATEGORI SELECTED ==-->
                 </div>
                 <div class="col-12 text-right">
-					<q-btn type="button" label="IR AL CHECKOUT" size="lg" color="red" sence class="q-my-md q-mr-sm" to="/checkout" />
+					<q-btn type="button" label="IR AL CHECKOUT" size="lg" color="brown" sence class="q-my-md q-mr-sm" to="/checkout" />
 					<q-btn type="button" label="CONTINUAR COMPRANDO" size="lg" color="red" sence class="q-my-md" to="/pide-en-linea" />
                 </div>
             </div>
             <!--End version desktop -->
 
             <!-- Version Mobile -->
-            <div class="row mobile-only">
+            <div class="row mobile-only" v-if="$q.platform.is.mobile">
                 <div class="col-xs-12 col-sm-12 col-md-8" >
 					<q-card class="no-shadow" v-for="(item, index) in cart.products" :key="index">
 						<q-card-main>
@@ -97,7 +97,7 @@
 				</div>
                 <div :class="`col-xs-12 col-md-4 ${($q.platform.is.desktop ? 'q-pl-md' : '' )}`">
 					<sumaryComponent :total="cart.total"/>
-					<q-btn label="IR AL CHECKOUT" class="full-width shadow-1" color="#723D3D" to="/checkout" />
+					<q-btn label="IR AL CHECKOUT" class="full-width shadow-1" color="brown" to="/checkout" />
 					<q-btn label="CONTINUAR COMPRANDO" class="full-width shadow-1 q-mt-sm" color="red" to="/pide-en-linea" />
 				</div>
             </div>
