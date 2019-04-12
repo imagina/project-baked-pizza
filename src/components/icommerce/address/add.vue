@@ -89,19 +89,19 @@
 								<input 
 								class="toggle toggle__textless"
 								type="checkbox"
-								v-model="domicile">
+								v-model="formData.domicile" @input="updateDomicile">
 								DOMICILIO
-								<p class="text-bold" v-if="!domicile">Debe seleccionar una tienda para recoger.</p>
-								<p class="text-bold" v-if="domicile">Debe seleccionar area valida para el domicilio.</p>
+								<p class="text-bold" v-if="!formData.domicile">Debe seleccionar una tienda para recoger.</p>
+								<p class="text-bold" v-if="formData.domicile">Debe seleccionar area valida para el domicilio.</p>
 							</div>
-							<div class="col-xs-12 col-sm-12 col-md-12 q-px-sm" align="center" v-if="!domicile">
+							<div class="col-xs-12 col-sm-12 col-md-12 q-px-sm" align="center" v-if="!formData.domicile">
 								<q-item tag="label" v-for="(store, index) in stores" :key="index">
 									<q-item-side>
 										<q-radio v-model="formData.store_id" :val="store.id" :label="store.name"/>
 									</q-item-side>
 								</q-item>
 							</div>
-							<div class="col-sm-12 q-px-sm q-py-lg" v-if="domicile">
+							<div class="col-sm-12 q-px-sm q-py-lg" v-if="formData.domicile">
 								<q-alert
 									v-if="ifcoberture == true"
 									type="positive"
@@ -171,7 +171,6 @@
 				areas: [],
 				ifcoberture: true,
 				areasValidated: [],
-				domicile: false,
 				visible: false,
 
 				// data`s form`
@@ -219,7 +218,6 @@
 						lat			: val.address_1.lat,
 						lng			: val.address_1.lng,
 					}
-					this.domicile = val.options.domicile
 					this.dataMap(val.address_1.lat, val.address_1.lng)
 					this.getCountries()
 					
@@ -231,14 +229,6 @@
 					this.resetData()
 				}
 			},
-			domicile: function(val){
-				this.formData.domicile = val
-				this.formData.store_id = ''
-
-				if (val) {
-					this.evalAddress()
-				}
-			}
 		},
 		computed: {
 		...mapState({
@@ -269,6 +259,12 @@
 			
 		},
 		methods:{
+			updateDomicile(){
+				this.formData.store_id = ''
+				if (!this.formData.domicile) {
+					this.evalAddress()
+				}
+			},
 			getCountries(){
 				locationsService.countries()
 				.then(response=>{
