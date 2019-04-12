@@ -7,8 +7,9 @@
 				</div>
 			</div>
 			<div class="q-py-lg row">
+
 				<div class="col-xs-12 col-sm-12 col-md-12 q-py-xs" v-for="(shippingMethod, index) in shipMethods" :key="index">
-					<q-radio v-model="parentData.paymentMethod_id" :val="shippingMethod.id" :label="shippingMethod.title" />				
+					<q-radio v-model="paymentmethodselected" :val="shippingMethod" :label="shippingMethod.title" />				
 				</div>				
 			</div>
 		</q-card>
@@ -25,6 +26,7 @@
 	import deliverymethodsComponent from 'src/components/icommerce/checkout/deliveryMethods'
 	import detailsComponent from 'src/components/icommerce/checkout/detailsComponent'
 
+	import { mapState } from 'vuex'
 	import paymentMethods from 'src/services/payment-methods'
 
 
@@ -39,7 +41,13 @@
 				visible: false,
 				shipMethods: [],
 				paymentMethod: '',
+				paymentmethodselected: [],
 			}
+		},
+		computed: {
+			...mapState({
+					payment_method_selected: state => state.paymentmethod.payment_method_selected
+			})
 		},
 		mounted(){
 			this.getshippingMethods()
@@ -53,10 +61,12 @@
 					this.visible = false
 					this.shipMethods = response.data
 				})
-
-				
-
 			},
-		}
+		},
+		watch: {
+			paymentmethodselected: function(val){
+				this.$store.dispatch('paymentmethod/setPaymentMethodSelected',val)
+			}
+		},
 	}
 </script>

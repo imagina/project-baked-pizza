@@ -2,7 +2,7 @@
     <div class="showinfouser">
         <div class="row">	
             <div class="col-xs-12 col-sm-12 col-md-12">
-                <q-tabs>
+                <q-tabs class="box"> 
                     <!-- Tabs - notice slot="title" -->
                     <q-tab default slot="title" label="Información" name="tab-1" />
                     <q-tab slot="title" name="tab-2" label="Cuenta" />

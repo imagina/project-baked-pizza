@@ -33,8 +33,11 @@
 	import customerinformationComponent from 'src/components/icommerce/checkout/customerInformation'
 	import billingdetailsComponent from 'src/components/icommerce/checkout/billingdetailsComponent'
 	import paymentmethodsComponent from 'src/components/icommerce/checkout/paymentMethods'
+
+	import {alert} from '@imagina/qhelper/_plugins/alert'
 	import {helper} from '@imagina/qhelper/_plugins/helper';
 	import orderService from 'src/services/order'
+	import {mapState} from 'vuex'
 
 	export default{
 		components:{
@@ -94,8 +97,16 @@
 						}
 					},				
 					cart_id: 0,
+					token: '',
 				}
 			}
+		},
+		computed: {
+			...mapState({
+					defaultAddress: 					state => state.address.defaultAddress,
+					shipping_method_selected: state => state.shippingmethod.shipping_method_selected,
+					payment_method_selected: 	state => state.paymentmethod.payment_method_selected
+			})
 		},
 		mounted(){
 			this.getcart()
@@ -103,41 +114,32 @@
 		},
 		methods:{
 			saveOrder(){
-				// PREPARING DATA
 
-				//validar si no esta autenticado
-				if (this.order.customerInformation.userData) {
-
-					let form = {
-						name: '',
-						lastName: '',
-						email: '',
-						phone: '',
-						password: '',
-						confirmPassword: '',
+				if (this.cart_id === 0) {
+					alert.error('Debe agregar articulos al carrito')
+				}else if(Object.keys(this.defaultAddress).length === 0){
+					alert.error('Debe seleccionar una dirección')
+				}else if(Object.keys(this.payment_method_selected).length === 0){
+					alert.error('Debe seleccionar un metodo de pago')
+				}else if(Object.keys(this.shipping_method_selected).length === 0){
+					alert.error('Debe seleccionar un metodo de envio')
+				}else{
+					// data preparada, lista para enviar
+					let fotData = {
+						"user_id"							: this.userData.id, //esto se debe eliminar, se hizo porque el servidor no me reconoce el usuario logueado
+						"store_id"						: 1,
+						"cart_id"							: this.cart_id,
+						"address_payment_id"	: this.defaultAddress.id,
+						"address_shipping_id"	:	this.defaultAddress.id,
+						"payment_id"					: this.payment_method_selected.id,
+						"shipping_name"				: this.shipping_method_selected.name
 					}
-					//register user
-
-
-					//start sesion
-
-					// register address
-
+					orderService.create({attributes: fotData})
+					.then(response=>{
+							alert.success('Registro agregado')
+					})
 				}
 
-				// data preparada, lista para enviar
-				let fotData = {
-					"cart_id": this.order.cart_id,
-					"address_payment_id": this.order.addreses.billing.address_id,
-					"address_shipping_id": (this.order.addreses.shipping.differentAddress ? this.order.addreses.billing.address_id : this.order.addreses.shipping.address_id),
-					"payment_id": this.order.shippingAndPay.paymentMethod_id,
-					"shipping_name": this.order.shippingAndPay.shippingMethod_name
-				}
-
-				orderService.create({attributes: fotData})
-				.then(response=>{
-					// PROCESING RESPONSE
-				})
 			},
     	async authenticate() {
         this.$v.$touch();
@@ -154,16 +156,19 @@
 			getcart(){
         helper.storage.get.item('cart_server').then(res => {
           if (res !== null) {
-          	this.order.cart_id = res.id
-          	
+          	this.cart_id = res.id
           }
         })
 			},
 			setData(){
         helper.storage.get.item('userData').then(response => {
           this.userData = response
+				})
+				
+				helper.storage.get.item('userToken').then(response => {
+          this.token = response
         })
-      },
+			}
 		}
 	}
 </script>

@@ -5,7 +5,13 @@
 			manera independiente de toda los demas componentes de 
 		 	la aplicacion.
 		==-->
-		<testComponent/>
+
+		<div class="row">
+			<div class="col-md-12">
+				<indexComponent/>
+			</div>
+		</div>
+
 	</div>
 </template>
 
@@ -15,8 +21,11 @@
 	// de todos los demas componetes de la aplicacion.
 	import testComponent from 'src/components/icommerce/addresses'
 
+	import indexComponent from 'src/components/icommerce/address/index'
+
 	export default{
 		components:{
+			indexComponent,
 			testComponent,
 		},
 	}

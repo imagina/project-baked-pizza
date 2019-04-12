@@ -76,7 +76,7 @@ export default {
         border-top-color #ed4400
         margin-bottom 20px
         width 100%
-        box-shadow 0 1px 1px rgba(0,0,0,0.1)
+        box-shadow 0 1px 1px rgba(0, 0, 0, 0.82)
         .profile-user-img
             margin 0 auto
             width 100px

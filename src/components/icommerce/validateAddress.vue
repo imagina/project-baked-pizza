@@ -172,7 +172,6 @@
 
         mapAreaService.latLng(this.fullAddress)
         .then(response=>{
-        	
      			this.addresslatLng = response.coordenades
      			helper.storage.set('addresslatLng', response.result)
      			helper.storage.set('address', {
@@ -180,7 +179,8 @@
 						street: this.street,
 						number1: this.number1,
 						number2: this.number2,
-     			})
+					 })
+					 
      			this.markers = [
      				{ 
      					position: { "lat": 4.6365976, "lng": -74.1658186 },
@@ -189,8 +189,10 @@
      				{ 
      					position: response.coordenades,
      				}
-     			]
-        	var areasValidated = []
+					 ]
+
+					var areasValidated = []
+					
           this.areas.forEach( area => {
             let poligon = new google.maps.Polygon({paths: area.polygon})
             var those = this;

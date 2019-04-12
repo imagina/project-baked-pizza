@@ -29,7 +29,7 @@ export default {
     });
   },
   calculateShipping(params) {
-    let get = '?options[countryCode]=' + params.options.countryCode + '&options[postalCode]=' + params.options.postalCode + '&products[total]=' + params.products.total + '&products[items]=' + JSON.stringify(params.products.items)
+    let get = '?options[countryCode]=' + params.options.countryCode + '&options[postalCode]=' + params.options.postalCode + '&products[cart_id]=' + params.products.cart_id + '&products[total]=' + params.products.total + '&products[items]=' + JSON.stringify(params.products.items)
     return new Promise((resolve, reject) => {
         return http.get(config('api.base_url') + '/api/icommerce/v3/shipping-methods/calculations/all' + get, {
         params: {},

@@ -88,5 +88,39 @@ export default {
     });
   },
 
+  stores() {
+    return new Promise((resolve, reject) => {
+      //remember.async(key, 3600 * 3, () => {
+      return http.get(config('api.api_url') + '/icommerce/v3/stores', {
+
+      }).then(response => {
+        resolve(response.data);
+      })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  show(id,include) {
+    let key = ":" + JSON.stringify(include);
+    key = key == ":null" ? "" : key;
+
+    return new Promise((resolve, reject) => {
+      remember.async("mapareas" + key, 3600 * 3, () => {
+        return http.get(config('api.api_url') + '/icommerce/v3/mapareas/' + id, {
+          params: {
+            include: include
+          }
+        })
+      }, true).then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      });
+    });
+  },
+
   // ... More functionss
 }

@@ -78,7 +78,7 @@ export default {
 
   delete(id) {
     return new Promise((resolve, reject) => {
-      http.delete(config('api.api_url') + '/profile/addresses/'+id)
+      http.delete(config('api.api_url') + '/profile/addresses/'+ id)
         .then(response => {
           resolve(response);
         })
