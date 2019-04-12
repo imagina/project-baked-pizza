@@ -137,6 +137,7 @@
 
   import store from 'src/store/cart/index'
   import { mapState, mapGetters, mapActions } from 'vuex'
+  import EventBus from 'src/utils/event-bus'
 
   export default {
     store,
@@ -153,6 +154,11 @@
       this.$root.$on("sesionStart", this.setData);
       this.$root.$on("updateCart", this.getcart);
       this.$root.$on("deleteItemCart", this.getcart);
+
+      EventBus.$on('getcart',() => {
+        this.cart.total_quantity = 0
+			})
+
     },
     mounted() {
       this.$nextTick(function () {

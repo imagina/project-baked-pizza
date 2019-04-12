@@ -38,6 +38,8 @@
 	import {helper} from '@imagina/qhelper/_plugins/helper';
 	import orderService from 'src/services/order'
 	import {mapState} from 'vuex'
+	import EventBus from 'src/utils/event-bus'
+	import LocalForage from "localforage"
 
 	export default{
 		components:{
@@ -136,7 +138,17 @@
 					}
 					orderService.create({attributes: fotData})
 					.then(response=>{
-							alert.success('Registro agregado')
+							if (Object.keys(response).length > 0) {
+								LocalForage.removeItem('cart_server').then(value => {
+									localStorage.removeItem('cart_server')
+									EventBus.$emit('getcart')
+									alert.success('Orden eviada!')
+									this.$router.push('/inicio')
+								})
+							}else{
+								alert.error('Error al agregar el registro')
+							}
+							
 					})
 				}
 
