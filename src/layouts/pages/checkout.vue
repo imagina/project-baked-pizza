@@ -1,29 +1,33 @@
 <template>
 	<section class="container-fluid">
 		<breadcrumb name="Checkout" image="statics/header-pide.jpg"></breadcrumb>
-		<div class="container-section">
-			<div class="row"> <!--== TITLE ==-->
-				<div class="col-xs-12 col-sm-12 col-md-12 q-mb-xl">
-					<div class="q-display-2 color-baked-title" align="center">Checkout</div>
+		<div class="container-section" >
+			<div v-if="Object.keys(dataOrder).length == 0">
+				<div class="row"> <!--== TITLE ==-->
+					<div class="col-xs-12 col-sm-12 col-md-12 q-mb-xl">
+						<div class="q-display-2 color-baked-title" align="center">Checkout</div>
+					</div>
 				</div>
-			</div>
-			<div class="row" v-if="Object.keys(userData).length === 0">
-				<div class="col-md-12">
-					<div class="q-title text-center"><router-link to="/auth/login">Inicie Sesión</router-link> para ver esta página. </div>
+				<div class="row" v-if="Object.keys(userData).length === 0">
+					<div class="col-md-12">
+						<div class="q-title text-center"><router-link to="/auth/login">Inicie Sesión</router-link> para ver esta página. </div>
+					</div>
 				</div>
-			</div>
-			<div class="row" v-else> <!--== COMPONENTS CHECKOUT ==-->
-				<customerinformation-component :parentData="order.customerInformation"/> <!--==  CUSTOMER INFORMATION ==-->	
-				<billingdetails-component :parentData="order.addreses"/> <!--==  BILLING DETAILS ==-->
-				<paymentmethods-component :parentData="order.shippingAndPay"/> <!--==  DELIVERY METHODS ==-->
-				<div class="col-12"> <!--== ACTION BUTTON ==-->
-					<div class="col-count-product text-right">
-						<q-btn type="submit" label="Comprar Ahora" size="lg" color="red" sence @click="saveOrder"/>
+				<div class="row" v-else> <!--== COMPONENTS CHECKOUT ==-->
+					<customerinformation-component :parentData="order.customerInformation"/> <!--==  CUSTOMER INFORMATION ==-->	
+					<billingdetails-component :parentData="order.addreses"/> <!--==  BILLING DETAILS ==-->
+					<paymentmethods-component :parentData="order.shippingAndPay"/> <!--==  DELIVERY METHODS ==-->
+					<div class="col-12"> <!--== ACTION BUTTON ==-->
+						<div class="col-count-product text-right">
+							<q-btn type="submit" label="Comprar Ahora" size="lg" color="red" sence @click="saveOrder"/>
+						</div>
 					</div>
 				</div>
 			</div>
+			<div v-else>
+				<orderComponent :order="dataOrder"/>
+			</div>
 		</div>
-		
 		<section-carting-app></section-carting-app> <!--== COMPONENTS BANNER CATERGIN INFO ==-->
 	</section>
 </template>
@@ -33,6 +37,7 @@
 	import customerinformationComponent from 'src/components/icommerce/checkout/customerInformation'
 	import billingdetailsComponent from 'src/components/icommerce/checkout/billingdetailsComponent'
 	import paymentmethodsComponent from 'src/components/icommerce/checkout/paymentMethods'
+	import orderComponent from 'src/components/icommerce/order/details'
 
 	import {alert} from '@imagina/qhelper/_plugins/alert'
 	import {helper} from '@imagina/qhelper/_plugins/helper';
@@ -46,10 +51,12 @@
 			customerinformationComponent,
 			billingdetailsComponent,
 			paymentmethodsComponent,
+			orderComponent,
 		},
 		data(){
 			return{
 				userData : false,
+				dataOrder: [],
 				order:{
 					customerInformation: {
 						userData: false,
@@ -140,11 +147,10 @@
 					.then(response=>{
 							if (Object.keys(response).length > 0) {
 								LocalForage.removeItem('cart_server').then(value => {
-									localStorage.removeItem('cart_server')
 									EventBus.$emit('getcart')
 									alert.success('Orden eviada!')
-									this.$router.push('/inicio')
 								})
+								this.dataOrder = response.data.data
 							}else{
 								alert.error('Error al agregar el registro')
 							}
