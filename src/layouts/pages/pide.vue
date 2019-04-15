@@ -20,7 +20,7 @@
 					<div class="row grid-products" v-if="products.length">
 						<div class="col-xs-12 col-sm-12 col-md-4" align="center" v-for="product in products" :key="product.id">
 							<div class="card-product-img">
-								<img src="statics/logo.png" alt="" class="responsive m-w-100">
+								<img :src="'statics/' + product.options.img" alt="" class="responsive m-w-100">
 								<q-btn type="submit" label="Pedir" color="red" sence class="q-my-md round-borders-0 btn-add-card" @click="productSelected(product)"/>
 							</div>
 							<div class="q-mt-lg">
@@ -108,6 +108,7 @@
 					this.products 		= response.data
 					this.showProduct 	= showProduct
 					this.visible		= false
+					console.log(response)
 				})
 			},
 			productSelected(product){

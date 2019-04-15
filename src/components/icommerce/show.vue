@@ -11,7 +11,7 @@
 		<div class="row q-mt-lg">
 			<div class="col-xs-12 col-sm-12 col-md-5">
 				<div class="card-product-img im-mt-1">
-					<img src="statics/logo.png" alt="" class="responsive m-w-100 full-width">
+					<img :src="'statics/' + product.product.options.img" alt="" class="responsive m-w-100 full-width">
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-7 im-mt-1">
