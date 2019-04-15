@@ -50,7 +50,9 @@ Route.view('/', master)
       Route.view('/perfil', require('../layouts/pages/perfil').default).options({
         name: 'perfil'
       }),
-
+      Route.view('/order', require('../layouts/pages/order').default).options({
+        name: 'order'
+      }),
 
 
 

@@ -78,7 +78,12 @@
 				<div class="layout-padding">
 					<div class="row">
 						<div class="col-md-3">
-							<pre>{{areas}}</pre>
+								<div class="q-title">TIENDAS DISPONIBLES</div>
+								<q-item tag="label" v-for="(store, index) in stores" :key="index">
+									<q-item-side>
+										<q-radio v-model="store_id" :val="store.id" :label="store.name"/>
+									</q-item-side>
+								</q-item>
 						</div>
 						<div class="col-md-9">
 							<gmap-map
@@ -137,6 +142,8 @@
 				number1: '',
 				number2: '',
 				map: false,
+				stores: [],
+				store_id: '',
 				//
 			}
 		},
@@ -144,6 +151,9 @@
 			fullAddress(){
 				return this.typeStreet+' '+this.street+' Numero+'+this.number1+' '+this.number2
 			}
+		},
+		created() {
+			this.getStores()
 		},
 		mounted() {
 			this.$nextTick(() => {
@@ -255,7 +265,12 @@
       },
       handleChangeCheckbox(){
       	helper.storage.set('typeOrder', this.typeOrder)
-      }
+			},
+			getStores(){
+				mapAreaService.stores().then(response => {
+					this.stores = response.data
+				})
+			},
       //
 		}
 	}
