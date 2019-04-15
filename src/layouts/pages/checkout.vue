@@ -2,7 +2,6 @@
 	<section class="container-fluid">
 		<breadcrumb name="Checkout" image="statics/header-pide.jpg"></breadcrumb>
 		<div class="container-section" >
-			<div v-if="Object.keys(dataOrder).length == 0">
 				<div class="row"> <!--== TITLE ==-->
 					<div class="col-xs-12 col-sm-12 col-md-12 q-mb-xl">
 						<div class="q-display-2 color-baked-title" align="center">Checkout</div>
@@ -23,10 +22,6 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div v-else>
-				<orderComponent :order="dataOrder"/>
-			</div>
 		</div>
 		<section-carting-app></section-carting-app> <!--== COMPONENTS BANNER CATERGIN INFO ==-->
 	</section>
@@ -39,9 +34,11 @@
 	import paymentmethodsComponent from 'src/components/icommerce/checkout/paymentMethods'
 	import orderComponent from 'src/components/icommerce/order/details'
 
+	//Services
+	import orderService from 'src/services/order'
+
 	import {alert} from '@imagina/qhelper/_plugins/alert'
 	import {helper} from '@imagina/qhelper/_plugins/helper';
-	import orderService from 'src/services/order'
 	import {mapState} from 'vuex'
 	import EventBus from 'src/utils/event-bus'
 	import LocalForage from "localforage"
@@ -151,6 +148,7 @@
 									alert.success('Orden eviada!')
 								})
 								this.dataOrder = response.data.data
+								this.$router.push('/order/' + this.dataOrder.id)
 							}else{
 								alert.error('Error al agregar el registro')
 							}
@@ -186,7 +184,7 @@
 				helper.storage.get.item('userToken').then(response => {
           this.token = response
         })
-			}
+			},
 		}
 	}
 </script>

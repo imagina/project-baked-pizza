@@ -30,6 +30,24 @@ export default {
     });
   },
 
+  orderMethod(method, orderId) {
+    let key = ":" + JSON.stringify(orderId);
+    key = key == ":null" ? "" : key;
 
+    return new Promise((resolve, reject) => {
+      remember.async("payment-methods" + key, 3600 * 3, () => {
+        return http.get(config('api.api_url') + '/' + method, {
+          params: {
+            orderID: orderId,
+          }
+        })
+      }, true).then(response => {
+        resolve(response);
+      })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
   
 }

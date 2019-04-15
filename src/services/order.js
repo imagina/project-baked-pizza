@@ -30,6 +30,22 @@ export default {
     });
   },
 
+  show(id) {
+    let key = JSON.stringify(id);
+    return new Promise((resolve, reject) => {
+      //remember.async(key, 3600 * 3, () => {
+      return http.get(config('api.api_url') + '/icommerce/v3/orders/' + id, {
+        params: {
+        }
+        /* })*/
+      }).then(response => {
+        resolve(response.data);
+      })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
 
   create(data) {  
     return new Promise((resolve, reject) => {
