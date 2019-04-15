@@ -5,23 +5,6 @@
 			<orderComponent :order="order"/>
 		</div>
 		<section-carting-app></section-carting-app> <!--== COMPONENTS BANNER CATERGIN INFO ==-->
-		<q-modal v-model="opened" :content-css="{maxWidth: '80vw', minHeight: '80vh'}">
-				<q-modal-layout>
-						<q-toolbar slot="header">
-						<q-btn
-								flat
-								round
-								dense
-								v-close-overlay
-								icon="close"
-						/>
-						<q-toolbar-title>
-								PAGO
-						</q-toolbar-title>
-						</q-toolbar>   
-								Qui va la URL
-						</q-modal-layout>
-		</q-modal>
 	</section>
 </template>
 
@@ -63,8 +46,6 @@
 						console.log(response)
 						if (response.data.external) {
 							window.open(response.data.redirectRoute, '_blank');
-						}else{
-							this.opened = true
 						}
 					}
 				})
