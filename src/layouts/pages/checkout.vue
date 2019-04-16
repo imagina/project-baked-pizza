@@ -16,6 +16,9 @@
 					<customerinformation-component :parentData="order.customerInformation"/> <!--==  CUSTOMER INFORMATION ==-->	
 					<billingdetails-component :parentData="order.addreses"/> <!--==  BILLING DETAILS ==-->
 					<paymentmethods-component :parentData="order.shippingAndPay"/> <!--==  DELIVERY METHODS ==-->
+
+					
+
 					<div class="col-12"> <!--== ACTION BUTTON ==-->
 						<div class="col-count-product text-right">
 							<q-btn type="submit" label="Comprar Ahora" size="lg" color="red" sence @click="saveOrder"/>
@@ -33,6 +36,7 @@
 	import billingdetailsComponent from 'src/components/icommerce/checkout/billingdetailsComponent'
 	import paymentmethodsComponent from 'src/components/icommerce/checkout/paymentMethods'
 	import orderComponent from 'src/components/icommerce/order/details'
+	
 
 	//Services
 	import orderService from 'src/services/order'
@@ -48,7 +52,7 @@
 			customerinformationComponent,
 			billingdetailsComponent,
 			paymentmethodsComponent,
-			orderComponent,
+			orderComponent
 		},
 		data(){
 			return{

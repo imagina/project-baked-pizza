@@ -16,6 +16,7 @@
 
 		<deliverymethods-component :parentData="parentData"/>
 		<details-component :parentData="parentData.details"/> <!--== START - DETAILS ==-->
+		<productsComponent simple/>
    	<q-inner-loading :visible="visible" style="background: #f4f4f4;">
       <q-spinner size="50px" color="primary"></q-spinner>
     </q-inner-loading>
@@ -25,6 +26,7 @@
 <script type="text/javascript">
 	import deliverymethodsComponent from 'src/components/icommerce/checkout/deliveryMethods'
 	import detailsComponent from 'src/components/icommerce/checkout/detailsComponent'
+	import productsComponent from 'src/components/icommerce/cart/products'
 
 	import { mapState } from 'vuex'
 	import paymentMethods from 'src/services/payment-methods'
@@ -34,7 +36,8 @@
 		props: ['parentData'],
 		components:{
 			detailsComponent,
-			deliverymethodsComponent
+			deliverymethodsComponent,
+			productsComponent
 		},
 		data(){
 			return {

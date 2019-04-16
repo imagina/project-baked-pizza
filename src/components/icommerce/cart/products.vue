@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <div class="container-section cart-content" v-if="products.length">
+  <div>
+    <div v-if="!simple">   
+      <div class="container-section cart-content" v-if="products.length">
             <div class="row">
                 <div class="col-12">
                     <p class="q-display-2 color-baked-title" align="center">Listado de Pedidos</p>
@@ -103,78 +104,112 @@
             </div>
             <!--End version mobile -->
         </div>
-
         <div class="container-section" v-else>
-                <div class="row" >
-                    <div class="col-12" align="center">
-                        <p class="q-display-2 color-baked-title" align="center">No ha agregado productos al carro</p>
-                    </div>
+            <div class="row" >
+                <div class="col-12" align="center">
+                    <p class="q-display-2 color-baked-title" align="center">No ha agregado productos al carro</p>
                 </div>
+            </div>
         </div>
     </div>
+    <div v-else>
+      
+      <q-card v-for="(item, index) in cart.products" :key="index" class="no-shadow">
+        <q-card-main class="row">
+          <div class="col-md-10">
+            <span class="q-display-1 color-primary">
+              {{item.name}}
+            </span>
+          </div>
+          <div class="col-md-2">
+            <q-btn size="sm" round color="red" @click="deleteitem(item)" icon="close"/>
+          </div>
+          <div class="col-md-6">
+            <span>Cantidad: {{item.quantity}}</span>
+          </div>
+          <div class="col-md-6">
+            <span class="q-display">${{item.subtotal}}</span>
+          </div>
+        </q-card-main>
+      </q-card>
+      <q-card class="no-shadow">
+        <q-card-main>
+          <hr style="background-color: #e0e0e0; color: #e0e0e0; border: none; height: 1px;">
+          <p>TOTAL: <span class="table-price__total"><b>$ {{cart.total}}</b></span></p>
+          <hr style="background-color: #e0e0e0; color: #e0e0e0; border: none; height: 1px;">
+        </q-card-main>
+      </q-card>
+      
+    </div>
+  </div>
 </template>
 
 <script>
-import sumaryComponent from 'src/components/icommerce/cart/sumary'
+  import sumaryComponent from 'src/components/icommerce/cart/sumary'
+  import {alert} from '@imagina/qhelper/_plugins/alert'
+  import {helper} from '@imagina/qhelper/_plugins/helper';
+  import cartService from 'src/services/cart';
 
-import {alert} from '@imagina/qhelper/_plugins/alert'
-import {helper} from '@imagina/qhelper/_plugins/helper';
-import cartService from 'src/services/cart';
-
-export default {
+  export default {
+    props:{
+      simple: {
+        type: Boolean,
+        default: false
+      },
+    },
     components:{
-        sumaryComponent
+      sumaryComponent
     },
     data(){
-        return{
-            visible: false,
-            cart: [],
-            products: false,
-        }
-    },
-    mounted(){
+      return{
+        visible: false,
+        cart: [],
+        products: false,
+      }
+      },
+      mounted(){
         this.getcart()
-    },
-    methods:{
+      },
+      methods:{
         getcart(){
-        helper.storage.get.item('cart_server').then(res => {
+          helper.storage.get.item('cart_server').then(res => {
             if (res !== null) {
             this.visible = true
             cartService.show(res.id)
             .then(response=>{
-                this.cart = response.data
-                            this.products = response.data.products
-                            console.log(this.products)
-                this.visible = false
-                this.$root.$emit('updateCart')
+              this.cart = response.data
+              this.products = response.data.products
+              console.log(this.products)
+              this.visible = false
+              this.$root.$emit('updateCart')
             })
-            }
+          }
         })
         },
-            deleteitem (item) {
-                cartService.deleteProduct(item.id)
-                .then(response=>{
-                    this.$root.$emit('deleteItemCart')
-                    alert.success('Carrito Actualizado')
-                    this.getcart()
-                })
-        },
-        update (item, sign) {
-            this.visible = true
-            let formData = {
-                    "cart_products": {
-                        "product_id": item.product_id,
-                        "quantity": parseInt(item.quantity) + (sign == '+' ? +1 : -1),
-                        "price": item.price
-                    },
-                }
-                formData['cart_id']  = this.cart.id
-                cartService.create(formData)
-                .then(response=>{
-                    alert.success('Producto Actualizado')
-                    this.getcart()
-                })
-        },
-    }
-}
+        deleteitem (item) {
+            cartService.deleteProduct(item.id)
+            .then(response=>{
+                this.$root.$emit('deleteItemCart')
+                alert.success('Carrito Actualizado')
+                this.getcart()
+            })
+          },
+          update (item, sign) {
+              this.visible = true
+              let formData = {
+                "cart_products": {
+                "product_id": item.product_id,
+                "quantity": parseInt(item.quantity) + (sign == '+' ? +1 : -1),
+                "price": item.price
+              },
+            }
+            formData['cart_id']  = this.cart.id
+            cartService.create(formData)
+            .then(response=>{
+                alert.success('Producto Actualizado')
+                this.getcart()
+            })
+          },
+      }
+  }
 </script>
