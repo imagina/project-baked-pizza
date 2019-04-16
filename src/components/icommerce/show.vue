@@ -128,7 +128,7 @@
 						priceOptions += parseFloat(element.price)
 					}
 				})
-				return parseFloat(this.product.product.price) + priceOptions
+				return (parseFloat(this.product.product.price) + priceOptions) * parseFloat(this.quantity)
 			}
 		},
 		mounted(){
