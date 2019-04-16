@@ -5,7 +5,6 @@
                 <q-btn color="primary" icon="add" label="Nueva dirección" class="float-rigth" @click="opened = true" />
             </div>
         </div>
-
         <q-modal v-model="opened" :content-css="{maxWidth: '80vw', minHeight: '80vh'}">
             <q-modal-layout>
                 <q-toolbar slot="header">
@@ -36,12 +35,20 @@
                         {{address.options.address}}
                         <q-btn flat round dense icon="delete" @click="destroy(address.id)"/>
                         <q-btn flat round dense icon="edit" @click="selectDataEdit(address)"/>
-                        <q-item tag="label">
+                        <q-item tag="label" v-if="type === 'shipping'">
                             <q-item-side>
                                 <input v-model="option" type="radio" :value="address.id" class="radio" @click="setUpdatedefault(address.id)">
                             </q-item-side>
                             <q-item-main>
                                 <q-item-tile label>Dirección por defecto</q-item-tile>
+                            </q-item-main>
+                        </q-item>
+                        <q-item tag="label" v-if="type === 'billing'">
+                            <q-item-side>
+                                <input v-model="idBillingAddress" type="radio" :value="address.id" class="radio" @click="setBillingAddress(address.id)">
+                            </q-item-side>
+                            <q-item-main>
+                                <q-item-tile label>Dirección para facturación</q-item-tile>
                             </q-item-main>
                         </q-item>
                     </q-card-actions>
@@ -80,12 +87,14 @@ export default {
     },
     data() {
         return {
-           option       : '',
-           addressEdit  : [],
-           opened       : false,
-           page         : 1,
+           option           : '',
+           idBillingAddress : '',
+           addressEdit      : [],
+           opened           : false,
+           page             : 1,
         }
     },
+    props: ['type'],
     created() {
         this.getAddresses()
     },
@@ -103,6 +112,7 @@ export default {
            defaultAddress   : state => state.address.defaultAddress,
            modal            : state => state.address.modal,
            pagination       : state => state.address.pagination,
+           billingAddress   : state => state.address.billingAddress,
        })
     },
     mounted() {
@@ -137,6 +147,9 @@ export default {
                 })
             })
             
+        },
+        setBillingAddress(address){
+            this.$store.dispatch('address/setBillingAddress',address)
         },
         selectDataEdit(address){
             this.addressEdit = address

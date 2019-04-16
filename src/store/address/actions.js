@@ -1,6 +1,10 @@
 import addresService from 'src/services/addresses'
 import {helper} from '@imagina/qhelper/_plugins/helper'
 
+export function initialState(context, payload) {
+	context.commit('initialState')
+}
+
 export async function getAddresses (context, payload) {
 
 	const user 	= await helper.storage.get.item('userData')
@@ -47,4 +51,12 @@ export async function updateAddress(context, payload) {
 
 export function page(context, payload) {
 	context.commit('page', payload)
+}
+
+export function setBillingAddress(context, payload) {
+	context.commit('billingAddress', payload)
+}
+
+export function setBillingShippingaddress(context, payload) {
+	context.commit('billingShippingaddress', payload)
 }

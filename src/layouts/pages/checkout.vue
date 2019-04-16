@@ -109,9 +109,11 @@
 		},
 		computed: {
 			...mapState({
-					defaultAddress: 					state => state.address.defaultAddress,
-					shipping_method_selected: state => state.shippingmethod.shipping_method_selected,
-					payment_method_selected: 	state => state.paymentmethod.payment_method_selected
+					defaultAddress					: 	state => state.address.defaultAddress,
+					shipping_method_selected: 	state => state.shippingmethod.shipping_method_selected,
+					payment_method_selected	: 	state => state.paymentmethod.payment_method_selected,
+					billingShippingaddress	: 	state => state.address.billingShippingaddress,
+					billingAddress					: 	state => state.address.billingAddress
 			})
 		},
 		mounted(){
@@ -129,17 +131,20 @@
 					alert.error('Debe seleccionar un metodo de pago')
 				}else if(Object.keys(this.shipping_method_selected).length === 0){
 					alert.error('Debe seleccionar un metodo de envio')
+				}else if(!this.billingShippingaddress && this.billingAddress === ''){
+					alert.error('Debe seleccionar una dirección de facturación')
 				}else{
 					// data preparada, lista para enviar
 					let fotData = {
 						"user_id"							: this.userData.id, //esto se debe eliminar, se hizo porque el servidor no me reconoce el usuario logueado
 						"store_id"						: 1,
 						"cart_id"							: this.cart_id,
-						"address_payment_id"	: this.defaultAddress.id,
+						"address_payment_id"	: (this.billingShippingaddress) ? this.defaultAddress.id : this.billingAddress,
 						"address_shipping_id"	:	this.defaultAddress.id,
 						"payment_id"					: this.payment_method_selected.id,
 						"shipping_name"				: this.shipping_method_selected.name
 					}
+
 					orderService.create({attributes: fotData})
 					.then(response=>{
 							if (Object.keys(response).length > 0) {
@@ -147,6 +152,7 @@
 									EventBus.$emit('getcart')
 									alert.success('Orden eviada!')
 								})
+								this.$store.dispatch('address/initialState')
 								this.dataOrder = response.data.data
 								this.$router.push('/order/' + this.dataOrder.id)
 							}else{

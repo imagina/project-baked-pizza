@@ -1,9 +1,11 @@
 export default {
-  user            : [],  
-  addresses       : [],
-  defaultAddress  : '',
-  pagination      : [],
-  page            : 1,
-  take            : 6,
-  modal           : false,
+  user                    : [],  
+  addresses               : [],
+  billingShippingaddress  : true,
+  defaultAddress          : '',
+  billingAddress          : '',
+  pagination              : [],
+  page                    : 1,
+  take                    : 6,
+  modal                   : false,
 }

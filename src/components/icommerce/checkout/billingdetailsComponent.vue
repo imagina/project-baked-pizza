@@ -8,7 +8,17 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12 q-py-lg">
-					<moduleaddressesComponent />
+					<moduleaddressesComponent :type="'shipping'"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 q-py-lg">
+					<q-checkbox v-model="billingShippingaddress" :val="true" label="La direcciónn de facturación es la misma que la de envio" @input="setBillingShippingaddress"/>
+				</div>
+			</div>
+			<div class="row" v-if="!billingShippingaddress">
+				<div class="col-md-12 q-py-lg">
+					<moduleaddressesComponent :type="'billing'"/>
 				</div>
 			</div>
 		</q-card>
@@ -33,11 +43,12 @@
 		data(){
 			return {
 				userData: true,
+				billingShippingaddress: true,
 			}
 		},
 		computed: {
 			...mapState({
-				defaultAddress : state => state.address.defaultAddress
+				defaultAddress 			: state => state.address.defaultAddress
 			})
 		},
 		created(){
@@ -52,6 +63,9 @@
 					this.userData = response
 				})
 			},
+			setBillingShippingaddress(val){
+				this.$store.dispatch('address/setBillingShippingaddress',val)
+			}
 		}
 	}
 </script>
