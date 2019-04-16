@@ -11,7 +11,7 @@
 		<div class="row q-mt-lg">
 			<div class="col-xs-12 col-sm-12 col-md-5">
 				<div class="card-product-img im-mt-1">
-					<img :src="'statics/' + product.product.options.img" alt="" class="responsive m-w-100 full-width">
+					<img :src="'statics/' + product.product.options.image" alt="" class="responsive m-w-100 full-width">
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-7 im-mt-1">
@@ -24,7 +24,7 @@
 							<div class="col-xs-12 col-sm-12 col-md-4 product-type-grid text-center" v-for="option of optionSize" :key="option.id">
 								<label>
 									<input v-model="productTypeOption" type="radio" :value="option.product_option_value_id" class="radio" @click="updateSize(option)">
-									<img :id="option.product_option_value_id" src="statics/logo.png" alt="" class="responsive m-w-100 imgradio">
+									<img :id="option.product_option_value_id" :src="'statics/' + option.image" alt="" class="responsive m-w-100 imgradio">
 								</label>
 								
 								<p align="center" class="product-type-name">{{ option.name }}</p>
@@ -147,7 +147,8 @@
 						description				: 'Description exaple',
 						product_option_id		: data.id,
 						price					: element.price,
-						price_prefix 			: element.price_prefix
+						price_prefix 			: element.price_prefix,
+						image 					: element.option.image
 					}
 					this.optionSize.push(item)
 				});
