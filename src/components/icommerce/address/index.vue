@@ -141,11 +141,17 @@ export default {
                 }
             }
 
-            this.$store.dispatch('address/updateAddress',lastData).then(response => {
+            if (this.defaultAddress.id === undefined) {
                 this.$store.dispatch('address/updateAddress',newData).then(response => {
                     alert.success('Registro actualizado')
                 })
-            })
+            }else{
+                this.$store.dispatch('address/updateAddress',lastData).then(response => {
+                    this.$store.dispatch('address/updateAddress',newData).then(response => {
+                        alert.success('Registro actualizado')
+                    })
+                })
+            }
             
         },
         setBillingAddress(address){
