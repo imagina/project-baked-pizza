@@ -24,6 +24,7 @@ export async function getAddresses (context, payload) {
 		addresses.data.forEach(element => {
 			if (element.default === '1') {
 				context.commit('defaultAddress',element)
+				context.commit('addressSelected',element)
 			}
 		});
 	}
@@ -51,6 +52,10 @@ export async function updateAddress(context, payload) {
 
 export function page(context, payload) {
 	context.commit('page', payload)
+}
+
+export function setAddressSelected(context, payload) {
+	context.commit('addressSelected', payload)
 }
 
 export function setBillingAddress(context, payload) {

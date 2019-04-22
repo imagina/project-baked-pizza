@@ -114,6 +114,7 @@
 		computed: {
 			...mapState({
 					defaultAddress					: 	state => state.address.defaultAddress,
+					addressSelected					: 	state => state.address.addressSelected,
 					shipping_method_selected: 	state => state.shippingmethod.shipping_method_selected,
 					payment_method_selected	: 	state => state.paymentmethod.payment_method_selected,
 					billingShippingaddress	: 	state => state.address.billingShippingaddress,
@@ -129,7 +130,7 @@
 
 				if (this.cart_id === 0) {
 					alert.error('Debe agregar articulos al carrito')
-				}else if(Object.keys(this.defaultAddress).length === 0){
+				}else if(Object.keys(this.addressSelected).length === 0){
 					alert.error('Debe seleccionar una dirección')
 				}else if(Object.keys(this.payment_method_selected).length === 0){
 					alert.error('Debe seleccionar un metodo de pago')
@@ -143,8 +144,8 @@
 						"user_id"							: this.userData.id, //esto se debe eliminar, se hizo porque el servidor no me reconoce el usuario logueado
 						"store_id"						: 1,
 						"cart_id"							: this.cart_id,
-						"address_payment_id"	: (this.billingShippingaddress) ? this.defaultAddress.id : this.billingAddress,
-						"address_shipping_id"	:	this.defaultAddress.id,
+						"address_payment_id"	: (this.billingShippingaddress) ? this.addressSelected.id : this.billingAddress,
+						"address_shipping_id"	:	this.addressSelected.id,
 						"payment_id"					: this.payment_method_selected.id,
 						"shipping_name"				: this.shipping_method_selected.name
 					}

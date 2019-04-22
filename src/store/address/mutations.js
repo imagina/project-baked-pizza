@@ -5,6 +5,7 @@ export const initialState = (state, opened) => {
 	state.page 					 = 1
 	state.take 					 = 6
 	state.modale 				 = false
+	state.addressSelected 		 = ''
 }
 
 export const Addresses = (state, opened) => {
@@ -18,6 +19,10 @@ export const userData = (state, opened) => {
 
 export const defaultAddress = (state, opened) => {
 	state.defaultAddress = opened
+}
+
+export const addressSelected = (state, opened) => {
+	state.addressSelected = opened
 }
 
 export const billingAddress = (state, opened) => {

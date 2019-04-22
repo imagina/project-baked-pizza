@@ -49,8 +49,9 @@
 		},
 		computed: {
 			...mapState({
-				defaultAddress : state => state.address.defaultAddress,
-				sipping_method_selected: state => state.shippingmethod.sipping_method_selected
+				defaultAddress 				: state => state.address.defaultAddress,
+				addressSelected 			: state => state.address.addressSelected,
+				sipping_method_selected		: state => state.shippingmethod.sipping_method_selected
 			})
 		},
 		created() {
@@ -140,7 +141,7 @@
 			shippingMethodSelected: function(val){
 				this.$store.dispatch('shippingmethod/setShippingMethodSelected',val)
 			},
-			defaultAddress: function(val){
+			addressSelected: function(val){
 				if (Object.keys(val).length > 0) {
 					this.priceMethodsShipping(val)
 				}

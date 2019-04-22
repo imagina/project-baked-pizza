@@ -37,10 +37,10 @@
                         <q-btn flat round dense icon="edit" @click="selectDataEdit(address)"/>
                         <q-item tag="label" v-if="type === 'shipping'">
                             <q-item-side>
-                                <input v-model="option" type="radio" :value="address.id" class="radio" @click="setUpdatedefault(address.id)">
+                                <input v-model="option" type="radio" :value="address.id" class="radio" @click="setUpdatedefault(address)">
                             </q-item-side>
                             <q-item-main>
-                                <q-item-tile label>Dirección por defecto</q-item-tile>
+                                <q-item-tile label>Seleccionar dirección</q-item-tile>
                             </q-item-main>
                         </q-item>
                         <q-item tag="label" v-if="type === 'billing'">
@@ -48,14 +48,14 @@
                                 <input v-model="idBillingAddress" type="radio" :value="address.id" class="radio" @click="setBillingAddress(address.id)">
                             </q-item-side>
                             <q-item-main>
-                                <q-item-tile label>Dirección para facturación</q-item-tile>
+                                <q-item-tile label>Seleccionar dirección</q-item-tile>
                             </q-item-main>
                         </q-item>
                     </q-card-actions>
                 </q-card>
             </div>
         </div>
-        <div class="row">
+        <div class="row" v-if="paginated">
             <div class="col-md-12">
                 <q-pagination 
 				boundary-links  
@@ -94,7 +94,7 @@ export default {
            page             : 1,
         }
     },
-    props: ['type'],
+    props: ['type','paginated'],
     created() {
         this.getAddresses()
     },
@@ -110,6 +110,7 @@ export default {
            addresses        : state => state.address.addresses,
            user             : state => state.address.user,
            defaultAddress   : state => state.address.defaultAddress,
+           addressSelected  : state => state.address.addressSelected,
            modal            : state => state.address.modal,
            pagination       : state => state.address.pagination,
            billingAddress   : state => state.address.billingAddress,
@@ -127,7 +128,9 @@ export default {
             })
         },
         setUpdatedefault(option){
-            let lastData = {
+            this.$store.dispatch('address/setAddressSelected',option)
+
+            /*let lastData = {
                 id: this.defaultAddress.id,
                 attributes : {
                     default : 0
@@ -139,10 +142,9 @@ export default {
                 attributes : {
                     default : 1
                 }
-            }
+            }*/
 
-
-            if (this.defaultAddress.id === undefined) {
+            /*if (this.defaultAddress.id === undefined) {
                 this.$store.dispatch('address/updateAddress',newData).then(response => {
                     alert.success('Registro actualizado')
                 })
@@ -152,7 +154,7 @@ export default {
                         alert.success('Registro actualizado')
                     })
                 })
-            }
+            }*/
             
         },
         setBillingAddress(address){
