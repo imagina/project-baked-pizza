@@ -1,8 +1,11 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-md-12">
-                <q-btn color="primary" icon="add" label="Nueva dirección" class="float-rigth" @click="opened = true" />
+            <div class="col-md-6">
+                <q-btn color="primary" title="Editar Dirección" icon="edit" @click="more = !more" />
+            </div>
+            <div class="col-md-6">
+                <q-btn v-if="more" color="primary" title="Agregar Dirección" icon="add" class="float-right" @click="opened = true" />
             </div>
         </div>
         <q-modal v-model="opened" :content-css="{maxWidth: '80vw', minHeight: '80vh'}">
@@ -25,7 +28,7 @@
         
         <div class="row q-mt-sm">
             <div class="col-xs-12 col-sm-12 col-md-12">
-                <q-card class="no-shadow" v-for="(address, index) in addresses" :key="index">
+                <q-card class="no-shadow" v-for="(address, index) in addresses" :key="index" v-if="index === 0 || more">
                     <q-card-main>
                         {{address.first_name}} {{address.last_name}}<q-icon name="star" v-if="address.default"/><br>
                         {{address.address_1.address}}<br>
@@ -33,9 +36,9 @@
                     </q-card-main>
                     <q-card-actions>
                         {{address.options.address}}
-                        <q-btn flat round dense icon="delete" @click="destroy(address.id)"/>
-                        <q-btn flat round dense icon="edit" @click="selectDataEdit(address)"/>
-                        <q-item tag="label" v-if="type === 'shipping'">
+                        <q-btn v-if="btn_edit" flat round dense icon="delete" @click="destroy(address.id)"/>
+                        <q-btn v-if="btn_delete" flat round dense icon="edit" @click="selectDataEdit(address)" />
+                        <q-item tag="label" v-if="shipping">
                             <q-item-side>
                                 <input v-model="option" type="radio" :value="address.id" class="radio" @click="setUpdatedefault(address)">
                             </q-item-side>
@@ -43,7 +46,7 @@
                                 <q-item-tile label>Seleccionar dirección</q-item-tile>
                             </q-item-main>
                         </q-item>
-                        <q-item tag="label" v-if="type === 'billing'">
+                        <q-item tag="label" v-if="!shipping">
                             <q-item-side>
                                 <input v-model="idBillingAddress" type="radio" :value="address.id" class="radio" @click="setBillingAddress(address.id)">
                             </q-item-side>
@@ -55,7 +58,7 @@
                 </q-card>
             </div>
         </div>
-        <div class="row" v-if="paginated">
+        <div class="row" v-if="paginate">
             <div class="col-md-12">
                 <q-pagination 
 				boundary-links  
@@ -92,9 +95,10 @@ export default {
            addressEdit      : [],
            opened           : false,
            page             : 1,
+           more             : false
         }
     },
-    props: ['type','paginated'],
+    props: ['shipping','paginate','btn_edit','btn_delete'],
     created() {
         this.getAddresses()
     },
@@ -123,7 +127,10 @@ export default {
     },
     methods: {
         getAddresses(){
-            this.$store.dispatch('address/getAddresses').then(response => {
+            let data = {
+                shipping: this.shipping
+            }
+            this.$store.dispatch('address/getAddresses',data).then(response => {
                 this.option = this.defaultAddress.id
             })
         },

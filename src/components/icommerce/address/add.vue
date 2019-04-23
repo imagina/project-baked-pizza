@@ -149,7 +149,6 @@
 
 <script>
 	import locationsService from 'src/services/locations'
-	import mapareaService from 'src/services/maparea'
 	import addresService from 'src/services/addresses'
 	import mapAreaService from 'src/services/maparea'
 

@@ -18,13 +18,16 @@ export async function getAddresses (context, payload) {
 			page: context.state.page,
 		}
 
-		const addresses = await addresService.index(data.filter, data.take, data.page)
+		let addresses = await addresService.index(data.filter, data.take, data.page)
+		addresses.data = addresses.data.sort((a, b) => (a.default > b.default || a.default === undefined) ? 1 : -1)
 		context.commit('Addresses', addresses)
 
 		addresses.data.forEach(element => {
 			if (element.default === '1') {
 				context.commit('defaultAddress',element)
-				context.commit('addressSelected',element)
+				if(payload.shipping){
+					context.commit('addressSelected',element)
+				}
 			}
 		});
 	}

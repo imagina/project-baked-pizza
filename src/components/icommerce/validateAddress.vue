@@ -264,7 +264,10 @@
         })
       },
       handleChangeCheckbox(){
-      	helper.storage.set('typeOrder', this.typeOrder)
+				helper.storage.set('typeOrder', this.typeOrder)
+				helper.storage.set('typeOrder').then(response => {
+					console.log(response)
+				})
 			},
 			getStores(){
 				mapAreaService.stores().then(response => {

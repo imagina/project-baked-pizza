@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import cart from 'src/store/cart/index';
 import address from 'src/store/address/index';
+import mapArea from 'src/store/mapArea/index';
 import shippingmethod  from 'src/store/shippingMethod/index'
 import paymentmethod  from 'src/store/paymentMethod/index'
 import auth from '@imagina/quser/_store/auth/index';
@@ -15,6 +16,7 @@ export default function () {
     	auth,
       cart,
       address,
+      mapArea,
       shippingmethod,
       paymentmethod
     }

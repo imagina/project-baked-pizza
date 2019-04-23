@@ -16,9 +16,6 @@
 					<customerinformation-component :parentData="order.customerInformation"/> <!--==  CUSTOMER INFORMATION ==-->	
 					<billingdetails-component :parentData="order.addreses"/> <!--==  BILLING DETAILS ==-->
 					<paymentmethods-component :parentData="order.shippingAndPay"/> <!--==  DELIVERY METHODS ==-->
-
-					
-
 					<div class="col-12"> <!--== ACTION BUTTON ==-->
 						<div class="col-count-product text-right">
 							<q-btn type="submit" label="Comprar Ahora" size="lg" color="red" sence @click="saveOrder"/>
