@@ -8,7 +8,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<q-tabs inverted>
+					<q-tabs inverted v-model="typeOrder">
 						<!-- Tabs - notice slot="title" -->
 						<q-tab :default="!domicile" slot="title" label="RECOGER EN TIENDA" name="tab-1" icon="directions_walk" @select="setDomicile(false)" />
 						<q-tab :default="domicile" slot="title" label="DOMICILIO" name="tab-2" icon="local_shipping" @select="setDomicile(true)" />
@@ -25,7 +25,7 @@
 						<q-tab-pane name="tab-2">
 							<q-item tag="label" v-for="(store, index) in shops" :key="index">
 								<q-item-side>
-									<q-radio v-model="selectedStore" :val="store.id" :label="store.name"/>
+									<q-radio v-model="selectedStore" :val="store.id" :label="store.name" @input="setStoreSelected"/>
 								</q-item-side>
 							</q-item>
 						</q-tab-pane>
@@ -59,19 +59,22 @@
 				billingShippingaddress: true,
 				stores: [],
 				selectedStore : '',
-				domicile: false,
+				typeOrder: 'tab-1',
 			}
 		},
 		computed: {
 			...mapState({
 				defaultAddress 			: state => state.address.defaultAddress,
-				shops 					: state => state.mapArea.shops
+				shops 					: state => state.mapArea.shops,
+				domicile 				: state => state.mapArea.domicile,
+				storeSelected 			: state => state.mapArea.storeSelected
 			})
 		},
 		created(){
 		  this.$root.$on("sesionStart", this.setData);
 		  this.getShops()
 		  this.getTypeOrder()
+		  this.getStoreSelected()
 		},
 		mounted(){
 			this.setData()
@@ -89,10 +92,27 @@
 				this.$store.dispatch('mapArea/getShops')
 			},
 			setDomicile(val){
-				this.domicile = val
+				this.$store.dispatch('mapArea/setTypeOrder',val)
 			},
 			getTypeOrder(){
-				let type = this.$store.dispatch('mapArea/getTypeOrder')
+				this.$store.dispatch('mapArea/getTypeOrder').then(response => {
+					this.setTab(this.domicile)
+				})
+			},
+			setTab(val){
+				if(val){
+					this.typeOrder = 'tab-2'
+				}else{
+					this.typeOrder = 'tab-1'
+				}
+			},
+			getStoreSelected(){
+				this.$store.dispatch('mapArea/getStoreSelected').then(response => {
+					this.selectedStore = this.storeSelected
+				})
+			},
+			setStoreSelected(val){
+				this.$store.dispatch('mapArea/setStoreSelected',val)
 			}
 		}
 	}

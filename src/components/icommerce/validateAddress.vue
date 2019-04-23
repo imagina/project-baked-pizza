@@ -81,7 +81,7 @@
 								<div class="q-title">TIENDAS DISPONIBLES</div>
 								<q-item tag="label" v-for="(store, index) in stores" :key="index">
 									<q-item-side>
-										<q-radio v-model="store_id" :val="store.id" :label="store.name"/>
+										<q-radio v-model="selectedStore" :val="store.id" :label="store.name" @input="setStoreSelected"/>
 									</q-item-side>
 								</q-item>
 						</div>
@@ -118,6 +118,8 @@
 	import {alert} from '@imagina/qhelper/_plugins/alert'
 	import mapAreaService from 'src/services/maparea'
 
+	import { mapState } from 'vuex';
+
 	export default {
 		data(){
 			return{
@@ -126,6 +128,7 @@
 				areasValidated: [],
 				ifcoberture: false,
 				typeOrder: false,
+				selectedStore : '',
 				typesStreet:
 				[
 					{name : 'Calle'},
@@ -150,10 +153,14 @@
 		computed: {
 			fullAddress(){
 				return this.typeStreet+' '+this.street+' Numero+'+this.number1+' '+this.number2
-			}
+			},
+			...mapState({
+				storeSelected 			: state => state.mapArea.storeSelected
+			})
 		},
 		created() {
 			this.getStores()
+			this.getStoreSelected()
 		},
 		mounted() {
 			this.$nextTick(() => {
@@ -265,15 +272,20 @@
       },
       handleChangeCheckbox(){
 				helper.storage.set('typeOrder', this.typeOrder)
-				helper.storage.set('typeOrder').then(response => {
-					console.log(response)
-				})
 			},
 			getStores(){
 				mapAreaService.stores().then(response => {
 					this.stores = response.data
 				})
 			},
+			getStoreSelected(){
+				this.$store.dispatch('mapArea/getStoreSelected').then(response => {
+					this.selectedStore = this.storeSelected
+				})
+			},
+			setStoreSelected(val){
+				this.$store.dispatch('mapArea/setStoreSelected',val)
+			}
       //
 		}
 	}
