@@ -10,8 +10,8 @@
 				<div class="col-md-12">
 					<q-tabs inverted v-model="typeOrder">
 						<!-- Tabs - notice slot="title" -->
-						<q-tab :default="!domicile" slot="title" label="RECOGER EN TIENDA" name="tab-1" icon="directions_walk" @select="setDomicile(false)" />
-						<q-tab :default="domicile" slot="title" label="DOMICILIO" name="tab-2" icon="local_shipping" @select="setDomicile(true)" />
+						<q-tab :default="domicile" slot="title" label="DOMICILIO" name="tab-1" icon="local_shipping" @select="setDomicile(true)" />
+						<q-tab :default="!domicile" slot="title" label="RECOGER EN TIENDA" name="tab-2" icon="directions_walk" @select="setDomicile(false)" />
 						<!-- Targets -->
 						<q-tab-pane name="tab-1">
 							<br>
@@ -101,9 +101,9 @@
 			},
 			setTab(val){
 				if(val){
-					this.typeOrder = 'tab-2'
-				}else{
 					this.typeOrder = 'tab-1'
+				}else{
+					this.typeOrder = 'tab-2'
 				}
 			},
 			getStoreSelected(){
