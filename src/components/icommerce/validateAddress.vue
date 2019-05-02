@@ -117,6 +117,12 @@
 									:animation="2"
 									@click="center=m.position">
 								</gmap-marker>
+								
+								<gmap-polygon 
+									v-for="(area, index) in areas"
+									:paths="area.polygon">
+								</gmap-polygon>
+
 		    			</gmap-map>
 							<q-btn 
 								label="Validar" 
@@ -201,9 +207,9 @@
 				markers: [],
 				form:{
 					typeStreet: 'Carrera',
-					street: '',
-					number1: '',
-					number2: '',
+					street: '87b',
+					number1: '38a',
+					number2: '42',
 				},
 				results:[],
 				map: false,
@@ -240,6 +246,7 @@
 		mounted(){
 			this.$nextTick(() => {
 				this.getMapAreas()
+				this.getStores()
 				// traer datos de local storage si las hay
 			})
 		},
@@ -289,9 +296,6 @@
 						}
 					},1000)
 				})
-				if(!this.typeOrder){
-					this.getStores()
-				}
 				this.opened = false
 				this.modalresultcoverage = true
 				setTimeout(()=>{
