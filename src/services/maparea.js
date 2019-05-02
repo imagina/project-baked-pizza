@@ -77,10 +77,10 @@ export default {
       .then(response=>{
         resolve(
           {
-            coordenades: new google.maps.LatLng(response.data.results[0].geometry.location), 
-            result: response.data.results[0].geometry.location
+            
+            data: response
           }
-        ); // >>>THIS IS TE ADDRES IN LATLNG FORMAT
+        );
       })
       .catch(error => {
         reject(error);

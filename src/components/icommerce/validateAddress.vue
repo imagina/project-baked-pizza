@@ -1,6 +1,6 @@
 <template>
-	<div class="text-center">
-		<div class="q-display-1 " style="color: white">
+	<div class="">
+		<div class="q-display-1">
 			¡ACEPTANDO PEDIDOS!
 		</div>
 		<div class="q-display-2 q-my-md">
@@ -8,17 +8,20 @@
 			<input 
 				class="toggle toggle__textless" 
 				type="checkbox"
-				@change="handleChangeCheckbox()"
 				v-model="typeOrder"> 
 				DOMICILIO
 		</div>
 		<div class="q-my-lg">
 			(Recoger en tienda te ahorra la fila y esperar)
 		</div>
-		<div class="q-my-lg" id="q-carousel-search">
+		<div class="q-my-lg" :id="false ? 'q-carousel-search': ''">
 		  <div class="row">
+
 		    <div class="col-xs-6 col-sm-3">
-		      <select class="search" v-model="typeStreet">
+		      <select 
+						class="search" 
+						v-model="form.typeStreet">
+							<option value="">- Seleccione -</option>
 		          <option 
 		          	v-for="(type, index) in typesStreet" 
 		          	:key="index" 
@@ -27,40 +30,52 @@
 		        </option>
 		      </select>
 		    </div>
+
 		    <div class="col-xs-6 col-sm-3">
-		      <input type="text" v-model="street" class="search" placeholder="86bis"> 
+		      <input type="text" 
+						v-model="form.street" 
+						class="search" 
+						placeholder="87b"> 
 		    </div>
-		    <div class="col-xs-6 col-sm-1 desktop-only" v-if="$q.platform.is.desktop">
-		      <span>#</span>
+
+		    <div class="col-xs-6 col-sm-3">
+		      <input type="text" 
+						v-model="form.number1" 
+						class="search" 
+						placeholder="38a">
 		    </div>
-		    <div class="col-xs-6 col-sm-2">
-		      <input type="text" v-model="number1" class="search" placeholder="38">
-		    </div>
-		    <div class="col-xs-6 col-sm-2">
-		      <input type="text" v-model="number2" class="search" placeholder="42">
-		    </div>
-		   	<div class="col-sm-1 desktop-only" v-if="$q.platform.is.desktop">
-		      <q-icon name="check_circle" color="green" size="25px" style="line-height: 35px" v-if="ifcoberture"/>
-		      <q-icon name="highlight_off" color="red" size="25px" style="line-height: 35px" v-else/>
+
+		    <div class="col-xs-6 col-sm-3">
+		      <input 
+						type="text" 
+						v-model="form.number2" 
+						class="search" 
+						placeholder="42">
 		    </div>
 		  </div>
+
 		  <div class="row">
 				<div class="col-xs-12 col-ms-12">
 					<input 
-					type="button" 
-					value="VERIFICAR COBERTURA" 
-					class="button button-search" 
-					@click="evalAddress()">
+						type="button" 
+						value="VERIFICAR COBERTURA" 
+						class="button button-search"
+						@click="validateAddress()">
 				</div>
 			</div>
-		</div>
 
-		<img src="statics/cards2.png" class="desktop-only" v-if="$q.platform.is.desktop">
-		<div class="desktop-only" style="font-family: Muli" v-if="$q.platform.is.desktop">
+		</div>
+		<img 
+			src="statics/cards2.png" 
+			class="desktop-only" 
+			v-if="$q.platform.is.desktop">
+		<div 
+			class="desktop-only" 
+			style="font-family: Muli" 
+			v-if="$q.platform.is.desktop">
 			Paga tu pedido en línea de forma segura
 		</div>
 
-		<!--==================== MODAL  =============-->
 		<q-modal v-model="opened" :content-css="{minWidth: '80vw'}">
 			<q-modal-layout>
 				<q-toolbar slot="header">
@@ -69,57 +84,101 @@
 		        round
 		        dense
 		        v-close-overlay
-		        icon="close"
-		      />
+		        icon="close"/>
 	      	<q-toolbar-title>
-	        	Tiendas disponibles
+	        	Se encontraron las siguientes direcciones
 	      	</q-toolbar-title>
 				</q-toolbar>
-				<div class="layout-padding">
+				<div class="q-mx-md q-my-md">
 					<div class="row">
-						<div class="col-md-3">
-								<div class="q-title">TIENDAS DISPONIBLES</div>
-								<q-item tag="label" v-for="(store, index) in stores" :key="index">
-									<q-item-side>
-										<q-radio v-model="selectedStore" :val="store.id" :label="store.name" @input="setStoreSelected"/>
-									</q-item-side>
-								</q-item>
+						<div class="col-xs-12 col-md-12">
+							<q-btn 
+								v-for="(add, index) in results.results" 
+								:key="index" 
+								:label="add.formatted_address" 
+								rounded 
+								icon="room"
+								color="green"
+								@click="showMap(add)"
+								class="q-mr-xl q-mb-md full-width"/>
 						</div>
-						<div class="col-md-9">
+						<div class="col-xs-12 col-md-12" v-if="containerMap">
 							<gmap-map
 					      :center="addresslatLng"
-					      :zoom="15"
-					      style="width:100%;  height: 550px;"
-					    	>
+					      :zoom="15.7"
+					      style="width:100%;  height: 200px;">
 		      			<gmap-marker
-				        :key="index"
-				        v-for="(m, index) in markers"
-				        :label='m.label'
-				        :position="m.position"
-				        :icon='m.icon'
-				        :clickable="true"
-				        @click="center=m.position"
-				      ></gmap-marker>
+									:key="index"
+									v-for="(m, index) in markers"
+									:label='m.label'
+									:position="m.position"
+									:icon='m.icon'
+									:clickable="true"
+									:animation="2"
+									@click="center=m.position">
+								</gmap-marker>
 		    			</gmap-map>
+							<q-btn 
+								label="Validar" 
+								class="full-width q-mt-md" 
+								color="red"
+								icon="where_to_vote"
+								@click="validateLatLng()"/>
 						</div>
 					</div>
-					
 				</div>
 			</q-modal-layout>
 		</q-modal>
-		<!--================ MODAL ==============-->
+		
+		<q-modal v-model="modalresultcoverage" no-esc-dismiss	no-backdrop-dismiss :content-css="{minWidth: '80vw'}">
+			<q-modal-layout>
+				<div class="q-mx-md q-my-md">
+
+					<div class="row" v-if="typeOrder">
+						<div class="col-xs-12 col-md-12 text-center">
+							<q-icon name="sentiment_very_satisfied" size="45px" v-if="coverage"/>
+							<q-icon name="sentiment_very_dissatisfied" size="45px" v-else/>
+						</div>
+						<div class="col-xs-12 col-md-12 text-center">
+								<p> <b>{{coverage ? 'Si' : 'No'}}</b> hay cobertura en tu dirección en este momento.</p>
+						</div>
+						<q-btn label="Aceptar" class="full-width" color="green" @click="modalresultcoverage = false"/>
+					</div>
+
+					<div class="row" v-else>
+						<div class="col-md-12">
+							<q-card class="no-shadow">
+								<q-card-title>
+									<p>Listado de tiendas disponibles</p>
+								</q-card-title>
+								<q-card-main>
+									<q-item tag="label" v-for="(store, index) in stores" :key="index">
+										<q-item-side>
+											<p>
+												<q-radio v-model="selectedStore" :val="store.id"/>
+												{{store.name}} <b>{{store.address}}</b> {{store.phone}}
+											</p>
+										</q-item-side>
+									</q-item>
+								</q-card-main>
+							</q-card>
+						</div>
+						<q-btn label="Aceptar" class="full-width" color="green" @click="modalresultcoverage = false"/>
+					</div>
+
+				</div>
+				<q-inner-loading :visible="loading">
+      		<q-spinner size="50px" color="primary"></q-spinner>
+    		</q-inner-loading>
+			</q-modal-layout>
+		</q-modal>
 
 	</div>
 </template>
 
 <script>
-
-	import {helper} from '@imagina/qhelper/_plugins/helper'
-	import {alert} from '@imagina/qhelper/_plugins/alert'
-	import mapAreaService from 'src/services/maparea'
-
-	import { mapState } from 'vuex';
-
+	import mapService from 'src/services/maparea'
+	import { required } from 'vuelidate/lib/validators'
 	export default {
 		data(){
 			return{
@@ -138,41 +197,55 @@
 					{name : 'Transversal'},
 					{name : 'Vía'},
 				],
-				addresslatLng: {lat:0, lng: 0},
+				addresslatLng: {lat:4.6478435, lng: -74.0693446},
 				markers: [],
-				typeStreet: 'Carrera',
-				street: '',
-				number1: '',
-				number2: '',
+				form:{
+					typeStreet: 'Carrera',
+					street: '',
+					number1: '',
+					number2: '',
+				},
+				results:[],
 				map: false,
 				stores: [],
 				store_id: '',
-				//
+				containerMap: false,
+				addressSelected:[],
+				coverage: [],
+				modalresultcoverage: false,
+				loading: true,
 			}
 		},
+		validations: {
+    	form: {
+				typeStreet: { required },
+				street: { required },
+				number1: { required },
+				number2: { required },
+    	}
+  	},
 		computed: {
 			fullAddress(){
-				return this.typeStreet+' '+this.street+' Numero+'+this.number1+' '+this.number2
+				return `${this.form.typeStreet}+
+					${this.form.street}+
+					${this.form.number1}+
+					${this.form.number2}`
 			},
-			...mapState({
-				storeSelected 			: state => state.mapArea.storeSelected
-			})
+			polygons(){
+				return this.areas.map(area=>{
+					return new google.maps.Polygon({paths: area.polygon})
+				})
+			},
 		},
-		created() {
-			this.getStores()
-			this.getStoreSelected()
-		},
-		mounted() {
+		mounted(){
 			this.$nextTick(() => {
 				this.getMapAreas()
-				this.initCheckbox()
-				this.initAddress()
-				this.initifcoberture()
-			});
-    },
-		methods: {
-      getMapAreas(){
-        mapAreaService.mapareas()
+				// traer datos de local storage si las hay
+			})
+		},
+		methods:{
+			getMapAreas(){
+        mapService.mapareas()
         .then(response=>{
           this.areas = response.data
         })
@@ -180,113 +253,60 @@
           console.warn(error)
         })
       },
-      evalAddress(){
-      	helper.storage.set('areasValidated',{})
-      	helper.storage.set('ifcoberture', false)
-      	this.ifcoberture = false
-
-      	this.areasValidated = [] 
-
-        mapAreaService.latLng(this.fullAddress)
-        .then(response=>{
-     			this.addresslatLng = response.coordenades
-     			helper.storage.set('addresslatLng', response.result)
-     			helper.storage.set('address', {
-     				typeStreet: this.typeStreet,
-						street: this.street,
-						number1: this.number1,
-						number2: this.number2,
-					 })
-					 
-     			this.markers = [
-     				{ 
-     					position: { "lat": 4.6365976, "lng": -74.1658186 },
-     					icon: 'statics/favicon.png'
-     				}, 
-     				{ 
-     					position: response.coordenades,
-     				}
-					 ]
-
-					var areasValidated = []
-					
-          this.areas.forEach( area => {
-            let poligon = new google.maps.Polygon({paths: area.polygon})
-            var those = this;
-
-            setTimeout(function() {
-
-	    				let result = google.maps.geometry.poly.containsLocation(response.coordenades, poligon)
-	    				if (result) {
-	    					areasValidated.push({area: area.id, coberture: result});
-	    					helper.storage.set('areasValidated',{area: area, coberture: result})
-	    					helper.storage.set('ifcoberture', result)
-	    					console.log(result)
-	    					those.ifcoberture = result
-
-	    					those.areasValidated = areasValidated
-	    				}
-    				}, 1000)
-          })
-          if (this.typeOrder) {
-      			console.log('show disponibilidad de envio')
-      		}else{
-      			this.opened = true
-					}
-        })
-        .catch(error=>{
-          console.warn(error)
-        })
-      },
-      initifcoberture(){
-      	helper.storage.get.item('ifcoberture').then(res => {
-          if (res !== null) {
-            this.ifcoberture = res
-          }
-        })
-      },
-      initCheckbox(){
-      	helper.storage.get.item('typeOrder').then(res => {
-          if (res !== null) {
-            this.typeOrder = res
-          }
-        })
-      },
-      initAddress(){
-      	helper.storage.get.item('address').then(res => {
-          if (res !== null) {
-          	this.typeStreet = res.typeStreet
-						this.street = res.street
-						this.number1 = res.number1
-						this.number2 = res.number2
-          }
-        })
-      },
-      initAreasValidated(){
-      	helper.storage.get.item('areasValidated').then(res => {
-          if (res !== null) {
-          	this.areasValidated = res
-          	this.coberture = true
-          }
-        })
-      },
-      handleChangeCheckbox(){
-				helper.storage.set('typeOrder', this.typeOrder)
+			validateAddress(){
+				this.containerMap = false
+				this.$v.form.$touch()
+				if (this.$v.form.$error) {
+					this.$q.notify('Faltan datos para validar su direccion.')
+					return
+				}else{
+					mapService.latLng(this.fullAddress)
+					.then(response =>{ 
+						this.opened = true
+						this.results = response.data.data
+					})
+					.catch(error=>{
+						console.warn(error)
+					})
+				}
+			},
+			showMap(map){
+				this.markers = []
+				this.containerMap = true
+				this.addresslatLng = map.geometry.location
+				this.markers.push({
+					position: map.geometry.location
+				})
+			},
+			validateLatLng(){
+				this.coverage = false
+				let address = new google.maps.LatLng(this.addresslatLng)
+				this.polygons.forEach(polygon=>{
+					setTimeout(()=>{
+						let response = google.maps.geometry.poly.containsLocation(address, polygon)
+						if(response){
+							this.coverage = response
+						}
+					},1000)
+				})
+				if(!this.typeOrder){
+					this.getStores()
+				}
+				this.opened = false
+				this.modalresultcoverage = true
+				setTimeout(()=>{
+					this.loading =  false
+				},2000)
 			},
 			getStores(){
-				mapAreaService.stores().then(response => {
+				mapService.stores()
+				.then(response => {
 					this.stores = response.data
 				})
-			},
-			getStoreSelected(){
-				this.$store.dispatch('mapArea/getStoreSelected').then(response => {
-					this.selectedStore = this.storeSelected
+				.catch(error=>{
+					console.warn(error)
 				})
-			},
-			setStoreSelected(val){
-				this.$store.dispatch('mapArea/setStoreSelected',val)
 			}
-      //
 		}
 	}
 </script>
