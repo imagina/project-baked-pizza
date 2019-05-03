@@ -1,8 +1,8 @@
 {
-  "name": "Baked",
+  "name": "Baked Pizza Gourmet",
   "version": "1.0.0",
-  "description": "Baked",
-  "productName": "Baked",
+  "description": "Comida: Italiana, Pizza, Gourmet,Sandwiches.",
+  "productName": "Baked Pizza Gourmet",
   "cordovaId": "org.cordova.quasar.app",
   "author": "Imagina Colombia <soporte@imaginacolombia.com>",
   "private": true,

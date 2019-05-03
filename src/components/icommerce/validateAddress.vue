@@ -117,13 +117,11 @@
 									:animation="2"
 									@click="center=m.position">
 								</gmap-marker>
-								
 								<gmap-polygon 
-									v-for="(area, index) in areas"
-									:key="index"
+									:key="i+10"
+									v-for="(area, i) in areas"
 									:paths="area.polygon">
 								</gmap-polygon>
-
 		    			</gmap-map>
 							<q-btn 
 								label="Validar" 
@@ -147,9 +145,10 @@
 							<q-icon name="sentiment_very_dissatisfied" size="45px" v-else/>
 						</div>
 						<div class="col-xs-12 col-md-12 text-center">
-								<p> <b>{{coverage ? 'Si' : 'No'}}</b> hay cobertura en tu dirección en este momento.</p>
+								<p> <b>{{coverage.status ? 'Si' : 'No'}}</b> hay cobertura en tu dirección en este momento. </p>
+								<p v-if="coverage.status"> Costo Domicilio ${{ coverage.price}} </p>
 						</div>
-						<q-btn label="Aceptar" class="full-width" color="green" @click="modalresultcoverage = false"/>
+						<q-btn label="Aceptar" class="full-width" color="green" @click="saveConfigAddress(true)"/>
 					</div>
 
 					<div class="row" v-else>
@@ -162,7 +161,7 @@
 									<q-item tag="label" v-for="(store, index) in stores" :key="index">
 										<q-item-side>
 											<p>
-												<q-radio v-model="selectedStore" :val="store.id"/>
+												<q-radio v-model="storeSelected" :val="store.id"/>
 												{{store.name}} <b>{{store.address}}</b> {{store.phone}}
 											</p>
 										</q-item-side>
@@ -170,7 +169,7 @@
 								</q-card-main>
 							</q-card>
 						</div>
-						<q-btn label="Aceptar" class="full-width" color="green" @click="modalresultcoverage = false"/>
+						<q-btn label="Aceptar" class="full-width" color="green" @click="saveConfigAddress(false)"/>
 					</div>
 
 				</div>
@@ -186,6 +185,7 @@
 <script>
 	import mapService from 'src/services/maparea'
 	import { required } from 'vuelidate/lib/validators'
+	import {helper} from '@imagina/qhelper/_plugins/helper'
 	export default {
 		data(){
 			return{
@@ -194,7 +194,7 @@
 				areasValidated: [],
 				ifcoberture: false,
 				typeOrder: false,
-				selectedStore : '',
+				storeSelected : '',
 				typesStreet:
 				[
 					{name : 'Calle'},
@@ -224,6 +224,7 @@
 			}
 		},
 		validations: {
+			storeSelected: {required},
     	form: {
 				typeStreet: { required },
 				street: { required },
@@ -240,27 +241,22 @@
 			},
 			polygons(){
 				return this.areas.map(area=>{
-					return new google.maps.Polygon({paths: area.polygon})
+					return {
+						path: new google.maps.Polygon({paths: area.polygon}),
+						price: area .price,
+						id: area.id
+					}
 				})
 			},
 		},
 		mounted(){
 			this.$nextTick(() => {
+				this.getDataFromStorage()
 				this.getMapAreas()
 				this.getStores()
-				// traer datos de local storage si las hay
 			})
 		},
 		methods:{
-			getMapAreas(){
-        mapService.mapareas()
-        .then(response=>{
-          this.areas = response.data
-        })
-        .catch(error=>{
-          console.warn(error)
-        })
-      },
 			validateAddress(){
 				this.containerMap = false
 				this.$v.form.$touch()
@@ -291,9 +287,13 @@
 				let address = new google.maps.LatLng(this.addresslatLng)
 				this.polygons.forEach(polygon=>{
 					setTimeout(()=>{
-						let response = google.maps.geometry.poly.containsLocation(address, polygon)
+						let response = google.maps.geometry.poly.containsLocation(address, polygon.path)
 						if(response){
-							this.coverage = response
+							this.coverage = {
+								status: response,
+								price: polygon.price,
+								area: polygon.id
+							}
 						}
 					},1000)
 				})
@@ -303,6 +303,56 @@
 					this.loading =  false
 				},2000)
 			},
+			saveConfigAddress(typeOrder){
+				// Save data in storage
+				let data = {}
+				data.typeOrder = this.typeOrder
+				data.form = {
+					typeStreet: this.form.typeStreet,
+					street: this.form.street,
+					number1: this.form.number1,
+					number2: this.form.number2,
+				}
+				data.addresslatLng = this.addresslatLng
+				data.coverage = this.coverage
+				if (!typeOrder){
+					data.store = this.storeSelected
+				}
+				if(!typeOrder && this.storeSelected == ''){
+					this.$q.notify('Seleccione una tienda')
+					return
+				}
+				this.modalresultcoverage = false
+				//console.log(data)
+				helper.storage.set('dataAddress', data)
+			},
+
+			getDataFromStorage(){
+				helper.storage.get.item('dataAddress').then(res => {
+          if (res !== null) {
+						this.typeOrder = res.typeOrder
+          	this.form.typeStreet = res.form.typeStreet
+						this.form.street = res.form.street
+						this.form.number1 = res.form.number1
+						this.form.number2 = res.form.number2
+						this.addresslatLng = res.addresslatLng
+						this.coverage = res.coverage
+						if(re.typeOrder){
+								this.storeSelected = res.store
+						}
+          }
+        })
+			},
+
+			getMapAreas(){
+        mapService.mapareas()
+        .then(response=>{
+          this.areas = response.data
+        })
+        .catch(error=>{
+          console.warn(error)
+        })
+      },
 			getStores(){
 				mapService.stores()
 				.then(response => {
