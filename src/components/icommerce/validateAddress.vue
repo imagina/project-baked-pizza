@@ -120,6 +120,7 @@
 								
 								<gmap-polygon 
 									v-for="(area, index) in areas"
+									:key="index"
 									:paths="area.polygon">
 								</gmap-polygon>
 
