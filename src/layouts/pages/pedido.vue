@@ -1,15 +1,15 @@
 <template>
 	<div>
-		<!--== START BREADCRUMB ==-->
-		<breadcrumb-component name="Listado de Pedidos" image="statics/header-pide.jpg"></breadcrumb-component>
-		<!--== END BREADCRUMB ==-->
+		<breadcrumbComponent 
+			:name="name"
+			:image="image"/>
 		<productsComponent/>
-
-    <section-carting-app></section-carting-app>
+    <section-carting-app/>
 	</div>
 </template>
 
 <script>
+	// Components
 	import breadcrumbComponent from 'src/components/pages/sections/breadcrumb'
 	import productsComponent from 'src/components/icommerce/cart/products'
 
@@ -18,6 +18,12 @@
 			breadcrumbComponent,
 			productsComponent,
 		},
+		data(){
+			return{
+				name:'Listado de Pedidos',
+				image:'statics/header-pide.jpg'
+			}
+		}
 	}
 </script>
 

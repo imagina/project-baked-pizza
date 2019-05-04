@@ -1,9 +1,10 @@
 <template>
 	<div class="">
-		<div class="q-display-1">
+
+		<div class="q-display-1" v-if="whitLabels">
 			¡ACEPTANDO PEDIDOS!
 		</div>
-		<div class="q-display-2 q-my-md">
+		<div class="q-display-2 q-my-md text-center" >
 			RECOGER EN TIENDA
 			<input 
 				class="toggle toggle__textless" 
@@ -11,11 +12,12 @@
 				v-model="typeOrder"> 
 				DOMICILIO
 		</div>
-		<div class="q-my-lg">
+		<div class="q-my-lg" v-if="whitLabels">
 			(Recoger en tienda te ahorra la fila y esperar)
 		</div>
+
 		<div class="q-my-lg" :id="false ? 'q-carousel-search': ''">
-		  <div class="row">
+		  <div class="row text-center">
 
 		    <div class="col-xs-6 col-sm-3">
 		      <select 
@@ -54,7 +56,7 @@
 		    </div>
 		  </div>
 
-		  <div class="row">
+		  <div class="row text-center">
 				<div class="col-xs-12 col-ms-12">
 					<input 
 						type="button" 
@@ -65,14 +67,15 @@
 			</div>
 
 		</div>
+		
 		<img 
 			src="statics/cards2.png" 
 			class="desktop-only" 
-			v-if="$q.platform.is.desktop">
+			v-if="$q.platform.is.desktop && whitLabels">
 		<div 
 			class="desktop-only" 
 			style="font-family: Muli" 
-			v-if="$q.platform.is.desktop">
+			v-if="$q.platform.is.desktop && whitLabels">
 			Paga tu pedido en línea de forma segura
 		</div>
 
@@ -113,6 +116,8 @@
 									:label='m.label'
 									:position="m.position"
 									:icon='m.icon'
+									:draggable="true"
+									@dragend="handleMarkerUpdate"
 									:clickable="true"
 									:animation="2"
 									@click="center=m.position">
@@ -187,6 +192,12 @@
 	import { required } from 'vuelidate/lib/validators'
 	import {helper} from '@imagina/qhelper/_plugins/helper'
 	export default {
+		props:{
+			whitLabels: {
+      	type: Boolean,
+      	default: true
+    	},
+		},
 		data(){
 			return{
 				opened: false,
@@ -204,13 +215,13 @@
 					{name : 'Transversal'},
 					{name : 'Vía'},
 				],
-				addresslatLng: {lat:4.6478435, lng: -74.0693446},
+				addresslatLng: {},
 				markers: [],
 				form:{
-					typeStreet: 'Carrera',
-					street: '87b',
-					number1: '38a',
-					number2: '42',
+					typeStreet: '',
+					street: '',
+					number1: '',
+					number2: '',
 				},
 				results:[],
 				map: false,
@@ -337,13 +348,12 @@
 						this.form.number2 = res.form.number2
 						this.addresslatLng = res.addresslatLng
 						this.coverage = res.coverage
-						if(re.typeOrder){
+						if(res.typeOrder){
 								this.storeSelected = res.store
 						}
           }
         })
 			},
-
 			getMapAreas(){
         mapService.mapareas()
         .then(response=>{
@@ -361,6 +371,10 @@
 				.catch(error=>{
 					console.warn(error)
 				})
+			},
+			handleMarkerUpdate(e){
+				console.log(e)
+				
 			}
 		}
 	}

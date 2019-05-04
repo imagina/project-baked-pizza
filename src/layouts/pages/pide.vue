@@ -1,11 +1,8 @@
 <template>
-	<section class="container-fluid">
-		<!--== START BREADCRUMB ==-->
+	<section class="container-fluid">		
 		<breadcrumb-component name="Pide en linea" image="statics/header-pide.jpg"></breadcrumb-component>
-		<!--== END BREADCRUMB ==-->
 		<div class="container-section">	
 			<div class="row" v-if="validaddress">
-				<!--== START CATETGORIES MENU ==-->
 				<div class="col-xs-12 col-sm-12 col-md-3">
 					<div class="label bg-deep-orange-7 text-white full-width title-menu">
 						<span>· Nuestro Menú ·</span>
@@ -14,8 +11,6 @@
 						<menu-categories-component parent="0" @category="getProducts" group="root"/>
 					</q-list>
 				</div>
-				<!--== END CATETGORIES MENU ==-->
-				<!--== START GRIDS PRODUCTS ==-->
 				<div class="col-md-9" v-if="!showProduct">	
 					<div class="row grid-products" v-if="products.length">
 						<div class="col-xs-12 col-sm-12 col-md-4" align="center" v-for="product in products" :key="product.id">
@@ -38,10 +33,7 @@
 			      <q-spinner size="50px" color="primary"></q-spinner>
 			    </q-inner-loading>
 				</div>
-				<!--== START SHOW PRODUCTS ==-->
 				<showComponent v-else :products="products" :product="selected"/>
-				<!--== END SHOW PRODUCTS ==-->
-				<!--== END GRIDS PRODUCTS ==-->
 			</div>
 			<div class="row" v-else align="center">
 				<div class="col-md-12">
@@ -49,7 +41,17 @@
 				</div>	
 			</div>
 		</div>
-	
+
+    <q-modal 
+      v-model="modalvalidateAddres" 
+      no-esc-dismiss
+      no-backdrop-dismiss>
+      <q-modal-layout style="background: #cfcfcf9c">
+        <div class="q-mx-lg">
+          <validateaddressComponent :whitLabels="false"/>
+        </div>
+      </q-modal-layout>
+    </q-modal>
 
 	</section>
 </template>
@@ -62,18 +64,21 @@
 	//components
 	import showComponent from 'src/components/icommerce/show'
 	import breadcrumbComponent from 'src/components/pages/sections/breadcrumb'
-	import menuCategoriesComponent from 'src/components/Menucategories';
+  import menuCategoriesComponent from 'src/components/Menucategories';
+  import validateaddressComponent from 'src/components/icommerce/validateAddress'
 
 	import store from 'src/store/cart/index'
 	import { mapState } from 'vuex'
 	import {alert} from '@imagina/qhelper/_plugins/alert'
-	import EventBus from 'src/utils/event-bus';
+  import EventBus from 'src/utils/event-bus';
+  import {helper} from '@imagina/qhelper/_plugins/helper'
 
 	export default{
 		components:{
 			menuCategoriesComponent,
 			breadcrumbComponent,
-			showComponent,
+      showComponent,
+      validateaddressComponent,
 		},
 		store,
 		data(){
@@ -83,18 +88,26 @@
 				selected: {
 					product:[]
 				},
-				showProduct: false,
+        showProduct: false,
+        modalvalidateAddres: false,
 			}
 		},
 		mounted(){
-			
 			this.detecteUrl(this.$route.params.slug)
-			
 			EventBus.$on('categorySlug', (data) => {
 				this.categorySlug(data)
-      		})
+      })
+      this.isAddressValidate()
 		},
 		methods:{
+      isAddressValidate(){
+				helper.storage.get.item('dataAddress').then(res => {
+          if (res == null) {
+            console.log('No tiene  una direccion validada')
+            this.modalvalidateAddres = true
+          }
+        })
+			},
 			getProducts(id = '',showProduct = false){
 				this.visible = true
 				let filter = ''
@@ -108,7 +121,6 @@
 					this.products 		= response.data
 					this.showProduct 	= showProduct
 					this.visible		= false
-					console.log(response)
 				})
 			},
 			productSelected(product){

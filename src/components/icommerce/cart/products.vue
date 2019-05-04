@@ -3,8 +3,8 @@
     <div v-if="!simple">   
       <div class="container-section cart-content" v-if="products.length">
             <div class="row">
-                <div class="col-12">
-                    <p class="q-display-2 color-baked-title" align="center">Listado de Pedidos</p>
+                <div class="col-12 q-mb-xl">
+                    <p class="q-display-2 color-baked-title" align="center">Tus Productos </p>
                 </div>
             </div>
             <!-- Version desktop -->
@@ -29,8 +29,8 @@
                                     </td>
                                     <td class="table-description table-description--info">
                                         <span class="q-display-1 d-block color-primary">{{item.name}}</span>
-                                        <p>Tamaño: Personal</p>
-                                        <p>Adicionales: 0</p>
+                                        <p class="hidden">Tamaño: Personal</p>
+                                        <p class="hidden">Adicionales: 0</p>
                                     </td>
                                     <td class="table-description table-description--boder">
                                         <div class="row">
@@ -141,6 +141,9 @@
       </q-card>
       
     </div>
+    <q-inner-loading :visible="visible">
+      <q-spinner size="50px" color="primary"></q-spinner>
+    </q-inner-loading>
   </div>
 </template>
 
@@ -162,7 +165,7 @@
     },
     data(){
       return{
-        visible: false,
+        visible: true,
         cart: [],
         products: false,
       }
@@ -172,9 +175,9 @@
       },
       methods:{
         getcart(){
+          this.visible = true
           helper.storage.get.item('cart_server').then(res => {
             if (res !== null) {
-            this.visible = true
             cartService.show(res.id)
             .then(response=>{
               this.cart = response.data
@@ -183,6 +186,8 @@
               this.visible = false
               this.$root.$emit('updateCart')
             })
+          }else{
+            this.visible = false
           }
         })
         },
