@@ -11,7 +11,7 @@
             </router-link>
 
             <div v-if="userData">
-              <router-link tag="span" to="/auth/logout" class="float-right q-ml-md util-link-1" style="cursor: pointer;" >
+              <router-link tag="span" to="/logout" class="float-right q-ml-md util-link-1" style="cursor: pointer;" >
                 <q-icon name="fas fa-sign-out-alt util-1"/>
                   <b>Cerrar Sesión</b> 
               </router-link>

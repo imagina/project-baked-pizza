@@ -191,6 +191,7 @@
 	import mapService from 'src/services/maparea'
 	import { required } from 'vuelidate/lib/validators'
 	import {helper} from '@imagina/qhelper/_plugins/helper'
+	import addressesService from 'src/services/addresses'
 	export default {
 		props:{
 			whitLabels: {
@@ -263,6 +264,7 @@
 		mounted(){
 			this.$nextTick(() => {
 				this.getDataFromStorage()
+				this.isLoggued()
 				this.getMapAreas()
 				this.getStores()
 			})
@@ -315,7 +317,6 @@
 				},2000)
 			},
 			saveConfigAddress(typeOrder){
-				// Save data in storage
 				let data = {}
 				data.typeOrder = this.typeOrder
 				data.form = {
@@ -334,10 +335,8 @@
 					return
 				}
 				this.modalresultcoverage = false
-				//console.log(data)
 				helper.storage.set('dataAddress', data)
 			},
-
 			getDataFromStorage(){
 				helper.storage.get.item('dataAddress').then(res => {
           if (res !== null) {
@@ -353,6 +352,26 @@
 						}
           }
         })
+			},
+			isLoggued(){
+				helper.storage.get.item('userData').then(response => {
+					if (response !== null) {
+						this.getAddresOfUserLogued(response.id)
+					}
+				})
+			},
+			getAddresOfUserLogued(userId){
+				let filter = {
+					user: userId
+				}
+				addressesService.index(filter)
+				.then(response=>{
+					// HERE ...
+					// set Address of user 
+				})
+				.catch(error=>{
+					console.warn(error)
+				})
 			},
 			getMapAreas(){
         mapService.mapareas()

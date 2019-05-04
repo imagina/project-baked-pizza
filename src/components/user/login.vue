@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <div class="flex flex-center q-my-lg">
     <div class="row" style="width: 500px">
       <div id="form-login-right"
         class="col-12 col-md-12">
@@ -48,7 +48,7 @@
         </div>
       </div>
     </div>
-  </q-page>
+  </div>
 </template>
 <script>
   import {required, email, numeric, minLength} from 'vuelidate/lib/validators';
