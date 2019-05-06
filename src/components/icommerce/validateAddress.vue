@@ -16,6 +16,16 @@
 			(Recoger en tienda te ahorra la fila y esperar)
 		</div>
 
+		<div class="row text-center" v-if="userId">
+			<div class="col-xs-12 col-ms-12">
+				<input
+					@click="openMyAddress()"
+					type="button" 
+					value="Usar Mis Direcciones" 
+					class="button button-search">
+			</div>
+		</div>
+
 		<div class="q-my-lg" :id="false ? 'q-carousel-search': ''">
 		  <div class="row text-center">
 
@@ -54,6 +64,7 @@
 						class="search" 
 						placeholder="42">
 		    </div>
+
 		  </div>
 
 		  <div class="row text-center">
@@ -184,6 +195,41 @@
 			</q-modal-layout>
 		</q-modal>
 
+		<q-modal 
+			v-model="modalMyAddress">
+			<q-modal-layout>
+				<div class="q-mx-lg">
+
+					<div class="row">
+						<div class="col-md-12">
+							<p class="q-mt-lg text-center">
+								Mis Direcciones
+							</p>
+						</div>
+						<div class="col-md-12">
+							<q-btn 
+								v-for="(addres, index) in myAddres" 
+								:key="index" 
+								color="green"
+								@click="setAddresFromMyAddress(addres)"
+								class="q-my-sm q-mb-md full-width">
+								<p class="text-white">
+									{{addres.address_1.typeStreet}} 
+									{{addres.address_1.street}} 
+									{{addres.address_1.number1}}
+									{{addres.address_1.number2}}
+								</p>
+							</q-btn>
+						</div>
+					</div>
+				</div>
+			</q-modal-layout>
+		</q-modal>
+
+		<q-inner-loading :visible="visible" style="background: transparent">
+      <q-spinner size="50px" color="white"></q-spinner>
+    </q-inner-loading>
+
 	</div>
 </template>
 
@@ -224,6 +270,7 @@
 					number1: '',
 					number2: '',
 				},
+				visible: false,
 				results:[],
 				map: false,
 				stores: [],
@@ -233,6 +280,9 @@
 				coverage: [],
 				modalresultcoverage: false,
 				loading: true,
+				userId: false,
+				myAddres: [],
+				modalMyAddress: false,
 			}
 		},
 		validations: {
@@ -356,6 +406,7 @@
 			isLoggued(){
 				helper.storage.get.item('userData').then(response => {
 					if (response !== null) {
+						this.userId = response.id 
 						this.getAddresOfUserLogued(response.id)
 					}
 				})
@@ -364,14 +415,27 @@
 				let filter = {
 					user: userId
 				}
+				this.visible = true
 				addressesService.index(filter)
 				.then(response=>{
-					// HERE ...
-					// set Address of user 
+					this.myAddres = response.data
+					this.visible = false
 				})
 				.catch(error=>{
 					console.warn(error)
+					this.visible = false
 				})
+			},
+			openMyAddress(){
+				this.modalMyAddress = true
+			},
+			setAddresFromMyAddress(addres){					
+				this.form.typeStreet = addres.address_1.typeStreet
+				this.form.street = addres.address_1.street
+				this.form.number1 = addres.address_1.number1
+				this.form.number2 = addres.address_1.number2
+
+				this.modalMyAddress = false
 			},
 			getMapAreas(){
         mapService.mapareas()

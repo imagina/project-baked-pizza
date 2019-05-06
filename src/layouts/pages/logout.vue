@@ -17,7 +17,7 @@
     mounted() {
       setInterval(()=>{ 
         this.$store.dispatch("auth/AUTH_LOGOUT")
-        window.location.href = "/inicio";
+        this.$router.push({name:"home"})
       }, 3000);
     }
   }
