@@ -3,26 +3,77 @@
     <q-card-title>
       <p class="color-baked-title">
         <b>
+          <q-icon name="list_alt"/>
           Dirección de facturación
         </b>
       </p>
     </q-card-title>
-    <q-card-separator />
     <q-card-main>
-      <q-btn label="Cambiar Direcciòn" color="primary" class="q-my-md"/>
-      <p>
-        <b>Direccion</b>: Calle 87b Número 38a 55, Bogotá, Colombia
-      </p>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+						<div class="col-xs-3">
+							<p class="color-baked-title">
+								Dirección
+							</p>
+						</div>
+						<div class="col-xs-9">
+							<p>
+                {{addrees.form.typeStreet}} 
+                {{addrees.form.street}} 
+                {{addrees.form.number1}} 
+                {{addrees.form.number2}}
+                Bogotá, Colombia
+              </p>
+						</div>
+					</div>
+        </div>
+        <div class="col-md-12">
+          <q-btn label="Cambiar Direcciòn" color="primary" class="q-my-md"/>
+        </div>
+      </div>
     </q-card-main>
   </q-card>
 </template>
 
 <script>
-export default {
-
-}
+  import {helper} from '@imagina/qhelper/_plugins/helper'
+  export default {
+    data(){
+      return{
+        addrees:{
+          typeOrder: false,
+          form: {
+            typeStreet: '',
+            street: '',
+            number1: '',
+            number2: ''
+          },
+          addresslatLng: {
+            lat: 0,
+            lng: 0
+          },
+          coverage: {
+            status: false,
+            price: '',
+            area: 0
+          }
+        }
+      }
+    },
+    mounted(){
+      this.$nextTick(() => {
+				this.getAddress()
+			})
+    },
+    methods:{
+      getAddress(){
+				helper.storage.get.item('dataAddress').then(res => {
+          if (res !== null) {
+						this.addrees = res
+          }
+        })
+      },
+    }
+  }
 </script>
-
-<style>
-
-</style>

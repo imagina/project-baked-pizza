@@ -2,13 +2,14 @@
 	<q-card>
 		<q-card-title>
 			<p class="color-baked-title">
-				<b>Datos Personales</b>
+				<b>
+					<q-icon name="person_pin"/>
+					Datos Personales</b>
 			</p>
 		</q-card-title>
-		<q-card-separator/>
 		<q-card-main>
 			<div class="row">
-				<div class="col-xs-12">	
+				<div class="col-md-12">	
 					<div class="row">
 						<div class="col-xs-3">
 							<p class="color-baked-title">
@@ -20,7 +21,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-12">
+				<div class="col-md-12">
 					<div class="row">
 						<div class="col-xs-3">
 							<p class="color-baked-title">

@@ -8,23 +8,24 @@
 				:image="image"/>
 			<div class="container-section">
 				<div class="row">
-					<div class="col-xs-12">
+					<div class="col-md-12">
 						<customerinformationComponent 
 							:info="datacheckout.user"/>
 					</div>
-					<div class="col-xs-12">
+					<div class="col-md-12">
 						<shippingAddresComponent/>
 					</div>
-					<div class="col-xs-12 ">
+					<div class="col-md-12 ">
 						<billingAddressComponent/>
 					</div>
-					<div class="col-xs-12">
+					<div class="col-md-12">
 						<deliveryMethodsComponent/>
 					</div>
-					<div class="col-xs-12">
+					<div class="col-md-12">
 						<paymentMethodsComponent/>
 					</div>
-					<div class="col-xs-12">
+
+					<div class="col-md-12">
 						<q-btn label="Procesar Compra" color="primary" size="lg"/>
 					</div>
 				</div>

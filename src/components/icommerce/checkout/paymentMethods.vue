@@ -3,13 +3,15 @@
 		<q-card>
 			<q-card-title>
 				<p class="color-baked-title">
-					<b>Método de Pago</b>
+					<b>
+						<q-icon name="credit_card"/>
+						Método de Pago
+					</b>
 				</p>
 			</q-card-title>
-			<q-card-separator />
 			<q-card-main>
-				<div class="q-py-lg row q-px-md">
-					<div class="col-xs-12 q-py-xs" v-for="(shippingMethod, index) in shipMethods" :key="index">
+				<div class="row">
+					<div class="col-md-12 q-py-xs" v-for="(shippingMethod, index) in shipMethods" :key="index">
 						<p>
 							<q-radio v-model="paymentmethodselected" :val="shippingMethod" />
 							{{shippingMethod.title}}
