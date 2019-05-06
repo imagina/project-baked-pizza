@@ -386,6 +386,7 @@
 				}
 				this.modalresultcoverage = false
 				helper.storage.set('dataAddress', data)
+				this.$emit('addressValidated')
 			},
 			getDataFromStorage(){
 				helper.storage.get.item('dataAddress').then(res => {

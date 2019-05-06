@@ -48,7 +48,9 @@
       no-backdrop-dismiss>
       <q-modal-layout style="background: #cfcfcf9c">
         <div class="q-mx-lg">
-          <validateaddressComponent :whitLabels="false"/>
+          <validateaddressComponent 
+            :whitLabels="false" 
+            @addressValidated="modalvalidateAddres = false"/>
         </div>
       </q-modal-layout>
     </q-modal>
