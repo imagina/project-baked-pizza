@@ -4,7 +4,7 @@
       <p class="color-baked-title">
         <b>
           <q-icon name="list_alt"/>
-          Dirección de facturación
+          Dirección de Facturación
         </b>
       </p>
     </q-card-title>
@@ -12,24 +12,43 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-						<div class="col-xs-3">
-							<p class="color-baked-title">
-								Dirección
-							</p>
-						</div>
-						<div class="col-xs-9">
-							<p>
-                {{addrees.form.typeStreet}} 
-                {{addrees.form.street}} 
-                {{addrees.form.number1}} 
-                {{addrees.form.number2}}
-                Bogotá, Colombia
+						<div class="col-xs-12 q-px-sm">
+              <p>
+              <q-select
+                v-model="addrees.form.typeStreet"
+                float-label="Tipo"
+                :options="typesStreet"
+                class="no-shadow"/>
               </p>
-						</div>
-					</div>
-        </div>
-        <div class="col-md-12">
-          <q-btn label="Cambiar Direcciòn" color="primary" class="q-my-md"/>
+            </div>
+            <div class="col-xs-12 q-px-sm">
+              <p>
+              <q-input 
+                type="text" 
+                v-model="addrees.form.street"  
+                float-label="Calle, Carrera, Avenida" 
+                class="no-shadow"/>
+              </p>
+            </div>
+            <div class="col-xs-12 q-px-sm">
+              <p>
+              <q-input 
+                type="text" 
+                v-model="addrees.form.number1"  
+                float-label="Numero" 
+                class="no-shadow"/>
+              </p>
+            </div>
+            <div class="col-xs-12 q-px-sm">
+              <p>
+              <q-input 
+                type="text" 
+                v-model="addrees.form.number2"  
+                float-label="Con" 
+                class="no-shadow"/>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </q-card-main>
@@ -41,6 +60,15 @@
   export default {
     data(){
       return{
+        typesStreet:
+				[
+					{label : 'Calle', value : 'Calle'},
+					{label : 'Carrera', value : 'Carrera'},
+					{label : 'Avenida', value : 'Avenida'},
+					{label : 'Diagonal', value : 'Diagonal'},
+					{label : 'Transversal', value : 'Transversal'},
+					{label : 'Vía', value : 'Vía'},
+				],
         addrees:{
           typeOrder: false,
           form: {

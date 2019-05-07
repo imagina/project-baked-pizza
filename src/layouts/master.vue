@@ -1,32 +1,21 @@
 <template>
   <div>
-    <q-layout :view="$q.platform.is.desktop ? 'lhh Lpr lfr' : 'lHh Lpr lfr'" v-show="!loading">
-      <!--=== HEADER ===-->
-      <header-component></header-component>
-
-      <!--=== ROUTER VIEW ===-->
+    <q-layout 
+      :view="$q.platform.is.desktop ? 'lhh Lpr lfr' : 'lHh Lpr lfr'" 
+      v-show="!loading">
+      <header-component/>
       <q-page-container style="background: #FFFFFF; padding-bottom: 0px;">
         <router-view />
       </q-page-container>
-
-      <!--=== FOOTER ===-->
-      <footer-component></footer-component>
-
-      <!--=== BACK TO TOP ===-->
+      <footer-component/>
       <q-page-sticky position="bottom-right" :offset="[18, 18]">
         <q-btn
           v-back-to-top.animate="{offset: 500, duration: 200}"
           round
-          color="red"
-          icon="keyboard_arrow_up"
-        />
+          color="primary"
+          icon="keyboard_arrow_up"/>
       </q-page-sticky>
     </q-layout>
-
-    <q-inner-loading :visible="loading" style="position: fixed; background: #fff; z-index: 10000; ">
-      <q-spinner-puff size="50px" color="red"></q-spinner-puff>
-    </q-inner-loading>
-
   </div>
 </template>
 
@@ -73,5 +62,4 @@
   @import "~variables";
   body
     font-family: 'Yanone Kaffeesatz', sans-serif;
-
 </style>

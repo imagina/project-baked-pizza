@@ -18,6 +18,8 @@
       setInterval(()=>{ 
         this.$store.dispatch("auth/AUTH_LOGOUT")
         this.$router.push({name:"home"})
+        this.$root.$emit('logout', true)
+
       }, 3000);
     }
   }

@@ -367,6 +367,12 @@
 				},2000)
 			},
 			saveConfigAddress(typeOrder){
+				
+				
+				if(!this.coverage.status){
+					this.modalresultcoverage = false
+					return
+				}
 				let data = {}
 				data.typeOrder = this.typeOrder
 				data.form = {

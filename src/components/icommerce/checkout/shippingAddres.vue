@@ -17,7 +17,7 @@
 								Dirección
 							</p>
 						</div>
-						<div class="col-xs-9">
+						<div class="col-xs-6">
 							<p>
                 {{addrees.form.typeStreet}} 
                 {{addrees.form.street}} 
@@ -28,7 +28,7 @@
 						</div>
 					</div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12 hidden">
           <q-btn 
             label="Cambiar Direcciòn"
             color="primary" 

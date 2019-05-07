@@ -38,9 +38,6 @@ Route.view('/', master)
     Route.view('/pqrs', require('../layouts/pages/qprs').default).options({
       name: 'qprs'
     }),
-    Route.view('/login', require('../layouts/pages/login').default).options({
-      name: 'login'
-    }),
     Route.view('/busqueda', require('../layouts/pages/busqueda').default).options({
       name: 'busqueda'
     }),
