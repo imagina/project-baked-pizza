@@ -58,18 +58,10 @@
 <script>
   import {helper} from '@imagina/qhelper/_plugins/helper'
   export default {
-    data(){
-      return{
-        typesStreet:
-				[
-					{label : 'Calle', value : 'Calle'},
-					{label : 'Carrera', value : 'Carrera'},
-					{label : 'Avenida', value : 'Avenida'},
-					{label : 'Diagonal', value : 'Diagonal'},
-					{label : 'Transversal', value : 'Transversal'},
-					{label : 'Vía', value : 'Vía'},
-				],
-        addrees:{
+    props:{
+      addrees:{
+        type:Object,
+        default:{
           typeOrder: false,
           form: {
             typeStreet: '',
@@ -89,19 +81,26 @@
         }
       }
     },
+    data(){
+      return{
+        typesStreet:
+				[
+					{label : 'Calle', value : 'Calle'},
+					{label : 'Carrera', value : 'Carrera'},
+					{label : 'Avenida', value : 'Avenida'},
+					{label : 'Diagonal', value : 'Diagonal'},
+					{label : 'Transversal', value : 'Transversal'},
+					{label : 'Vía', value : 'Vía'},
+				],
+      }
+    },
     mounted(){
       this.$nextTick(() => {
-				this.getAddress()
+				
 			})
     },
     methods:{
-      getAddress(){
-				helper.storage.get.item('dataAddress').then(res => {
-          if (res !== null) {
-						this.addrees = res
-          }
-        })
-      },
+
     }
   }
 </script>

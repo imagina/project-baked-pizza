@@ -42,9 +42,10 @@
 <script>
   import {helper} from '@imagina/qhelper/_plugins/helper'
   export default {
-    data(){
-      return{
-        addrees:{
+    props:{
+      addrees:{
+        type:Object,
+        default:{
           typeOrder: false,
           form: {
             typeStreet: '',
@@ -64,19 +65,18 @@
         }
       }
     },
+    data(){
+      return{
+        
+      }
+    },
     mounted(){
       this.$nextTick(() => {
-				this.getAddress()
-			})
+        
+      })
     },
     methods:{
-      getAddress(){
-				helper.storage.get.item('dataAddress').then(res => {
-          if (res !== null) {
-						this.addrees = res
-          }
-        })
-      },
+
     }
   }
 </script>
