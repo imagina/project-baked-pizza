@@ -10,10 +10,9 @@ export default {
     filter = JSON.stringify(filter);
     let key = ":" + JSON.stringify(filter + take + page + fields + include);
     key = key == ":null" ? "" : key;
-
     return new Promise((resolve, reject) => {
       remember.async("mapareas" + key, 3600 * 3, () => {
-        return http.get(config('api.api_url') + '/icommerce/v3/mapareas', {
+        return http.get(config('apiRoutes.api.api_url') + '/icommerceurbanshipping/mapareas', {
           params: {
             filter: filter,
             take: take,
@@ -46,12 +45,13 @@ export default {
   },
 
   mapareas(filter, take, page, fields, include, refresh) {
+    
     filter = JSON.stringify(filter);
     let key = ":" + JSON.stringify(filter + take + page + fields + include);
     key = key == ":null" ? "" : key;
     return new Promise((resolve, reject) => {
       remember.async("mapareas" + key, 3600 * 3, () => {
-        return http.get(config('api.api_url') + '/icommerce/v3/mapareas', {
+        return http.get(config('apiRoutes.api.api_url') + '/icommerceurbanshipping/mapareas', {
           params: {
             filter: filter,
             take: take,
@@ -73,7 +73,7 @@ export default {
     let addressFormated = address.replace(/ /g, "+")
     let resulsEval = {'status': false, 'data': []}
     return new Promise((resolve, reject) => {
-      http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+addressFormated+'+,Bogotá,CO&key='+env('KEY_GOOGLE_MAPS'))
+      http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+addressFormated+'+,Bogotá,CO&key='+env('GOOGLE_APY_KEY'))
       .then(response=>{
         resolve(
           {
@@ -91,7 +91,7 @@ export default {
   stores() {
     return new Promise((resolve, reject) => {
       //remember.async(key, 3600 * 3, () => {
-      return http.get(config('api.api_url') + '/icommerce/v3/stores', {
+      return http.get(config('apiRoutes.api.api_url') + '/icommerce/v3/stores', {
 
       }).then(response => {
         resolve(response.data);
@@ -108,7 +108,7 @@ export default {
 
     return new Promise((resolve, reject) => {
       remember.async("mapareas" + key, 3600 * 3, () => {
-        return http.get(config('api.api_url') + '/icommerce/v3/mapareas/' + id, {
+        return http.get(config('apiRoutes.api.api_url') + '/icommerceurbanshipping/mapareas' + id, {
           params: {
             include: include
           }

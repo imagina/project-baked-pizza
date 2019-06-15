@@ -11,7 +11,7 @@ export default {
     key = key == ":null" ? "" : key;
     return new Promise((resolve, reject) => {
       remember.async("addresses" + key, 3600 * 3, () => {
-        return http.get(config('api.api_url') + '/profile/addresses', {
+        return http.get(config('apiRoutes.api.api_url') + '/profile/addresses', {
           params: {
             filter: filter,
             take: take,
@@ -33,7 +33,7 @@ export default {
     let key = JSON.stringify(id);
     return new Promise((resolve, reject) => {
       //remember.async(key, 3600 * 3, () => {
-      return http.get(config('api.api_url') + '/profile/addresses/' + id, {
+      return http.get(config('apiRoutes.api.api_url') + '/profile/addresses/' + id, {
         params: {
             filter: filter,
             take: take,
@@ -54,7 +54,7 @@ export default {
 
   create(data) {  
     return new Promise((resolve, reject) => {
-      http.post(config('api.api_url') + '/profile/addresses', data)
+      http.post(config('apiRoutes.api.api_url') + '/profile/addresses', data)
         .then(response => {
           resolve(response);
         })
@@ -66,7 +66,7 @@ export default {
 
   update(data, id) {
     return new Promise((resolve, reject) => {
-      http.put(config('api.api_url') + '/profile/addresses/' + id, data)
+      http.put(config('apiRoutes.api.api_url') + '/profile/addresses/' + id, data)
         .then(response => {
           resolve(response.data);
         })
@@ -78,7 +78,7 @@ export default {
 
   delete(id) {
     return new Promise((resolve, reject) => {
-      http.delete(config('api.api_url') + '/profile/addresses/'+ id)
+      http.delete(config('apiRoutes.api.api_url') + '/profile/addresses/'+ id)
         .then(response => {
           resolve(response);
         })

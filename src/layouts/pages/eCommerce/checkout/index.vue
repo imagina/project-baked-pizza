@@ -1,0 +1,320 @@
+<template>
+  <section>
+    <breadcrumb-component
+      class="q-mb-lg"
+      name="Comprar"
+      image="statics/footer.jpg"/>
+    <div class="q-container relative-position">
+      <div class="row gutter-x-sm">
+
+        <div class="col-12 col-md-8">
+          <div class="backend-page q-mb-md">
+            <pre v-show="false">{{orderData}}</pre>
+            <div class="row">
+              <div class="col-12">
+                <div class="border-top-color shadow-1">
+                  <miniCart v-model="orderData"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="backend-page q-mb-md">
+            <div class="row">
+              <div class="col-12">
+                <div class="border-top-color shadow-1">
+                  <UserInformation v-model="orderData"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="backend-page q-mb-md">
+            <div class="row">
+              <div class="col-12">
+                <div class="border-top-color shadow-1">
+                  <addressShipping v-model="orderData"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="backend-page q-mb-md">
+            <div class="row">
+              <div class="col-12">
+                <div class="border-top-color shadow-1">
+                  <addressBilling v-model="orderData"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="backend-page q-mb-md">
+            <div class="row">
+              <div class="col-12">
+                <div class="border-top-color shadow-1">
+                  <methodsShipping v-model="orderData"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="backend-page q-mb-md">
+            <div class="row">
+              <div class="col-12">
+                <div class="border-top-color shadow-1">
+                  <methodsPayment v-model="orderData"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="backend-page q-mb-md"
+               v-if="orderData.methodPayment.name == 'icommercecheckmo' || orderData.dataAddress.store">
+            <div class="row">
+              <div class="col-12">
+                <div class="border-top-color shadow-1">
+                  <div class="row">
+                    <div class="col-12 q-mb-md border-botton">
+                      <p> <q-icon name="list"/> Datos Adicionales</p>
+                    </div>
+                    <div class="col-12" v-if="orderData.methodPayment.name == 'icommercecheckmo'">
+                      <div class="row items-center">
+                        <div class="col-12 col-md-6">
+                          <span>¿Cómo quieres pagar en tu domicilio?</span>
+                        </div>
+                      </div>
+                      <q-list separator>
+                      <q-item link tag="label">
+
+                        <q-item-side >
+                          <q-radio v-model="orderData.options.paymentItem" val="Efectivo" />
+                        </q-item-side>
+                        <q-item-main label="Efectivo" />
+                      </q-item>
+                      <q-item link tag="label">
+
+                        <q-item-side >
+                          <q-radio v-model="orderData.options.paymentItem" val="Datáfono" />
+                        </q-item-side>
+                        <q-item-main label="Datáfono" />
+                      </q-item>
+                      </q-list>
+                    </div>
+                    <div class="col-12" v-if="orderData.dataAddress.store">
+                      <div class="row items-center">
+                        <div class="col-12 col-md-6">
+                          <span>Dinos, en cuantos minutos pasas a retirar</span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <q-input type="number" suffix="Min." v-model="orderData.options.timeToWithdraw" stack-label=""/>
+                        </div>
+                      </div>
+
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="backend-page q-mb-md">
+            <div class="row">
+              <div class="col-12">
+                <div class="border-top-color shadow-1">
+                  <sumary />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <q-btn
+            :disabled="$store.state.shoppingCart.cart.total > 0 ? false : true"
+            @click="save"
+            label="procesar Compra"
+            class="full-width q-mb-md"
+            color="positive"/>
+
+        </div>
+      </div>
+      <inner-loading :visible="loading"></inner-loading>
+    </div>
+  </section>
+</template>
+
+<script>
+  // VALIDATORS
+  import {required} from 'vuelidate/lib/validators'
+
+  // COMPONENTS
+  import UserInformation from 'src/components/qcommerce/front/checkout/UserInformation'
+  import addressShipping from 'src/components/qcommerce/front/checkout/addressShipping'
+  import addressBilling from 'src/components/qcommerce/front/checkout/addressBilling'
+  import methodsShipping from 'src/components/qcommerce/front/checkout/methodsShipping'
+  import methodsPayment from 'src/components/qcommerce/front/checkout/methodsPayment'
+  import sumary from 'src/components/qcommerce/front/checkout/sumary'
+  import miniCart from 'src/components/qcommerce/front/checkout/miniCart'
+  import breadcrumbComponent from 'src/components/pages/sections/breadcrumb'
+  import innerLoading from 'src/components/master/innerLoading'
+
+  // SERVICES
+  import eCommerceService from '@imagina/qcommerce/_services/index'
+
+  import {helper} from '@imagina/qhelper/_plugins/helper';
+
+  export default{
+    components:{
+      breadcrumbComponent,
+      UserInformation,
+      addressShipping,
+      addressBilling,
+      methodsShipping,
+      methodsPayment,
+      sumary,
+      miniCart,
+      innerLoading
+    },
+    data(){
+      return{
+        loading:false,
+
+        orderData:{
+          cart:{},
+          dataAddress: {},
+          methodPayment:{},
+          methodShipping:{},
+          addressBilling:{},
+          addressShipping:{},
+          userData:{},
+          options:{
+            paymentItem:'',
+            timeToWithdraw: ''
+          }
+        }
+      }
+    },
+    validations:{
+      orderData:{
+        methodPayment:{required}
+      }
+    },
+    created(){
+      this.$nextTick(async () => {
+        await this.isAddressValidated()
+
+      })
+    },
+    methods:{
+      async save(){
+        this.loading = true
+        this.$v.$touch()
+        if (this.$v.$invalid) {
+          this.$helper.alert.error('Faltan datos para procesar la compra', 'bottom')
+          this.loading = false
+          return
+        }
+
+        if(this.orderData.dataAddress.store && !this.orderData.options.timeToWithdraw){
+          this.$helper.alert.error('Por favor, dinos en cuantos minutos pasas a retirar', 'bottom')
+          this.loading = false
+          return
+        }
+
+        if(!this.orderData.dataAddress.store && this.orderData.methodPayment.name == 'icommercecheckmo' && !this.orderData.options.paymentItem){
+          this.$helper.alert.error('Por favor, confírmanos cómo quieres pagar en tu domicilio', 'bottom')
+          this.loading = false
+          return
+        }
+
+        let formData = await this.formatData(this.orderData)
+        console.log(formData)
+        //return
+        eCommerceService.crud.create('apiRoutes.eCommerce.orders', formData)
+        .then(response=>{
+
+          helper.storage.remove('dataAddress')
+          this.$store.dispatch("shoppingCart/CLEAR_CART")
+
+          if(response.data.paymentData.external){
+            window.open(response.data.paymentData.redirectRoute, '_blank');
+          }
+          this.loading = false
+          // Redirect show Order
+          this.$router.push({name : 'order.show' , params : {id : response.data.orderId}})
+        })
+        .catch(error=>{
+          this.loading = false
+          console.warn(error)
+        })
+      },
+      isAddressValidated(){
+        return new Promise(async (resolve, reject) => {
+        helper.storage.get.item('dataAddress').then(response => {
+          if (response == null) {
+            this.$helper.alert.error('No se ha validado la direccion de envío aun', 'bottom', false, 2500)
+            this.$router.push({name : 'app.home'})
+            reject(error)
+          }else{
+            this.orderData.dataAddress = response;
+            resolve(true)
+          }
+        })
+        })
+      },
+
+      formatData(data){
+        let attributes =  {
+            storeId: 1,
+            customerId: data.userData.id,
+
+            paymentMethod: data.methodPayment.name,
+            paymentMethodId: data.methodPayment.id,
+            shippingMethod: data.methodShipping.typeOrder ? data.methodShipping.coverage.area : 'icommercepickup',
+            shippingMethodId: data.methodShipping.typeOrder ? 2 : 1, // Datos quemados, en actaulizacion traer de la base de datos
+
+            cartId: data.cart.id,
+            paymentFirstName: data.userData.firstName,
+            paymentLastName: data.userData.lastName,
+            paymentCompany: "",
+            paymentNit: "",
+            paymentAddress1: JSON.stringify({
+              address: this.formatAddress(data.addressBilling),
+              lat:data.addressBilling.addresslatLng.lat,
+              lng:data.addressBilling.addresslatLng.lng
+            }),
+            paymentAddress2: "",
+            paymentCity: 'Bogotá',
+            paymentZipCode: '123456',
+            paymentCountry: 'Colombia',
+            paymentZone: 'Cundinamarca',
+            shippingFirstName: data.userData.firstName,
+            shippingLastName: data.userData.lastName,
+            shippingCompany: "",
+            shippingAddress1: JSON.stringify({
+              address: this.formatAddress(data.addressShipping),
+              lat:data.addressShipping.addresslatLng.lat,
+              lng:data.addressShipping.addresslatLng.lng
+            }),
+            shippingAddress2: "",
+            shippingCity: 'Bogotá',
+            shippingZipCode: '123456',
+            shippingCountry: 'Colombia',
+            shippingZone: 'Cundinamarca',
+            options: data.options
+          }
+
+        return attributes
+      },
+      formatAddress(data){
+        return `${data.form.typeStreet} ${data.form.street} Número ${data.form.number1} - ${data.form.number2}`
+      }
+    }
+  }
+</script>
+
+<style lang="stylus">
+  @import "~variables";
+  .border-botton
+    border-bottom: 1px solid #c4c4c47a;
+</style>

@@ -37,7 +37,7 @@
 
       <div class="infoHeader ">
         <h6>
-          <router-link tag="a" to="/franchise">
+          <router-link tag="a" :to="{name:'shopping.cart.index'}">
              <span class="numberCircle">10</span>Mi Pedido
           </router-link>
       </h6>

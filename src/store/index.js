@@ -1,25 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import cart from 'src/store/cart/index';
-import address from 'src/store/address/index';
-import mapArea from 'src/store/mapArea/index';
-import shippingmethod  from 'src/store/shippingMethod/index'
-import paymentmethod  from 'src/store/paymentMethod/index'
-import auth from '@imagina/quser/_store/auth/index';
+import auth from '@imagina/quser/_store/index'; //User
 
-Vue.use(Vuex)
+const configApp = require('src/config/app').default//Get config APP
+if (!configApp.modules.store.auth) configApp.modules.store.auth = auth//Check if store auth exist
 
-export default function () {
-  // IMPORTANT! Instantiate Store inside this function
-  const Store = new Vuex.Store({
-    modules: {
-    	auth,
-      cart,
-      address,
-      mapArea,
-      shippingmethod,
-      paymentmethod
-    }
-  })
-  return Store
-}
+Vue.use(Vuex)//Add VUEX to VUE
+const store = new Vuex.Store({
+  modules: configApp.modules.store//Add config of store's
+});
+
+export default store

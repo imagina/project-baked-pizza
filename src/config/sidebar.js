@@ -1,40 +1,28 @@
-/**
- * Config for items in Menu
- */
-
-/*
-*{
-  title: 'Assignment',
-  icon: 'fas fa-users-cog',
-  to: 'user.users.assignment',
-  can:'user.users.index'
-},*/
-
 export default {
   /*home*/
   home: {
-    title: 'inicio',
+    title: 'INICIO',
     icon: 'fas fa-home',
-    to: 'home'
+    to: 'app.home'
   },
-  menu: {
-    title: 'pedido',
+  pide: {
+    title: 'PIDE EN LÍNEA',
     icon: 'fas fa-utensils',
-    to: 'pedido'
+    to: 'app.home'
   },
   about: {
-    title: 'donde-estamos',
-    icon: 'far fa-building',
-    to: 'donde-estamos',
-  },
-  catering: {
-    title: 'nosotros',
-    icon: 'far fa-calendar-check',
+    title: 'NOSOTROS',
+    icon: 'fas fa-utensils',
     to: 'nosotros'
   },
-  locations: {
-    title: 'pide-en-linea',
+  ubications: {
+    title: 'DONDE ESTAMOS',
+    icon: 'far fa-building',
+    to: 'ubications',
+  },
+  cart: {
+    title: 'MI PEDIDO',
     icon: 'fas fa-map-marked-alt',
-    to: 'pide-en-linea'
+    to: 'shopping.cart.index'
   },
 }

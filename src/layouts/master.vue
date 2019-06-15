@@ -1,65 +1,85 @@
 <template>
-  <div>
-    <q-layout 
-      :view="$q.platform.is.desktop ? 'lhh Lpr lfr' : 'lHh Lpr lfr'" 
-      v-show="!loading">
-      <header-component/>
-      <q-page-container style="background: #FFFFFF; padding-bottom: 0px;">
-        <router-view />
-      </q-page-container>
-      <footer-component/>
-      <q-page-sticky position="bottom-right" :offset="[18, 18]">
-        <q-btn
-          v-back-to-top.animate="{offset: 500, duration: 200}"
-          round
-          color="primary"
-          icon="keyboard_arrow_up"/>
-      </q-page-sticky>
-    </q-layout>
-  </div>
+  <q-layout :view="$q.platform.is.desktop ? 'lhh Lpr lfr' : 'lHh Lpr lfr'"
+            v-if="$store.state.app.active && loadedApp">
+    <!-- HEADER -->
+    <master-header></master-header>
+
+    <!-- ROUTER VIEW -->
+    <q-page-container style="padding-bottom: 0px;">
+      <router-view v-if="loadedApp"/>
+    </q-page-container>
+
+    <!-- FOOTER -->
+    <master-footer></master-footer>
+  </q-layout>
 </template>
 
 <script>
-  import headerComponent from 'src/components/master/header/header'
-  import footerComponent from 'src/components/master/footer/footer'
-  import {helper} from '@imagina/qhelper/_plugins/helper'
+  /*Components*/
+  import masterHeader from 'src/components/master/header/header'
+  import masterFooter from 'src/components/master/footer/footer'
+
+  //Services
+  import appServices from 'src/services/application/index'
 
   export default {
+    meta() {
+      let siteName = this.$store.getters['site/getSettingValueByName']('core::site-name')
+      let iconHref = this.$store.getters['site/getSettingMediaByName']('isite::favicon').path
+      return {
+        title: siteName,
+        link: [{rel: 'icon', href: iconHref, id: 'icon'}],
+      }
+    },
     components: {
-      headerComponent,
-      footerComponent
+      masterHeader,
+      masterFooter
+    },
+    watch: {
+      $route(to, from) {
+        this.checkVersionApp(to)
+      }
     },
     mounted() {
-      this.$nextTick(function () {
-        this.chekcart()
+      this.$nextTick(async function () {
+        //Call to config when is mounted
+        let params = this.$route.params
+        if (!this.$route.params.fromConfig)
+          this.$router.push({name: 'app.config'})
+        this.loadedApp = true//Load route view
       })
     },
     data() {
       return {
-        loading: false,
+        loadedApp: false
       }
     },
-    methods: {
-      loadinghide: function (){
-        setTimeout(() => { 
-          this.loading = false
-        }, 3000);
+    computed: {
+      showApp() {
+        return this.$store.state.app.show
       },
-      chekcart(){
-        helper.storage.get.item('cart').then(res => {
-          if (res !== null) {
-            this.$store.dispatch("init_cart", res.items)
-          }
-        })
+    },
+    methods: {
+      isInStandaloneMode() {
+        (window.matchMedia('(display-mode: standalone)').matches) || (window.navigator.standalone);
+      },
+
+      //Check if app is update
+      checkVersionApp(toRoute) {
+        if (toRoute.name != 'config') {
+          let currentVersion = parseInt(config('app.version').split('.').join(''))
+          appServices.crud.index('apiRoutes.site.appVersion', {remember: false}).then(response => {
+            let version = parseInt(response.data.split('.').join(''))
+            if (currentVersion < version) {
+              this.$router.push({name: 'app.config'})
+            }
+          })
+        }
       }
     }
   }
 </script>
 
 <style lang="stylus">
-  @import url('https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz')
-  @import url('https://fonts.googleapis.com/css?family=Muli')
   @import "~variables";
-  body
-    font-family: 'Yanone Kaffeesatz', sans-serif;
 </style>

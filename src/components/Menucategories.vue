@@ -1,21 +1,31 @@
 <template>
   <div>
-    <q-collapsible :label="category.title" v-for="category in categories" :key="category.id" @show="getdata(category)" class="pide-menu__category" :group="group">
+    <q-collapsible 
+      :label="category.title" 
+      v-for="category in categories" 
+      :key="category.id"
+       @show="getdata(category)"
+      class="pide-menu__category" 
+      :group="group">
       <div class="pide-menu__subcategory">
-        <menu-menucategories :parent="category.id" @category="getdata" :group="category.title"/>
+        <menu-menucategories 
+        :parent="category.id" 
+        @category="getdata(category)" 
+        :group="category.title"/>
       </div>
     </q-collapsible>
-    <q-inner-loading :visible="visible" style="background-color: #f4f4f4c7">
-      <q-spinner size="50px" color="primary"></q-spinner>
+    <q-inner-loading 
+      :visible="visible" >
+      <q-spinner 
+        size="50px" 
+        color="red"/>
     </q-inner-loading>
   </div>
 </template>
 
 <script>
-  import categoryService from 'src/services/categories';
+  import icommerceService from 'src/services/icommerce/index'
   import menuCategories from 'src/components/Menucategories';
-
-  import EventBus from 'src/utils/event-bus';
 
   export default {
     name: 'menu-menucategories',
@@ -23,7 +33,6 @@
       'menucategories-component': menuCategories,
     },
     props:['parent', 'group'],
-
     data(){
       return{
         visible: false,
@@ -36,24 +45,35 @@
       this.getCategories()
     },
     methods:{
-      getCategories: function () {
+      getCategories () {
         this.visible = true
-        categoryService.index({parent_id: this.parent})
-          .then(response =>{
+        let params = {
+          params:{
+            filter:{
+              parent_id:this.parent
+            }
+          }
+        }
+        icommerceService.crud
+        .index('apiRoutes.eCommerce.categories',params)
+        .then(response =>{
           this.categories = response.data
           this.visible = false
         })
+        .catch(error=>{
+          console.warn(error)
+        })
       },
       getdata(category){
-        EventBus.$emit('categorySlug',category.slug)
-        this.$router.push({ name: 'pide-en-linea/category' , params: { slug : category.slug } })
+        this.$emit('categorySlug', category.slug)
+        this.$router.push({ name: 'category' , params: { slug : category.slug } })
       },
     }
   }
 </script>
 
 <style lang="stylus">
-.label
+  .label
     display -webkit-inline-box
     display -ms-inline-flexbox
     display inline-flex

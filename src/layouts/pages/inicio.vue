@@ -1,13 +1,11 @@
 <template>
   <div>
-
     <section class="row validateAddress-content">
-
       <div class="col-xs-12 col-md-12" style="position: relative;">
         <div class="islider-inner">
           <div class="islider-inner-details text-white text-center">
             <!--== START VALIDATE ADDRESS ==-->
-            <validateaddress-component/>
+            <validateaddressComponent/>
             <!--== END VALIDATE ADDRESS ==-->
           </div>
         </div>
@@ -18,8 +16,7 @@
           color="white" 
           quick-nav 
           maximized 
-          :height="this.$q.platform.is.desktop ? '880px' : '350px'"
-          >
+          :height="this.$q.platform.is.desktop ? '880px' : '350px'">
           <q-carousel-slide img-src="statics/sliders/1.jpg" class="flex flex-center"></q-carousel-slide>
           <q-carousel-slide img-src="statics/sliders/3.jpg" class="flex flex-center"></q-carousel-slide>
           <q-carousel-slide img-src="statics/sliders/2.jpg" class="flex flex-center"></q-carousel-slide>
@@ -62,7 +59,7 @@
           </div>
         </div>
           <!--== START CATEGORIES ==-->
-          <categorieshomeComponent />
+          <categorieshomeComponent/>
           <!--== END CATEGORIES ==-->
       </div>
     </section>
@@ -71,7 +68,7 @@
 </template>
 
 <script>
-  import categorieshomeComponent from 'src/components/icommerce/categorieshome'
+  import categorieshomeComponent from '@imagina/qcommerce/_components/frontend/categories/widgetCircles'
   import validateaddressComponent from 'src/components/icommerce/validateAddress'
   
   export default{
@@ -123,19 +120,6 @@
     ) #F8B31B;
   }
 
-  .border{
-    border-radius: 50%;height: 200px; width: 200px; border: 2px #8e7e7d dashed;
-    transition: all .7s;
-  }
-
-  .circle{
-    border-radius: 50%; background: #c02400; height: 90%; width: 90%; font-size: 25px;
-    
-  }
-  .border:hover{
-    background: #EB3800;
-    border: 2px #EB3800 solid;
-  }
 
   input.toggle {
     position: relative;

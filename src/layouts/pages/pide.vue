@@ -8,7 +8,7 @@
 						<span>· Nuestro Menú ·</span>
 					</div>
 					<q-list sublabel-lines id="pide-menu">
-						<menu-categories-component parent="0" @category="getProducts" group="root"/>
+						<menuCategoriesComponent parent="0" @category="getProducts" group="root"/>
 					</q-list>
 				</div>
 				<div class="col-md-9" v-if="!showProduct">	
@@ -95,11 +95,11 @@
 			}
 		},
 		mounted(){
-			this.detecteUrl(this.$route.params.slug)
+			/*this.detecteUrl(this.$route.params.slug)
 			EventBus.$on('categorySlug', (data) => {
 				this.categorySlug(data)
       })
-      this.isAddressValidate()
+      this.isAddressValidate()*/
 		},
 		methods:{
       isAddressValidate(){

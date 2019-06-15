@@ -1,8 +1,7 @@
 // Configuration for your app
 var webpack = require('webpack')
 var path = require('path')
-//const util = require('util')
-const nodeExternals = require('webpack-node-externals')
+
 // Get our env variables
 const envparser = require('./env/envparser')
 
@@ -10,12 +9,15 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
-      'VueGoogleMaps',
-      
       'i18n',
       'vuelidate',
       'axios',
-      {path: 'vueCarousel', server: false }
+      'moment',
+      'helper',
+      'clone',
+      'auth',
+      //'VueGoogleMaps',
+      'gmaps'
     ],
     css: [
       'app.styl'
@@ -31,6 +33,7 @@ module.exports = function (ctx) {
     build: {
       scopeHoisting: true,
       env: envparser(),
+      // vueRouterMode: 'history',
       // vueCompiler: true,
       // gzip: true,
       // analyze: true,
@@ -39,36 +42,10 @@ module.exports = function (ctx) {
         // Make our helper function Global, for example to use it in js files you should call it env('MY_VALUE')
         cfg.plugins.push(
           new webpack.ProvidePlugin({
-            env: [path.resolve(__dirname, 'env/env'),'default']
+            env: [path.resolve(__dirname, 'env/env'), 'default'],
+            config: [path.resolve(__dirname, 'src/config/index'), 'default']
           })
         )
-
-        /*Alias*/
-        cfg.resolve.alias = {
-          ...cfg.resolve.alias, // This adds the existing alias
-
-          // Add your own alias like this
-          //myalias: path.resolve(__dirname, './src/somefolder'),
-        }
-
-
-        /*
-        cfg.module.rules.push({
-          test: /\.(js)$/,
-          loader: 'babel-loader',
-          exclude: ['quasar']
-        })
-        */
-
-        //console.log(util.inspect(cfg, false, 5, true /* enable colors */))
-      },
-      chainWebpack (chain, { isServer, isClient }) {
-        if (isServer) {
-          chain.externals(nodeExternals({
-            // do not externalize CSS files in case we need to import it from a dep
-            whitelist: /(\.css$|\.vue$|\?vue&type=style|@imagina|quasar-framework[\\/])/
-          }))
-        }
       }
     },
     devServer: {
@@ -76,54 +53,70 @@ module.exports = function (ctx) {
       // port: 8080,
       open: true // opens browser window automatically
     },
+    // framework: 'all' --- includes everything; for dev only!
     framework: 'all',
-    /*framework: {
-      components: [
-        'QLayout',
-        'QLayoutHeader',
-        'QLayoutDrawer',
-        'QPageContainer',
-        'QPage',
-        'QToolbar',
-        'QToolbarTitle',
-        'QBtn',
-        'QIcon',
-        'QList',
-        'QListHeader',
-        'QItem',
-        'QItemMain',
-        'QItemSide'
-      ],
-      directives: [
-        'Ripple'
-      ],
-      // Quasar plugins
-      plugins: [
-        'Notify'
-      ]
-      // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
-      // i18n: 'de' // Quasar language
-    },*/
+    /*components: [
+      'QLayout',
+      'QLayoutHeader',
+      'QLayoutDrawer',
+      'QPageContainer',
+      'QPage',
+      'QToolbar',
+      'QToolbarTitle',
+      'QBtn',
+      'QIcon',
+      'QList',
+      'QListHeader',
+      'QItem',
+      'QItemMain',
+      'QItemSide'
+    ],
+    directives: [
+      'Ripple'
+    ],
+    // Quasar plugins
+    plugins: [
+      'Notify'
+    ]
+    // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
+    // i18n: 'de' // Quasar language
+  },*/
     // animations: 'all' --- includes all animations
     animations: [],
     ssr: {
       pwa: false
     },
     pwa: {
-      // workboxPluginMode: 'InjectManifest',
-      // workboxOptions: {},
+      workboxPluginMode: 'InjectManifest',
+      workboxOptions: {},
       manifest: {
-        // name: 'Quasar App',
-        // short_name: 'Quasar-PWA',
-        // description: 'Best PWA App in town!',
-        display: 'standalone',
+        name: 'APP',
+        short_name: 'APP',
+        description: '',
         orientation: 'portrait',
         background_color: '#ffffff',
-        theme_color: '#027be3',
+        theme_color: '#ffffff',
+        display: "standalone",
+        serviceWorker: {
+          src: "service-worker.js",
+          scope: "/",
+          use_cache: true,
+          skipWaiting: true
+        },
         icons: [
           {
             'src': 'statics/icons/icon-128x128.png',
             'sizes': '128x128',
+            'type': 'image/png'
+          },
+          {
+            'src': 'statics/icons/apple-icon-152x152.png',
+            'sizes': '152x152',
+            'type': 'image/png'
+          },
+          {
+            'src': 'statics/icons/ms-icon-144x144.png',
+            'sizes': '144x144',
             'type': 'image/png'
           },
           {

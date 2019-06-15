@@ -1,23 +1,28 @@
 <template>
   <div id="notFoundComponent" class="text-center">
     <p>
-      <img
-        src="~assets/sad.svg"
-        style="width:30vw;max-width:150px;"
-      >
+      <img src="~assets/sad.svg" style="width:30vw;max-width:150px;">
     </p>
-    <p class="text-faded">Sorry, nothing here...<strong>(404)</strong></p>
+    <p class="text-faded" v-html="label"></p>
     <q-btn
-      color="secondary"
+      color="primary"
       style="width:200px;"
-      @click="$router.push({name: 'home'})"
-    >Go to Home</q-btn>
+      v-if="showButton"
+      @click="$router.push({name: routeName})"
+    >{{buttonLabel}}
+    </q-btn>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'Error404'
+    name: 'Error404',
+    props: {
+      showButton: {default: true},
+      routeName: {default: 'app.home'},
+      label: {default: 'Sorry, nothing here...<b>(404)</b>'},
+      buttonLabel: {default: 'Go to Home'},
+    },
   }
 </script>
 
