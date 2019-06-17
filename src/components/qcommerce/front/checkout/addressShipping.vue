@@ -9,7 +9,7 @@
       <input 
         disabled
         type="text" 
-        v-model="addrees.form.typeStreet"  
+        v-model="address.form.typeStreet"
         float-label="Calle, Carrera, Avenida" 
         class="no-shadow vue-treeselect__control"/>
     </div>
@@ -17,7 +17,7 @@
       <input 
         disabled
         type="text" 
-        v-model="addrees.form.street"  
+        v-model="address.form.street"
         float-label="Calle, Carrera, Avenida" 
         class="no-shadow vue-treeselect__control"/>
     </div>
@@ -28,7 +28,7 @@
       <input 
         disabled
         type="text" 
-        v-model="addrees.form.number1"  
+        v-model="address.form.number1"
         float-label="Calle, Carrera, Avenida" 
         class="no-shadow vue-treeselect__control"/>
     </div>
@@ -39,9 +39,16 @@
       <input 
         disabled
         type="text" 
-        v-model="addrees.form.number2"  
+        v-model="address.form.number2"
         float-label="Calle, Carrera, Avenida" 
         class="no-shadow vue-treeselect__control"/>
+    </div>
+    <div class="col-12 q-px-sm">
+      <q-input
+        type="text"
+        v-model="address.form.address2"
+        stack-label="Más detalles de la dirección"
+        />
     </div>
   </div>
 </template>
@@ -57,13 +64,14 @@
     },
     data(){
       return{
-        addrees:{
+        address:{
           typeOrder: false,
           form: {
             typeStreet: '',
             street: '',
             number1: '',
-            number2: ''
+            number2: '',
+            address2: ''
           },
           addresslatLng: {
             lat: 0,
@@ -86,7 +94,7 @@
       getAddress(){
 				helper.storage.get.item('dataAddress').then(response => {
           if (response !== null) {
-						this.addrees = response
+						this.address = response
             this.value.addressShipping = response
           }
         })

@@ -68,6 +68,7 @@
 		    <div class="col-xs-6 col-sm-2">
           <q-input
             v-model="form.number2"
+						type="number"
             inverted
             prefix="-"
             color="white"

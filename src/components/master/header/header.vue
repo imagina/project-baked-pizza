@@ -15,20 +15,12 @@
             </router-link>
             <router-link
               tag="a"
-              :to=" userData ? '/inicio' :'/auth/login'"
+              :to=" userData ? '/users/me/profile' :'/auth/login'"
               class="secondary-font link-menu">
               <q-icon name="fas fa-user util-1"/>
               {{userData ? (userData.fullName).toUpperCase() : 'INICIAR SESIÓN'}}
             </router-link>
-            <router-link
-              tag="a"
-              to=""
-              v-if="userData"
-              @click.native="logout"
-              class="secondary-font link-menu">
-              <q-icon name="fas fa-sign-out-alt util-1"/>
-              SALIR
-            </router-link>
+            
             <router-link
               tag="a"
               to="/orders"
@@ -44,6 +36,15 @@
               class="secondary-font link-menu">
               <q-icon name="fas fa-search util-1"/>
               BÚSQUEDA
+            </router-link>
+            <router-link
+              tag="a"
+              to=""
+              v-if="userData"
+              @click.native="logout"
+              class="secondary-font link-menu">
+              <q-icon name="fas fa-sign-out-alt util-1"/>
+              SALIR
             </router-link>
           </div>
         </div>

@@ -1,12 +1,12 @@
 <template>
   <section>
-    <breadcrumb-component
+    <breadcrumb-component 
       class="q-mb-lg"
-      name="Comprar"
+      name="Checkout" 
       image="statics/footer.jpg"/>
     <div class="q-container relative-position">
       <div class="row gutter-x-sm">
-
+      
         <div class="col-12 col-md-8">
           <div class="backend-page q-mb-md">
             <pre v-show="false">{{orderData}}</pre>
@@ -36,7 +36,7 @@
               </div>
             </div>
           </div>
-
+          
           <div class="backend-page q-mb-md">
             <div class="row">
               <div class="col-12">
@@ -46,7 +46,7 @@
               </div>
             </div>
           </div>
-
+          
           <div class="backend-page q-mb-md">
             <div class="row">
               <div class="col-12">
@@ -65,7 +65,7 @@
               </div>
             </div>
           </div>
-
+  
           <div class="backend-page q-mb-md"
                v-if="orderData.methodPayment.name == 'icommercecheckmo' || orderData.dataAddress.store">
             <div class="row">
@@ -83,14 +83,14 @@
                       </div>
                       <q-list separator>
                       <q-item link tag="label">
-
+    
                         <q-item-side >
                           <q-radio v-model="orderData.options.paymentItem" val="Efectivo" />
                         </q-item-side>
                         <q-item-main label="Efectivo" />
                       </q-item>
                       <q-item link tag="label">
-
+    
                         <q-item-side >
                           <q-radio v-model="orderData.options.paymentItem" val="Datáfono" />
                         </q-item-side>
@@ -101,22 +101,50 @@
                     <div class="col-12" v-if="orderData.dataAddress.store">
                       <div class="row items-center">
                         <div class="col-12 col-md-6">
-                          <span>Dinos, en cuantos minutos pasas a retirar</span>
+                          <span>Tiempo de espera para recoger en tienda:</span>
                         </div>
                         <div class="col-12 col-md-6">
-                          <q-input type="number" suffix="Min." v-model="orderData.options.timeToWithdraw" stack-label=""/>
+    
+                          <q-btn-toggle
+                            v-model="orderData.options.timeToWithdraw"
+                            toggle-color="primary"
+                            inverted
+                            :options="[
+                              {label: '15 min.', value: '15 min.'},
+                              {label: '20 min.', value: '20 min'},
+                              {label: '25 min.', value: '25 min.'},
+                              {label: '30 min.', value: '30 min.'},
+                              {label: '1 hora.', value: '1 hora'},
+                            ]"
+                          />
+                        </div>
+                        <div class="separator"></div>
+                        
+                        <div class="col-12">
+                          <span>Observaciones que desees enviarnos:</span>
+                        </div>
+                        <div class="col-12">
+                          <q-field :count="200">
+                            <q-input
+                              type="textarea"
+                              :maxlength="200"
+                              v-model="orderData.options.observations"
+                              rows="2"
+                            />
+                          </q-field>
+                          
                         </div>
                       </div>
-
-
-
+                      
+                      
+                      
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
+          
         </div>
         <div class="col-12 col-md-4">
           <div class="backend-page q-mb-md">
@@ -128,14 +156,14 @@
               </div>
             </div>
           </div>
-
+  
           <q-btn
             :disabled="$store.state.shoppingCart.cart.total > 0 ? false : true"
             @click="save"
             label="procesar Compra"
             class="full-width q-mb-md"
-            color="positive"/>
-
+            color="primary"/>
+  
         </div>
       </div>
       <inner-loading :visible="loading"></inner-loading>
@@ -145,7 +173,7 @@
 
 <script>
   // VALIDATORS
-  import {required} from 'vuelidate/lib/validators'
+  import {required,min} from 'vuelidate/lib/validators'
 
   // COMPONENTS
   import UserInformation from 'src/components/qcommerce/front/checkout/UserInformation'
@@ -178,7 +206,7 @@
     data(){
       return{
         loading:false,
-
+        
         orderData:{
           cart:{},
           dataAddress: {},
@@ -189,7 +217,8 @@
           userData:{},
           options:{
             paymentItem:'',
-            timeToWithdraw: ''
+            timeToWithdraw: '',
+            observations:''
           }
         }
       }
@@ -202,7 +231,7 @@
     created(){
       this.$nextTick(async () => {
         await this.isAddressValidated()
-
+        
       })
     },
     methods:{
@@ -214,13 +243,13 @@
           this.loading = false
           return
         }
-
-        if(this.orderData.dataAddress.store && !this.orderData.options.timeToWithdraw){
-          this.$helper.alert.error('Por favor, dinos en cuantos minutos pasas a retirar', 'bottom')
+  
+        if(this.orderData.dataAddress.store && !this.orderData.options.timeToWithdraw ){
+          this.$helper.alert.error('Por favor, ingresa el tiempo de espera para recoger en tienda', 'bottom')
           this.loading = false
           return
         }
-
+       
         if(!this.orderData.dataAddress.store && this.orderData.methodPayment.name == 'icommercecheckmo' && !this.orderData.options.paymentItem){
           this.$helper.alert.error('Por favor, confírmanos cómo quieres pagar en tu domicilio', 'bottom')
           this.loading = false
@@ -228,7 +257,7 @@
         }
 
         let formData = await this.formatData(this.orderData)
-        console.log(formData)
+     
         //return
         eCommerceService.crud.create('apiRoutes.eCommerce.orders', formData)
         .then(response=>{
@@ -263,47 +292,48 @@
         })
       },
 
-      formatData(data){
+      formatData(){
         let attributes =  {
             storeId: 1,
-            customerId: data.userData.id,
+            customerId: this.orderData.userData.id,
+            
+            paymentMethod: this.orderData.methodPayment.name,
+            paymentMethodId: this.orderData.methodPayment.id,
+            shippingMethod: this.orderData.methodShipping.typeOrder ? this.orderData.methodShipping.coverage.area : 'icommercepickup',
+            shippingMethodId: this.orderData.methodShipping.typeOrder ? 2 : 1, // Datos quemados, en actaulizacion traer de la base de datos
 
-            paymentMethod: data.methodPayment.name,
-            paymentMethodId: data.methodPayment.id,
-            shippingMethod: data.methodShipping.typeOrder ? data.methodShipping.coverage.area : 'icommercepickup',
-            shippingMethodId: data.methodShipping.typeOrder ? 2 : 1, // Datos quemados, en actaulizacion traer de la base de datos
-
-            cartId: data.cart.id,
-            paymentFirstName: data.userData.firstName,
-            paymentLastName: data.userData.lastName,
+            cartId: this.orderData.cart.id,
+            paymentFirstName: this.orderData.userData.firstName,
+            paymentLastName: this.orderData.userData.lastName,
             paymentCompany: "",
             paymentNit: "",
             paymentAddress1: JSON.stringify({
-              address: this.formatAddress(data.addressBilling),
-              lat:data.addressBilling.addresslatLng.lat,
-              lng:data.addressBilling.addresslatLng.lng
+              address: this.formatAddress(this.orderData.addressBilling),
+              lat:this.orderData.addressBilling.addresslatLng.lat,
+              lng:this.orderData.addressBilling.addresslatLng.lng
             }),
             paymentAddress2: "",
             paymentCity: 'Bogotá',
             paymentZipCode: '123456',
             paymentCountry: 'Colombia',
             paymentZone: 'Cundinamarca',
-            shippingFirstName: data.userData.firstName,
-            shippingLastName: data.userData.lastName,
+            shippingFirstName: this.orderData.userData.firstName,
+            shippingLastName: this.orderData.userData.lastName,
             shippingCompany: "",
             shippingAddress1: JSON.stringify({
-              address: this.formatAddress(data.addressShipping),
-              lat:data.addressShipping.addresslatLng.lat,
-              lng:data.addressShipping.addresslatLng.lng
+              address: this.formatAddress(this.orderData.addressShipping),
+              lat:this.orderData.addressShipping.addresslatLng.lat,
+              lng:this.orderData.addressShipping.addresslatLng.lng
             }),
-            shippingAddress2: "",
+          
+            shippingAddress2: this.orderData.addressShipping.form.address2,
             shippingCity: 'Bogotá',
             shippingZipCode: '123456',
             shippingCountry: 'Colombia',
             shippingZone: 'Cundinamarca',
-            options: data.options
+            options: this.orderData.options
           }
-
+        
         return attributes
       },
       formatAddress(data){
@@ -317,4 +347,8 @@
   @import "~variables";
   .border-botton
     border-bottom: 1px solid #c4c4c47a;
+  .separator
+    border-bottom: 1px solid #c4c4c47a;
+    margin: 5px 0
+    width 100%
 </style>
