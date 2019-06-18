@@ -114,22 +114,15 @@
 		        dense
 		        v-close-overlay
 		        icon="close"/>
-	      	<q-toolbar-title>
-						{{
-						results.length ? results.length == 1 ?
-						'Se encontró la siguiente dirección' :
-						'Se encontraron las siguientes direcciones' :
-						''
-						}}
+	      	<q-toolbar-title class="text-center">
+						<q-icon name="fas fa-exclamation-circle q-mr-xs"/>
+						Por favor, ubica la dirección exacta con el marcador del mapa
 	       
 	      	</q-toolbar-title>
 				</q-toolbar>
 				<div class="q-mx-md q-my-md">
 					<div class="row">
 					
-						<div class="q-subheading full-width text-center q-my-md">
-							Oye, puedes arrastrar el marcador en el mapa en caso de que no esté exactamente en el destino
-						</div>
 						<q-btn
 							label="Validar"
 							class="full-width q-mb-md"
@@ -179,9 +172,9 @@
 							<q-icon name="sentiment_very_dissatisfied" size="45px" v-else/>
 						</div>
 						<div class="col-xs-12 col-md-12 text-center">
-								<p> <b class="secondary-font">{{coverage ? coverage.status ? 'Si' : 'No' : 'No'}}</b>
+								<p class="secondary-font"> <b class="secondary-font">{{coverage ? coverage.status ? 'Si' : 'No' : 'No'}}</b>
 									hay cobertura en tu dirección en este momento,<br>
-									<span v-if="!coverage">
+									<span class="secondary-font"  v-if="!coverage">
 									pero no te preocupes, puedes cambiar a "<b class="secondary-font">Recoger en Tienda</b>",<br>
 									<b class="secondary-font">recoger en tienda te ahorra la fila y esperar</b>
 									</span>
