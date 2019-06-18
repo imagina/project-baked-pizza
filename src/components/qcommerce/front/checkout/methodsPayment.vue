@@ -22,6 +22,8 @@
 <script>
 	// SERVICES
 	import eCommerceService from '@imagina/qcommerce/_services/index'
+  
+  import _cloneDeep from 'lodash.clonedeep'
 	export default {
 		props:{
       value:{
@@ -52,7 +54,7 @@
 				eCommerceService.crud.index('apiRoutes.eCommerce.paymentMethods')
 				.then(response=>{
 					this.loading = false
-					this.paymentMethods = response.data
+					this.paymentMethods = _cloneDeep(response.data)
 					if(this.value.dataAddress.store){
             this.paymentMethods.forEach((payment,index) =>{
             	if(payment.name == 'icommercecheckmo'){
