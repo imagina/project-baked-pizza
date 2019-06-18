@@ -29,7 +29,7 @@
             >
               <q-input :maxlength="14"
                        @input="forceSet('phone',mask(form.phone))"
-                       clearable
+                       clearable inputmode="numeric"
                        type="text" v-model="form.phone" float-label="Número de contacto"/>
             </q-field>
             <q-field
@@ -178,7 +178,6 @@
   
       /*mask value with format phone US*/
       mask(data) {
-        
         return this.$helper.maskPhone(data)
       },
   
@@ -188,7 +187,6 @@
          this.$alert.error('Por favor revisa de nuevo los campos.', 'bottom');
         } else {
           this.loading = true;
-          console.warn('apiRoutes.iform.send', this.form)
           iformService.crud.create('apiRoutes.iform.send', this.form).then(response => {
         
             if(response.status==="error"){
