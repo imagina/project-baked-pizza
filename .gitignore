@@ -1,21 +1,18 @@
-.quasar
-.env
-.DS_Store
-.thumbs.db
-node_modules
-/dist
-/src-cordova/node_modules
-/src-cordova/platforms
-/src-cordova/plugins
-/src-cordova/www
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Ignore everything
+/*
 
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
+# But not these files
+
+#src
+!/env
+!/src
+!/src-pwa
+!.env-example
+
+#other fields
+!/.gitignore
+!/package.json
+!/quasar.conf.js
+!/README.md
+!/.babelrc
+!/.postcssrc.js
