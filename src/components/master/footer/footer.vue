@@ -1,8 +1,8 @@
 <template>
   <div id="footerMaster">
     <div class="container-fluid" style="background: #f3f1dd url('statics/textura2.jpg');">
-      <div class="container container-section">
-        <section class="row">
+      <div class="q-container">
+        <section class="row q-pt-md">
           <div class="col-12 col-md-6 q-mb-lg">
             <div class="q-display-1 color-baked-subtitle">Permítenos atenderte</div>
             <div class="q-display-2 color-baked-title">¡VISÍTANOS PRONTO!</div>
@@ -13,7 +13,7 @@
           <div class="col-12 col-md-6 q-mb-lg relative-position">
             <div class="q-display-1 color-baked-subtitle">¿Necesitas ayuda?</div>
             <div class="q-display-2 color-baked-title">DÉJANOS UN MENSAJE</div>
-  
+
             <q-field
               :error="$v.form.name.$error" :count="45"
               error-label="Este campo es requerido"
@@ -48,7 +48,7 @@
                        :maxlength="300"
                        float-label="Mensaje"
                        type="textarea"/>
-      
+
             </q-field>
               <div class="text-right">
                 <q-btn label="- Enviar -"
@@ -131,7 +131,7 @@
   import GoogleMap from "src/components/GoogleMap";
   import iformService from "src/services/iform/index"
   import {required, email, numeric, minLength} from 'vuelidate/lib/validators'
-  
+
   import innerLoading from 'src/components/master/innerLoading'
   export default {
     props: {},
@@ -153,7 +153,7 @@
         phone: {required},
         address: {required},
         message: {required},
- 
+
       }
     },
     data() {
@@ -175,12 +175,12 @@
           this.form[field] = value
         })
       },
-  
+
       /*mask value with format phone US*/
       mask(data) {
         return this.$helper.maskPhone(data)
       },
-  
+
       sendMessage(){
        this.$v.$touch();
        if (this.$v.$error) {
@@ -188,7 +188,7 @@
         } else {
           this.loading = true;
           iformService.crud.create('apiRoutes.iform.send', this.form).then(response => {
-        
+
             if(response.status==="error"){
               this.loading = false;
               this.$alert.error('Ha ocurrido un error al enviar el correo.', 'bottom');
@@ -208,7 +208,7 @@
           });
         }
       }
-      
+
     }
 
   }
