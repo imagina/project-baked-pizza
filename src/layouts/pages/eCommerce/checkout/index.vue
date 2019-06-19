@@ -66,8 +66,7 @@
             </div>
           </div>
   
-          <div class="backend-page q-mb-md"
-               v-if="orderData.methodPayment.name == 'icommercecheckmo' || orderData.dataAddress.store">
+          <div class="backend-page q-mb-md">
             <div class="row">
               <div class="col-12">
                 <div class="border-top-color shadow-1">
@@ -120,24 +119,25 @@
                         </div>
                         <div class="separator"></div>
                         
-                        <div class="col-12">
-                          <span>Observaciones que desees enviarnos:</span>
-                        </div>
-                        <div class="col-12">
-                          <q-field :count="200">
-                            <q-input
-                              type="textarea"
-                              :maxlength="200"
-                              v-model="orderData.options.observations"
-                              rows="2"
-                            />
-                          </q-field>
-                          
-                        </div>
+                      
                       </div>
                       
                       
                       
+                    </div>
+                    <div class="col-12">
+                      <span>Observaciones que desees enviarnos:</span>
+                    </div>
+                    <div class="col-12">
+                      <q-field :count="200">
+                        <q-input
+                          type="textarea"
+                          :maxlength="200"
+                          v-model="orderData.options.observations"
+                          rows="2"
+                        />
+                      </q-field>
+  
                     </div>
                   </div>
                 </div>
