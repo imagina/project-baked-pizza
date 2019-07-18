@@ -77,7 +77,7 @@
   import menuCategories from '@imagina/qcommerce/_components/frontend/categories/menu'
   import innerLoading from 'src/components/master/innerLoading'
   import selectProducts from '@imagina/qcommerce/_components/frontend/products/widgets/selectProducts'
-  import addToCart from '@imagina/qcommerce/_components/frontend/cart/widgets/addToCartOptions'
+  import addToCart from 'src/components/icommerce/cart/widgets/addToCartOptions'
   import breadcrumbComponent from 'src/components/pages/sections/breadcrumb'
   import notFound from 'src/components/404'
   import validateaddressComponent from 'src/components/icommerce/validateAddress'
