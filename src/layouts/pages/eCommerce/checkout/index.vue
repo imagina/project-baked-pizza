@@ -1,8 +1,8 @@
 <template>
   <section>
-    <breadcrumb-component 
+    <breadcrumb-component
       class="q-mb-lg"
-      name="Checkout" 
+      name="Checkout"
       image="statics/footer.jpg"/>
     <div class="q-container relative-position">
       <div class="row gutter-x-sm">
@@ -162,7 +162,26 @@
             @click="save"
             label="procesar Compra"
             class="full-width q-mb-md"
-            color="primary"/>
+            color="primary" v-if="scheduleAvaliable"/>
+          
+          <q-item class="text-center q-pb-none q-mt-md" v-else>
+            <q-item-main>
+              <q-alert color="white" class="shadow-none q-title">
+                <p>Horarios</p>
+                <p align="justify">
+                  Domicilio: <br>
+                  Lunes, Martes, Miércoles, Jueves, Viernes de 1PM a 9.45PM <br>
+                  Sábados, Domingos, y Festivos de 12.30PM a 9:45PM <br>
+                </p>
+                <p align="justify">
+                  Recoger en Tienda: <br>
+                  Todos los días desde las 2PM hasta las 9.45PM <br>
+                </p>
+              </q-alert>
+            </q-item-main>
+          </q-item>
+          
+          
   
         </div>
       </div>
@@ -206,7 +225,10 @@
     data(){
       return{
         loading:false,
-        
+        schedules:[],
+        validatedAddress:{
+          typeOrder:false,
+        },
         orderData:{
           cart:{},
           dataAddress: {},
@@ -233,6 +255,15 @@
         await this.isAddressValidated()
         
       })
+    },
+    computed: {
+      scheduleAvaliable(){
+        if (this.validatedAddress.typeOrder){
+          return this.schedules.status.shipping.status
+        } else {
+          return this.schedules.status.pickup.status
+        }
+      }
     },
     methods:{
       async save(){
@@ -338,7 +369,31 @@
       },
       formatAddress(data){
         return `${data.form.typeStreet} ${data.form.street} Número ${data.form.number1} - ${data.form.number2}`
+      },
+      getSchedules(){
+        let criteria = 1
+        let params = {
+          refresh: true
+        }
+        commerceServices.crud.show('apiRoutes.eCommerce.schedules', criteria, params)
+        .then(response => {
+          this.schedules = response.data
+        })
+        .catch(error => {
+          console.warn(error)
+        })
+      },
+      getValidateAddress(){
+        helper.storage.get.item('dataAddress').then(res => {
+          console.warn(res)
+          if (res != null) {
+            this.validatedAddress = res
+          }else{
+            this.validatedAddress = {}
+          }
+        })
       }
+      
     }
   }
 </script>
