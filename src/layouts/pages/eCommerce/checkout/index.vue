@@ -6,7 +6,7 @@
       image="statics/footer.jpg"/>
     <div class="q-container relative-position">
       <div class="row gutter-x-sm">
-      
+        
         <div class="col-12 col-md-8">
           <div class="backend-page q-mb-md">
             <pre v-show="false">{{orderData}}</pre>
@@ -65,7 +65,7 @@
               </div>
             </div>
           </div>
-  
+          
           <div class="backend-page q-mb-md">
             <div class="row">
               <div class="col-12">
@@ -81,20 +81,20 @@
                         </div>
                       </div>
                       <q-list separator>
-                      <q-item link tag="label">
-    
-                        <q-item-side >
-                          <q-radio v-model="orderData.options.paymentItem" val="Efectivo" />
-                        </q-item-side>
-                        <q-item-main label="Efectivo" />
-                      </q-item>
-                      <q-item link tag="label">
-    
-                        <q-item-side >
-                          <q-radio v-model="orderData.options.paymentItem" val="Datáfono" />
-                        </q-item-side>
-                        <q-item-main label="Datáfono" />
-                      </q-item>
+                        <q-item link tag="label">
+                          
+                          <q-item-side >
+                            <q-radio v-model="orderData.options.paymentItem" val="Efectivo" />
+                          </q-item-side>
+                          <q-item-main label="Efectivo" />
+                        </q-item>
+                        <q-item link tag="label">
+                          
+                          <q-item-side >
+                            <q-radio v-model="orderData.options.paymentItem" val="Datáfono" />
+                          </q-item-side>
+                          <q-item-main label="Datáfono" />
+                        </q-item>
                       </q-list>
                     </div>
                     <div class="col-12" v-if="orderData.dataAddress.store">
@@ -103,7 +103,7 @@
                           <span>Tiempo de espera para recoger en tienda:</span>
                         </div>
                         <div class="col-12 col-md-6">
-    
+                          
                           <q-btn-toggle
                             v-model="orderData.options.timeToWithdraw"
                             toggle-color="primary"
@@ -118,12 +118,12 @@
                           />
                         </div>
                         <div class="separator"></div>
-                        
+                      
                       
                       </div>
-                      
-                      
-                      
+                    
+                    
+                    
                     </div>
                     <div class="col-12">
                       <span>Observaciones que desees enviarnos:</span>
@@ -137,14 +137,14 @@
                           rows="2"
                         />
                       </q-field>
-  
+                    
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          
+        
         </div>
         <div class="col-12 col-md-4">
           <div class="backend-page q-mb-md">
@@ -156,33 +156,14 @@
               </div>
             </div>
           </div>
-  
+          
           <q-btn
             :disabled="$store.state.shoppingCart.cart.total > 0 ? false : true"
             @click="save"
             label="procesar Compra"
             class="full-width q-mb-md"
-            color="primary" v-if="scheduleAvaliable"/>
-          
-          <q-item class="text-center q-pb-none q-mt-md" v-else>
-            <q-item-main>
-              <q-alert color="white" class="shadow-none q-title">
-                <p>Horarios</p>
-                <p align="justify">
-                  Domicilio: <br>
-                  Lunes, Martes, Miércoles, Jueves, Viernes de 1PM a 9.45PM <br>
-                  Sábados, Domingos, y Festivos de 12.30PM a 9:45PM <br>
-                </p>
-                <p align="justify">
-                  Recoger en Tienda: <br>
-                  Todos los días desde las 2PM hasta las 9.45PM <br>
-                </p>
-              </q-alert>
-            </q-item-main>
-          </q-item>
-          
-          
-  
+            color="primary"/>
+        
         </div>
       </div>
       <inner-loading :visible="loading"></inner-loading>
@@ -225,10 +206,7 @@
     data(){
       return{
         loading:false,
-        schedules:[],
-        validatedAddress:{
-          typeOrder:false,
-        },
+
         orderData:{
           cart:{},
           dataAddress: {},
@@ -242,7 +220,24 @@
             timeToWithdraw: '',
             observations:''
           }
-        }
+        },
+        schedules:{
+          status: {
+            shipping: {
+              status: false,
+              message: "",
+              schedule: {}
+            },
+            pickup: {
+              status: false,
+              message: "",
+              schedule: {}
+            }
+          },
+        },
+        validatedAddress:{
+          typeOrder:false,
+        },
       }
     },
     validations:{
@@ -253,7 +248,10 @@
     created(){
       this.$nextTick(async () => {
         await this.isAddressValidated()
-        
+
+        this.getSchedules()
+        this.getValidateAddress()
+
       })
     },
     computed: {
@@ -267,6 +265,21 @@
     },
     methods:{
       async save(){
+        if(!this.scheduleAvaliable){
+          this.$q.dialog({
+            title: 'Fuera del horario',
+            message:'Domicilio: Todos los dias de 1PM a 9.45PM, Fines de semana, y Festivos de 12.30PM a 9:45PM. Recoger en Tienda: Todos los días desde las 2PM hasta las 9.45PM ',
+            color: 'positive',
+            ok: 'Ok',
+            cancel: 'Cancel'
+          }).then(data => {
+            return
+          }).catch(() => {
+            return
+          })
+          return
+        }
+        
         this.loading = true
         this.$v.$touch()
         if (this.$v.$invalid) {
@@ -274,13 +287,13 @@
           this.loading = false
           return
         }
-  
+
         if(this.orderData.dataAddress.store && !this.orderData.options.timeToWithdraw ){
           this.$helper.alert.error('Por favor, ingresa el tiempo de espera para recoger en tienda', 'bottom')
           this.loading = false
           return
         }
-       
+
         if(!this.orderData.dataAddress.store && this.orderData.methodPayment.name == 'icommercecheckmo' && !this.orderData.options.paymentItem){
           this.$helper.alert.error('Por favor, confírmanos cómo quieres pagar en tu domicilio', 'bottom')
           this.loading = false
@@ -288,100 +301,101 @@
         }
 
         let formData = await this.formatData(this.orderData)
-     
+
         //return
         eCommerceService.crud.create('apiRoutes.eCommerce.orders', formData)
-        .then(response=>{
+          .then(response=>{
 
-          helper.storage.remove('dataAddress')
-          this.$store.dispatch("shoppingCart/CLEAR_CART")
+            helper.storage.remove('dataAddress')
+            this.$store.dispatch("shoppingCart/CLEAR_CART")
 
-          if(response.data.paymentData.external){
-            window.open(response.data.paymentData.redirectRoute, '_blank');
-          }
-          this.loading = false
-          // Redirect show Order
-          this.$router.push({name : 'order.show' , params : {id : response.data.orderId}})
-        })
-        .catch(error=>{
-          this.loading = false
-          console.warn(error)
-        })
+            if(response.data.paymentData.external){
+              window.open(response.data.paymentData.redirectRoute, '_blank');
+            }
+            this.loading = false
+            // Redirect show Order
+            this.$router.push({name : 'order.show' , params : {id : response.data.orderId}})
+          })
+          .catch(error=>{
+            this.loading = false
+            console.warn(error)
+          })
       },
       isAddressValidated(){
         return new Promise(async (resolve, reject) => {
-        helper.storage.get.item('dataAddress').then(response => {
-          if (response == null) {
-            this.$helper.alert.error('No se ha validado la direccion de envío aun', 'bottom', false, 2500)
-            this.$router.push({name : 'app.home'})
-            reject(error)
-          }else{
-            this.orderData.dataAddress = response;
-            resolve(true)
-          }
-        })
+          helper.storage.get.item('dataAddress').then(response => {
+            if (response == null) {
+              this.$helper.alert.error('No se ha validado la direccion de envío aun', 'bottom', false, 2500)
+              this.$router.push({name : 'app.home'})
+              reject(error)
+            }else{
+              this.orderData.dataAddress = response;
+              resolve(true)
+            }
+          })
         })
       },
 
       formatData(){
         let attributes =  {
-            storeId: 1,
-            customerId: this.orderData.userData.id,
-            
-            paymentMethod: this.orderData.methodPayment.name,
-            paymentMethodId: this.orderData.methodPayment.id,
-            shippingMethod: this.orderData.methodShipping.typeOrder ? this.orderData.methodShipping.coverage.area : 'icommercepickup',
-            shippingMethodId: this.orderData.methodShipping.typeOrder ? 2 : 1, // Datos quemados, en actaulizacion traer de la base de datos
+          storeId: 1,
+          customerId: this.orderData.userData.id,
 
-            cartId: this.orderData.cart.id,
-            paymentFirstName: this.orderData.userData.firstName,
-            paymentLastName: this.orderData.userData.lastName,
-            paymentCompany: "",
-            paymentNit: "",
-            paymentAddress1: JSON.stringify({
-              address: this.formatAddress(this.orderData.addressBilling),
-              lat:this.orderData.addressBilling.addresslatLng.lat,
-              lng:this.orderData.addressBilling.addresslatLng.lng
-            }),
-            paymentAddress2: "",
-            paymentCity: 'Bogotá',
-            paymentZipCode: '123456',
-            paymentCountry: 'Colombia',
-            paymentZone: 'Cundinamarca',
-            shippingFirstName: this.orderData.userData.firstName,
-            shippingLastName: this.orderData.userData.lastName,
-            shippingCompany: "",
-            shippingAddress1: JSON.stringify({
-              address: this.formatAddress(this.orderData.addressShipping),
-              lat:this.orderData.addressShipping.addresslatLng.lat,
-              lng:this.orderData.addressShipping.addresslatLng.lng
-            }),
-          
-            shippingAddress2: this.orderData.addressShipping.form.address2,
-            shippingCity: 'Bogotá',
-            shippingZipCode: '123456',
-            shippingCountry: 'Colombia',
-            shippingZone: 'Cundinamarca',
-            options: this.orderData.options
-          }
-        
+          paymentMethod: this.orderData.methodPayment.name,
+          paymentMethodId: this.orderData.methodPayment.id,
+          shippingMethod: this.orderData.methodShipping.typeOrder ? this.orderData.methodShipping.coverage.area : 'icommercepickup',
+          shippingMethodId: this.orderData.methodShipping.typeOrder ? 2 : 1, // Datos quemados, en actaulizacion traer de la base de datos
+
+          cartId: this.orderData.cart.id,
+          paymentFirstName: this.orderData.userData.firstName,
+          paymentLastName: this.orderData.userData.lastName,
+          paymentCompany: "",
+          paymentNit: "",
+          paymentAddress1: JSON.stringify({
+            address: this.formatAddress(this.orderData.addressBilling),
+            lat:this.orderData.addressBilling.addresslatLng.lat,
+            lng:this.orderData.addressBilling.addresslatLng.lng
+          }),
+          paymentAddress2: "",
+          paymentCity: 'Bogotá',
+          paymentZipCode: '123456',
+          paymentCountry: 'Colombia',
+          paymentZone: 'Cundinamarca',
+          shippingFirstName: this.orderData.userData.firstName,
+          shippingLastName: this.orderData.userData.lastName,
+          shippingCompany: "",
+          shippingAddress1: JSON.stringify({
+            address: this.formatAddress(this.orderData.addressShipping),
+            lat:this.orderData.addressShipping.addresslatLng.lat,
+            lng:this.orderData.addressShipping.addresslatLng.lng
+          }),
+
+          shippingAddress2: this.orderData.addressShipping.form.address2,
+          shippingCity: 'Bogotá',
+          shippingZipCode: '123456',
+          shippingCountry: 'Colombia',
+          shippingZone: 'Cundinamarca',
+          options: this.orderData.options
+        }
+
         return attributes
       },
       formatAddress(data){
         return `${data.form.typeStreet} ${data.form.street} Número ${data.form.number1} - ${data.form.number2}`
       },
+
       getSchedules(){
         let criteria = 1
         let params = {
           refresh: true
         }
-        commerceServices.crud.show('apiRoutes.eCommerce.schedules', criteria, params)
-        .then(response => {
-          this.schedules = response.data
-        })
-        .catch(error => {
-          console.warn(error)
-        })
+        eCommerceService.crud.show('apiRoutes.eCommerce.schedules', criteria, params)
+          .then(response => {
+            this.schedules = response.data
+          })
+          .catch(error => {
+            console.warn(error)
+          })
       },
       getValidateAddress(){
         helper.storage.get.item('dataAddress').then(res => {

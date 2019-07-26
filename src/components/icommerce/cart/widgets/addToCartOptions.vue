@@ -43,27 +43,11 @@
       </q-item>
       
       <!--Add to cart-->
-      <q-item class="text-center q-pb-none" v-if="scheduleAvaliable">
+      <q-item class="text-center q-pb-none">
         <q-item-main>
           <q-btn @click="addCart()" icon="shopping_cart"
                  label="AÑADIR" color="positive"
                  :disable="addCartDisable"/>
-        </q-item-main>
-      </q-item>
-      <q-item class="text-center q-pb-none q-mt-md" v-else>
-        <q-item-main>
-          <q-alert color="white" class="shadow-none q-title">
-            <p>Horarios</p>
-            <p align="justify">
-              Domicilio: <br>
-              Lunes, Martes, Miércoles, Jueves, Viernes de 1PM a 9.45PM <br>
-              Sábados, Domingos, y Festivos de 12.30PM a 9:45PM <br>
-            </p>
-            <p align="justify">
-              Recoger en Tienda: <br>
-              Todos los días desde las 2PM hasta las 9.45PM <br>
-            </p>
-          </q-alert>
         </q-item-main>
       </q-item>
     </q-list>
@@ -202,6 +186,21 @@
       },
       //Add product to cart
       async addCart() {
+        
+        if(!this.scheduleAvaliable){
+          this.$q.dialog({
+            title: 'Fuera del horario',
+            message:'Domicilio: Todos los dias de 1PM a 9.45PM, Fines de semana, y Festivos de 12.30PM a 9:45PM. Recoger en Tienda: Todos los días desde las 2PM hasta las 9.45PM ',
+            color: 'positive',
+            ok: 'Ok',
+            cancel: 'Cancel'
+          }).then(data => {
+            return
+          }).catch(() => {
+            return
+          })
+          return
+        }
         if (!this.template.productOptions.required) {
           this.loading = true
           let formData = {
