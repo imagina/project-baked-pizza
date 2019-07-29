@@ -67,7 +67,7 @@
     <q-layout-footer id="footer" class="no-shadow" style="background: url('statics/footer.jpg');">
 
       <div class="flex flex-center">
-        <img src="statics/logo.png" class="desktop-only" style="position: absolute; top: -70px;" >
+        <img src="statics/logo.png" class="desktop-only" style="position: absolute; top: -50px;" width="5%">
       </div>
 
       <div class="row">

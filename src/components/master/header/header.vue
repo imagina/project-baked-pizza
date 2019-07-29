@@ -54,7 +54,7 @@
         <div class="col-12">
           <div class="q-container">
             <router-link tag="a" class="relative-position" :to="{name: 'app.home'}">
-              <img src="statics/logo.png" id="header-logo">
+              <img src="statics/logo.png" id="header-logo" width="750%">
             </router-link>
 
             <div class="desktop-only__slide text-right">
@@ -124,7 +124,7 @@
         <q-layout container style="height: 100vh;">
           <q-layout-header class="no-shadow text-center q-py-md bg-white">
             <router-link :to="{ name: 'app.home'}">
-              <img src="statics/logo.png"/>
+              <img src="statics/logo.png" width="25%"/>
             </router-link>
           </q-layout-header>
           <q-page-container>
