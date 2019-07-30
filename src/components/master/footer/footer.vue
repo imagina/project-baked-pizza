@@ -21,7 +21,7 @@
               <q-input :maxlength="45"
                        clearable
                        v-model="form.name"
-                       float-label="Nombre Complejo"/>
+                       float-label="Nombre Completo"/>
             </q-field>
             <q-field
               :error="$v.form.phone.$error" :count="14"
@@ -38,7 +38,7 @@
             >
               <q-input :maxlength="45"
                        clearable
-                       v-model="form.address" float-label="Dirección de Dominilio"/>
+                       v-model="form.address" float-label="Dirección de Domicilio"/>
             </q-field>
             <q-field
               :error="$v.form.message.$error" :count="300"
