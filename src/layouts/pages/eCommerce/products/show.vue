@@ -22,11 +22,10 @@
         </div>
       </div>
 
-      <div v-else class="row gutter-x-sm q-mt-md">
-        <div class="col-12 col-md-3">
-          <menu-categories class="widgetMenuCategories" title="· Nuestro Menú ·"/>
+      <div v-else class="row gutter-x-sm q-mt-md ">
+        <div class="col-12 col-md-3 desktop-only">
+          <menu-categories class="widgetMenuCategories desktop-only" title="· Nuestro Menú ·"/>
         </div>
-
         <!--== Content ==-->
         <div id="showProductContent" class="col-12 col-md-9">
           <div class="relative-position" style="min-height: 150px">
@@ -66,6 +65,9 @@
           </div>
           <!--Inner Loading-->
           <inner-loading :visible="loading"/>
+        </div>
+        <div class="col-12 col-md-3 mobile-only q-mt-md">
+          <menu-categories class="widgetMenuCategories" title="· Nuestro Menú ·"/>
         </div>
       </div>
     </div>

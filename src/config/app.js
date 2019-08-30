@@ -10,7 +10,7 @@ eCommercePages.productsShow.layout = require('src/layouts/pages/eCommerce/produc
 eCommercePages.checkout.layout = require('src/layouts/pages/eCommerce/checkout/index').default
 
 export default {
-  version: '0.0.1',//Version of APP
+  version: '1.0.2',//Version of APP
   registerUsers : true,//PErmit register users
   modules: {
     apiRoutes: {//All api routes

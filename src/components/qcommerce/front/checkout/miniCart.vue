@@ -70,7 +70,7 @@
           </q-table>
           <!--Message not found items-->
           <div v-else class="">
-            Your cart is empty...
+            Tu carrito esta vacío...
           </div>
         </div>
 

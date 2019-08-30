@@ -4,7 +4,7 @@
     <div class="text-center full-height q-pa-lg">
       <q-spinner-gears color="blue-grey" size="80px"/>
       <h6 class="q-ma-none q-mt-md text-blue-grey">
-        Loading ({{progressPercentage}}%)
+        Cargando ({{progressPercentage}}%)
       </h6>
       <!--Bar Loading-->
       <q-progress :percentage="progressPercentage" color="primary" class="q-mt-sm"/>
@@ -21,13 +21,13 @@
       <!-- This or use "title" prop on <q-dialog> -->
       <span slot="title" class="text-blue-grey">
 				<q-icon name="fas fa-gift" class="q-mr-md"></q-icon>
-				Update available!
+				¡Actualización disponible!
 				<q-icon name="fas fa-gift" class="q-ml-md"></q-icon>
 			</span>
 
       <!-- This or use "message" prop on <q-dialog> -->
       <span slot="message">
-				Your browser will be refreshed
+				Tu navegador se actualizará
 			</span>
     </q-dialog>
 
@@ -42,7 +42,7 @@
       <!-- This or use "title" prop on <q-dialog> -->
       <span slot="title" class="q-title text-negative">
 				<q-icon name="fas fa-times"></q-icon>
-				Role or Department not assigned...
+				Rol del departamento no asignado ...
 			</span>
 
       <!-- This or use "message" prop on <q-dialog> -->
@@ -63,13 +63,13 @@
       <!-- This or use "title" prop on <q-dialog> -->
       <span slot="title" class="text-negative">
 				<q-icon name="fas fa-times"></q-icon>
-				Access denied
+				Acceso denegado
 			</span>
 
       <!-- This or use "message" prop on <q-dialog> -->
       <span slot="message">
-				You do not have permission to enter the app
-				<br>close in : {{dialog.logout.countDown}} seconds
+				No tienes permiso para ingresar a la aplicación
+				<br>cerrar en: {{dialog.logout.countDown}} segundos
 			</span>
     </q-dialog>
   </q-page>

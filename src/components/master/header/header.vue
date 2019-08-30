@@ -2,9 +2,9 @@
   <div id="headerComponent">
     <q-layout-header class="no-shadow">
       <search v-model="modalSearch"/>
-      <div class="row desktop-only nav-aux">
+      <div class="row nav-aux">
         <div class="col-12 text-right">
-          <div class="q-container">
+          <div class="q-container desktop-only ">
             <router-link
               tag="a"
               to=""
@@ -20,7 +20,6 @@
               <q-icon name="fas fa-user util-1"/>
               {{userData ? (userData.fullName).toUpperCase() : 'INICIAR SESIÓN'}}
             </router-link>
-            
             <router-link
               tag="a"
               to="/orders"
@@ -45,6 +44,70 @@
               class="secondary-font link-menu">
               <q-icon name="fas fa-sign-out-alt util-1"/>
               SALIR
+            </router-link>
+          </div>
+          <div class="q-container mobile-only">
+            <router-link
+                    tag="a"
+                    to=""
+                    @click.native="goToFooter()"
+                    class="secondary-font link-menu">
+              <q-icon name="fas fa-question-circle util-1"/>
+              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                <strong> PQRS</strong>
+              </q-tooltip>
+
+            </router-link>
+            <router-link
+                    tag="a"
+                    :to=" userData ? '/users/me/profile' :'/auth/login'"
+                    class="secondary-font link-menu">
+              <q-icon name="fas fa-user util-1"/>
+              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                {{userData ? (userData.fullName).toUpperCase() : 'INICIAR SESIÓN'}}
+              </q-tooltip>
+
+            </router-link>
+            <router-link
+                    tag="a"
+                    to="/orders"
+                    v-if="userData"
+                    class="secondary-font link-menu">
+              <q-icon name="fas fa-cubes util-1"/>
+              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                <strong> PEDIDOS</strong>
+              </q-tooltip>
+
+            </router-link>
+            <router-link
+                    tag="a"
+                    to=""
+                    @click.native="modalSearch=true"
+                    class="secondary-font link-menu">
+              <q-icon name="fas fa-search util-1"/>
+              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                <strong>   BÚSQUEDA</strong>
+              </q-tooltip>
+
+            </router-link>
+            <router-link
+                    tag="a"
+                    to=""
+                    v-if="userData"
+                    @click.native="logout"
+                    class="secondary-font link-menu">
+              <q-icon name="fas fa-sign-out-alt util-1"/>
+              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                <strong>  SALIR</strong>
+              </q-tooltip>
+            </router-link>
+            <router-link
+                    tag="a"
+                    :to="{name:'shopping.cart.index'}"
+                    class="secondary-font link-menu">
+              <q-icon name="fas fa-shopping-cart util-1"/>{{numProductsCart}}
+
+
             </router-link>
           </div>
         </div>

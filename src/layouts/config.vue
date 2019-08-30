@@ -14,7 +14,7 @@
   export default {
     meta() {
       return {
-        title: 'Loading...',
+        title: 'Baked Pizza Gourmet',
         link: [{
           rel: 'icon',
           id: 'icon',

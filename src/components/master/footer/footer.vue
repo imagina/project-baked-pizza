@@ -74,11 +74,11 @@
         <div class="col-12 q-my-lg q-pt-lg">
          <div class="flex flex-center text-white">
             <div class="flex flex-center text-white q-pt-lg footer__link-social">
-              <a href="#" target="_blank"><i class="fab fa-facebook-f q-px-md hover-icon"></i></a>
-              <a href="#" target="_blank"><i class="fab fa-twitter q-px-md hover-icon"></i></a>
-              <a href="#" target="_blank"><i class="fab fa-instagram q-px-md hover-icon"></i></a>
-              <a href="#" target="_blank"><i class="fab fa-google-plus-g q-px-md hover-icon"></i></a>
-              <a href="#" target="_blank"><i class="fab fa-linkedin-in q-px-md hover-icon"></i></a>
+              <a href="https://www.facebook.com/bakedpizzacol/" target="_blank"><i class="fab fa-facebook-f q-px-md hover-icon"></i></a>
+             <!-- <a href="#" target="_blank"><i class="fab fa-twitter q-px-md hover-icon"></i></a>-->
+              <a href="https://www.instagram.com/baked_pizza_co" target="_blank"><i class="fab fa-instagram q-px-md hover-icon"></i></a>
+              <!--<a href="#" target="_blank"><i class="fab fa-google-plus-g q-px-md hover-icon"></i></a>-->
+              <!--<a href="#" target="_blank"><i class="fab fa-linkedin-in q-px-md hover-icon"></i></a>-->
             </div>
           </div>
         </div>
@@ -87,11 +87,11 @@
       <div class="row q-pb-lg footer_link-contact" style="margin: 0 8%">
         <div class="col-12 q-py-sm">
           <div class="flex flex-center text-white">
-            <a href="tel:+57300-000-0000" class="q-px-lg text-white">
+            <a href="https://api.whatsapp.com/send?phone=573166396211&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20puductos." target="_blank" class="q-px-lg text-white">
               <span class="baked-icon-color">
                 <i class="fab fa-whatsapp"></i> (+57)
               </span>
-               300-000-0000
+              316 639 6211
             </a>
             <a href="email:info@bakedpizza.com.co" class="q-px-lg text-white">
               <span class="baked-icon-color"><i class="fas fa-envelope"></i> </span>
@@ -212,6 +212,15 @@
     }
 
   }
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/5d44b093e5ae967ef80e31a9/default';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+  })();
 </script>
 <style lang="stylus">
   @import "~variables";
