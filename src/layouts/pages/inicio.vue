@@ -9,17 +9,20 @@
             <!--== END VALIDATE ADDRESS ==-->
           </div>
         </div>
-        <q-carousel  
-          class="text-white" 
-          arrows 
-          infinite 
-          color="white" 
-          quick-nav 
-          maximized 
+        <q-carousel
+          class="text-white"
+          arrows
+          infinite
+          color="white"
+          quick-nav
+          maximized
           :height="this.$q.platform.is.desktop ? '880px' : '350px'">
-          <q-carousel-slide img-src="statics/sliders/1.jpg" class="flex flex-center"></q-carousel-slide>
-          <q-carousel-slide img-src="statics/sliders/3.jpg" class="flex flex-center"></q-carousel-slide>
-          <q-carousel-slide img-src="statics/sliders/2.jpg" class="flex flex-center"></q-carousel-slide>
+          <q-carousel-slide
+            v-for="(slider, index) in sliders"
+            :key="index"
+            :img-src="slider.imageUrl"
+            class="flex flex-center">
+          </q-carousel-slide>
         </q-carousel>
       </div>
     </section>
@@ -32,10 +35,10 @@
             <div class="q-display-2 color-baked-title" align="center">SÓMOS BAKED PIZZA</div>
             <br><br>
             <p align="justify" class="q-mt-xs q-mx-lg" style="color: #4C3D3A; font-family: Muli; font-size: 20px">
-              Nuestras deliciosas recetas son preparadas de manera artesanal con los mejores ingredientes. 
-              La masa de nuestra pizza es estirada a mano dándole una textura suave y esponjosa, sus bordes 
-              son ligeramente dorados y crocantes. Estamos comprometidos a ofrecer a nuestros clientes calidad, 
-              generando confianza en cada plato. Nuestras preparaciones las realizamos al instante para ofrecer 
+              Nuestras deliciosas recetas son preparadas de manera artesanal con los mejores ingredientes.
+              La masa de nuestra pizza es estirada a mano dándole una textura suave y esponjosa, sus bordes
+              son ligeramente dorados y crocantes. Estamos comprometidos a ofrecer a nuestros clientes calidad,
+              generando confianza en cada plato. Nuestras preparaciones las realizamos al instante para ofrecer
               productos siempre frescos.
             </p>
           </div>
@@ -52,7 +55,7 @@
 
     <section class="container-fluid q-pb-lg" style="background: url('statics/textura.jpg')">
       <div class="container-section">
-        <div class="row">        
+        <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 q-py-xl">
             <div class="q-display-2 color-baked-title" align="center">¿Que quieres comer hoy?</div>
             <div class="q-display-3 color-baked-subtitle" align="center">CONOCE NUESTRO MENÚ</div>
@@ -70,12 +73,36 @@
 <script>
   import categorieshomeComponent from '@imagina/qcommerce/_components/frontend/categories/widgetCircles'
   import validateaddressComponent from 'src/components/icommerce/validateAddress'
-  
+  import sliderService from 'src/services/sliders'
   export default{
     components:{
       categorieshomeComponent,
       validateaddressComponent,
     },
+    data () {
+      return {
+        mainSliderId:1,
+        sliders: [
+          {imageUrl: 'statics/sliders/1.jpg'},
+          {imageUrl: 'statics/sliders/3.jpg'},
+          {imageUrl: 'statics/sliders/2.jpg'}
+        ]
+      }
+    },
+    mounted(){
+      this.getSliders()
+    },
+    methods:{
+      getSliders(){
+        sliderService.show(this.mainSliderId)
+          .then( response => {
+            this.sliders =  response.data.slides
+          })
+          .catch( error => {
+            console.warn( error , 'Error slider, show default slider' )
+          })
+      }
+    }
   }
 </script>
 
@@ -90,7 +117,7 @@
  .red-texture{
   position: relative;
 
-  background: #C02400 url('/statics/textura6.png') no-repeat right top;  
+  background: #C02400 url('/statics/textura6.png') no-repeat right top;
  }
 
   .diagonal-texture{
@@ -311,7 +338,7 @@
   .q-carousel-quick-nav .q-btn-dense:not(.inactive),
   .q-carousel-quick-nav .q-btn-dense:hover,
   .q-carousel-quick-nav .q-btn-dense:hover .q-btn-inner,
-  .q-carousel-quick-nav .q-btn-dense:not(.inactive) .q-btn-inner 
+  .q-carousel-quick-nav .q-btn-dense:not(.inactive) .q-btn-inner
   {
     border-color: #f44336;
     color: #f44336;
@@ -366,7 +393,7 @@
   .csh3__catering_col .csh3__content
   {
     padding-top: 60px;
-    padding-bottom: 60px;  
+    padding-bottom: 60px;
   }
 
   .csh3__catering_col .csh3__content
@@ -405,7 +432,7 @@
       }
     }
     @media screen and (max-width: 768px)
-    { 
+    {
       .csh3
       {
         background-image: none;
