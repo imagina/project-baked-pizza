@@ -116,45 +116,56 @@
       <div class="row desktop-only nav-desktop">
         <div class="col-12">
           <div class="q-container">
-            <router-link tag="a" class="relative-position" :to="{name: 'app.home'}">
-              <img src="statics/logo.png" id="header-logo" width="750%">
-            </router-link>
+            <div class="row column justify-center ">
+              <div class="col">
+                <router-link tag="a" class="relative-position" :to="{name: 'app.home'}">
+                  <img src="statics/logo.png" id="header-logo" width="360%">
+                </router-link>
+              </div>
+              <div class="col">
+                <div class="desktop-only__slide text-right">
+                  <div class="col">
+                    <router-link
+                            tag="a"
+                            to="/inicio"
+                            class="q-ml-md nav-color">
+                      Inicio
+                    </router-link>
+                    <router-link
+                            tag="a"
+                            to="/products/pizzas"
+                            class="q-ml-md nav-color">
+                      Pide en Línea
+                    </router-link>
+                    <router-link
+                            tag="a"
+                            to="/nosotros"
+                            class="q-ml-md nav-color">
+                      Nosotros
+                    </router-link>
+                    <router-link
+                            tag="a"
+                            to="/donde-estamos"
+                            class="q-ml-md nav-color">
+                      ¿Dónde Estamos?
+                    </router-link>
+                    <router-link
+                            tag="a"
+                            :to="{name:'shopping.cart.index'}"
+                            class="q-ml-md nav-color desktop-only__slide__card text-blue-10">
+                      <q-chip color="secondary" class="q-mr-xs" small>
+                        {{numProductsCart}}
+                      </q-chip>
+                      Mi Pedido
+                    </router-link>
+                  </div>
 
-            <div class="desktop-only__slide text-right">
-              <router-link
-                tag="a"
-                to="/inicio"
-                class="q-ml-md nav-color">
-                Inicio
-              </router-link>
-              <router-link
-                tag="a"
-                to="/products/pizzas"
-                class="q-ml-md nav-color">
-                Pide en Línea
-              </router-link>
-              <router-link
-                tag="a"
-                to="/nosotros"
-                class="q-ml-md nav-color">
-                Nosotros
-              </router-link>
-              <router-link
-                tag="a"
-                to="/donde-estamos"
-                class="q-ml-md nav-color">
-                ¿Dónde Estamos?
-              </router-link>
-              <router-link
-                tag="a"
-                :to="{name:'shopping.cart.index'}"
-                class="q-ml-md nav-color desktop-only__slide__card text-blue-10">
-                <q-chip color="secondary" class="q-mr-xs" small>
-                  {{numProductsCart}}
-                </q-chip>
-                Mi Pedido
-              </router-link>
+                </div>
+              </div>
             </div>
+
+
+
           </div>
         </div>
       </div>

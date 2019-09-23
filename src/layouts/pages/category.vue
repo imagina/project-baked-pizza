@@ -11,7 +11,7 @@
             <menuCategories/>
           </q-list>
         </div>
-        
+
         <div class="col-md-9" v-if="!showProduct">
           <div class="row grid-products" v-if="products.length">
             <div class="col-xs-12 col-sm-12 col-md-4" align="center" v-for="product in products" :key="product.id">

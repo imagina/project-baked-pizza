@@ -1,10 +1,10 @@
 {
-  "name": "atcolombia",
-  "version": "1.0.0",
-  "description": "Development by Imagina Colombia",
-  "productName": "atcolombia",
-  "cordovaId": "org.cordova.quasar.app",
-  "author": "msolanoimagina <msolano@imaginacolombia.com>",
+  "name": "BakedPizzaGourmet",
+  "version": "1.0.3",
+  "description": "SÓMOS BAKED PIZZA. Nuestras deliciosas recetas son preparadas de manera artesanal con los mejores ingredientes",
+  "productName": "Baked Pizza Gourmet",
+  "cordovaId": "com.imagina.baked.app",
+  "author": "michael <38920570+msolanoimagina@users.noreply.github.com>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",

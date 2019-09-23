@@ -140,9 +140,12 @@
         let params = {
           params:{
             filter:{
+              status:1,
               categorySlug:this.$route.params.slugCategory,
               locale:'es'
             },
+            refresh:true,
+            remember:false,
             include:'productOptions,optionValues',
             take:this.paginate.take,
             page:this.paginate.page,
@@ -153,6 +156,7 @@
         .then(response=>{
           this.paginate.maxPages = response.meta.page.lastPage
           this.products = response.data
+            console.warn(response.data)
           this.visible = false
         })
         .catch(error=>{

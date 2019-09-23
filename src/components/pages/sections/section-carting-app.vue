@@ -8,7 +8,7 @@
           <div class="csh3__content">
             <div class="q-display-2 color-baked-title">Descarga nuestra APP</div>
             <div class="q-display-1 color-baked-subtitle">¡Haz tu pedido desde el celular!</div>
-            <a href="#">
+            <a href="https://play.google.com/store/apps/details?id=com.imagina.baked.app" target="_blank">
               <img src="statics/googleplay.png" width="200">
             </a>
           </div>
@@ -29,8 +29,8 @@
 </template>
 
 <script>
-  export default 
-  { 
+  export default
+  {
     name: 'section-carting-app'
   }
 </script>

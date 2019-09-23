@@ -8,7 +8,7 @@ export default {
   pide: {
     title: 'PIDE EN LÍNEA',
     icon: 'fas fa-utensils',
-    to: 'app.home'
+    to: 'products.index'
   },
   about: {
     title: 'NOSOTROS',
