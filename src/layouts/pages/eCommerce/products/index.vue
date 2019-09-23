@@ -124,28 +124,26 @@
     },
     watch:{
       $route(to, from) {
-        this.getProducts()
+        this.getProducts(true)
       }
     },
     created(){
-      this.$nextTick(()=>{
-        this.getProducts()
-        this.isAddressValidate()
-      })
+      this.getProducts(true)
+      this.isAddressValidate()
     },
     methods:{
       // Get all products by category :slug
-      getProducts(){
+      getProducts(refresh = false){
         this.visible = true
         let params = {
+          refresh:refresh,
+          remember:false,
           params:{
             filter:{
-              status:1,
+              status:'1',
               categorySlug:this.$route.params.slugCategory,
               locale:'es'
             },
-            refresh:true,
-            remember:false,
             include:'productOptions,optionValues',
             take:this.paginate.take,
             page:this.paginate.page,
@@ -156,7 +154,6 @@
         .then(response=>{
           this.paginate.maxPages = response.meta.page.lastPage
           this.products = response.data
-            console.warn(response.data)
           this.visible = false
         })
         .catch(error=>{
