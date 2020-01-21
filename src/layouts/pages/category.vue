@@ -17,11 +17,11 @@
             <div class="col-xs-12 col-sm-12 col-md-4" align="center" v-for="product in products" :key="product.id">
               <div class="card-product-img">
                 <img :src="product.mainImage.path"  class="responsive m-w-100">
-                <q-btn 
-                  type="submit" 
-                  label="Pedir" 
-                  color="red" 
-                  sence 
+                <q-btn
+                  type="submit"
+                  label="Pedir"
+                  color="red"
+                  sence
                   class="q-my-md round-borders-0 btn-add-card" @click="productSelected(product)"/>
               </div>
               <div class="q-mt-lg">
@@ -33,7 +33,7 @@
           <div class="row" v-else align="center">
             <div class="col-md-12">
               <span class="q-display-1 color-baked-title">No hay productos que concuerden con la selección.</span>
-            </div>	
+            </div>
           </div>
           <q-inner-loading :visible="visible">
             <q-spinner size="50px" color="red"></q-spinner>

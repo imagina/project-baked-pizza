@@ -71,7 +71,7 @@
 </template>
 
 <script>
-  import categorieshomeComponent from '@imagina/qcommerce/_components/frontend/categories/widgetCircles'
+  import categorieshomeComponent from 'src/components/icommerce/categories/widgetCircles'
   import validateaddressComponent from 'src/components/icommerce/validateAddress'
   import sliderService from 'src/services/sliders'
   export default{
