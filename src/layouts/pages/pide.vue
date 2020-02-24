@@ -1,7 +1,7 @@
 <template>
-	<section class="container-fluid">		
+	<section class="container-fluid">
 		<breadcrumb-component name="Pide en linea" image="statics/header-pide.jpg"></breadcrumb-component>
-		<div class="container-section">	
+		<div class="container-section">
 			<div class="row" v-if="validaddress">
 				<div class="col-xs-12 col-sm-12 col-md-3">
 					<div class="label bg-deep-orange-7 text-white full-width title-menu">
@@ -11,7 +11,7 @@
 						<menuCategoriesComponent parent="0" @category="getProducts" group="root"/>
 					</q-list>
 				</div>
-				<div class="col-md-9" v-if="!showProduct">	
+				<div class="col-md-9" v-if="!showProduct">
 					<div class="row grid-products" v-if="products.length">
 						<div class="col-xs-12 col-sm-12 col-md-4" align="center" v-for="product in products" :key="product.id">
 							<div class="card-product-img">
@@ -27,7 +27,7 @@
 					<div class="row" v-else align="center">
 						<div class="col-md-12">
 							<span class="q-display-1 color-baked-title">No se encontraron resultados para esta categoría.</span>
-						</div>	
+						</div>
 					</div>
 					<q-inner-loading :visible="visible">
 			      <q-spinner size="50px" color="primary"></q-spinner>
@@ -38,18 +38,18 @@
 			<div class="row" v-else align="center">
 				<div class="col-md-12">
 					<span class="q-display-1 color-baked-title">Comprobando dirección.</span>
-				</div>	
+				</div>
 			</div>
 		</div>
 
-    <q-modal 
-      v-model="modalvalidateAddres" 
+    <q-modal
+      v-model="modalvalidateAddres"
       no-esc-dismiss
       no-backdrop-dismiss>
       <q-modal-layout style="background: #cfcfcf9c">
         <div class="q-mx-lg">
-          <validateaddressComponent 
-            :whitLabels="false" 
+          <validateaddressComponent
+            :whitLabels="false"
             @addressValidated="modalvalidateAddres = false"/>
         </div>
       </q-modal-layout>
@@ -203,7 +203,7 @@
 
 	.title-menu
 		border-radius 15px
-		span 
+		span
 			padding 5px 0 5px 0
 
 
@@ -221,7 +221,7 @@
 		margin-top .6rem
 		
 
-	.product-type-grid .radio { 
+	.product-type-grid .radio {
 	position: absolute;
 	opacity: 0;
 	width: 0;
@@ -288,8 +288,8 @@
 	    font-weight inherit
 	    color #6B5B5A
 
-	.q-select.q-select--app .q-if-label, 
-		.q-select.q-select--app .q-input-target, 
+	.q-select.q-select--app .q-if-label,
+		.q-select.q-select--app .q-input-target,
 		.q-select.q-select--app .q-if-inner,
 		.q-item-label
 	    padding-left 0px !important

@@ -128,8 +128,10 @@
       }
     },
     created(){
-      this.getProducts(true)
-      this.isAddressValidate()
+      this.$nextTick( () => {
+        this.getProducts(true)
+        this.isAddressValidate()
+      })
     },
     methods:{
       // Get all products by category :slug
@@ -163,6 +165,7 @@
       },
       isAddressValidate(){
 				helper.storage.get.item('dataAddress').then(res => {
+				  console.warn(res)
           if (res != null) {
             this.isValidateAddress = true
           }else{
