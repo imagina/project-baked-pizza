@@ -151,6 +151,7 @@
           await this.$helper.storage.restore(config('app.saveStorage.refresh'))//Restore storage
           if(await this.$helper.storage.get.item('userToken'))//Reset Auth
             await this.$store.dispatch('auth/AUTH_UPDATE')
+		        await this.$store.dispatch('auth/AUTH_TRYAUTOLOGIN')
           if (navigator && navigator.serviceWorker && navigator.serviceWorker.controller) {//Reset Service Worker
             navigator.serviceWorker.controller.postMessage({
               msg: "clearCache"

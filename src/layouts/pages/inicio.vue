@@ -74,10 +74,12 @@
   import categorieshomeComponent from 'src/components/icommerce/categories/widgetCircles'
   import validateaddressComponent from 'src/components/icommerce/validateAddress'
   import sliderService from 'src/services/sliders'
+  import myAddress from "../../components/icommerce/myAddress";
   export default{
     components:{
       categorieshomeComponent,
       validateaddressComponent,
+      myAddress
     },
     data () {
       return {
