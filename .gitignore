@@ -16,3 +16,9 @@
 !/README.md
 !/.babelrc
 !/.postcssrc.js
+
+
+#node_modules
+!/node_modules
+/node_modules/*
+!/node_modules/@imagina
