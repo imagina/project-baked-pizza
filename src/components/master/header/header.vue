@@ -209,7 +209,7 @@
       </div>
 
     </q-layout-drawer>
-
+		<pushNotification/>
   </div>
 </template>
 
@@ -222,6 +222,7 @@
   import informationHeader from 'src/components/master/header/information'
   import searchComponent from '@imagina/qmenu/_components/search'
   import search from "@imagina/qcommerce/_components/frontend/search";
+  import pushNotification from "../../pushNotification";
   
   import cartService from 'src/services/cart';
 
@@ -237,7 +238,8 @@
       menuDesktop,
       menuMobile,
       widgetMenu,
-      search
+      search,
+      pushNotification
     },
     created() {
       this.$root.$on("sesionStart", this.setData);
@@ -248,7 +250,7 @@
       //EventBus.$on('getcart',() => {
       //  this.cart.total_quantity = 0
       //})
-
+		    
     },
     mounted() {
       this.$nextTick(function () {
