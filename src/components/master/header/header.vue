@@ -210,7 +210,7 @@
       </div>
 
     </q-layout-drawer>
-
+		<pushNotification/>
   </div>
 </template>
 
@@ -223,8 +223,9 @@
   import informationHeader from 'src/components/master/header/information'
   import searchComponent from '@imagina/qmenu/_components/search'
   import search from "@imagina/qcommerce/_components/frontend/search";
+  import pushNotification from "../../pushNotification";
   import menuTabs from '@imagina/qcommerce/_components/frontend/categories/menuTabs'
-  
+
   import cartService from 'src/services/cart';
 
   //import store from 'src/store/cart/index'
@@ -240,6 +241,7 @@
       menuMobile,
       widgetMenu,
       search,
+      pushNotification,
       menuTabs
     },
     created() {
