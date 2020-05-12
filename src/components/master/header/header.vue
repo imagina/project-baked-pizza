@@ -184,6 +184,7 @@
           <q-icon name="menu"/>
         </q-btn>
         <q-toolbar-title :class="$q.platform.is.mobile ? 'text-center' : ''">
+          <menu-tabs class="mobile-only" />
         </q-toolbar-title>
         <search-component class="mobile-only"/>
       </q-toolbar>
@@ -222,6 +223,7 @@
   import informationHeader from 'src/components/master/header/information'
   import searchComponent from '@imagina/qmenu/_components/search'
   import search from "@imagina/qcommerce/_components/frontend/search";
+  import menuTabs from '@imagina/qcommerce/_components/frontend/categories/menuTabs'
   
   import cartService from 'src/services/cart';
 
@@ -237,7 +239,8 @@
       menuDesktop,
       menuMobile,
       widgetMenu,
-      search
+      search,
+      menuTabs
     },
     created() {
       this.$root.$on("sesionStart", this.setData);

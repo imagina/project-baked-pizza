@@ -1,7 +1,7 @@
 <template>
   <section>
     <breadcrumb-component
-      class="q-mb-lg"
+      class="q-mb-lg desktop-only"
       name="Pide en linea"
       image="statics/header-pide.jpg"/>
 
@@ -20,11 +20,11 @@
         </div>
       </div>
 
-      <div class="row gutter-x-sm q-mt-md" v-else>
-        <div class="col-xs-12 col-sm-12 col-md-3">
+      <div class="row gutter-x-sm" style="min-width: 150px" v-else>
+        <div class="col-xs-12 col-sm-12 col-md-3 desktop-only">
           <menu-categories class="widgetMenuCategories" title="· Nuestro Menú ·" />
         </div>
-        <div class="col-md-9">
+        <div :class="$q.platform.is.desktop ? 'col-12 col-md-9' : 'col-12'">
           <div
             class="row gutter-x-sm"
             v-if="products.length">
@@ -32,25 +32,48 @@
               tag="div"
               v-for="(product, index) in products"
               :key="index"
-              class="col-xs-12  col-sm-12 col-md-4 text-center product"
+              :class="'col-12' + ($q.platform.is.desktop ? ' col-md-4': ' col-md-6 col-xl-4') +' text-center product'"
               :to="{name:'product.show', params: { slugProduct: product.slug }}">
-              <div
-                :style="`background-image: url(${product.mainImage.path});`"
-                class="product-img">
-                <q-btn
-                  :to="{name:'product.show', params: { slugProduct: product.slug }}"
-                  label="Pedir"
-                  color="primary"
-                  class="q-btn inline q-my-md btn-product"/>
+              <div v-if="$q.platform.is.desktop">
+                <div
+                        :style="`background-image: url(${product.mainImage.path});`"
+                        class="product-img">
+                  <q-btn
+                          :to="{name:'product.show', params: { slugProduct: product.slug }}"
+                          label="Pedir"
+                          color="primary"
+                          class="q-btn inline q-my-md btn-product"/>
+                </div>
+                <div class="q-mt-lg">
+                  <span class="q-display-1 color-baked-title">
+                    {{product.name}}
+                  </span>
+                  <p class="">
+                    {{$n(product.price) | money }}
+                  </p>
+                </div>
               </div>
-              <div class="q-mt-lg">
-                <span class="q-display-1 color-baked-title">
-                  {{product.name}}
-                </span>
-                <p class="">
-                  {{$n(product.price) | money }}
-                </p>
+              <div class="row q-mb-md gutter-sm" v-else>
+                <div class="col-7 col-sm-6">
+                  <div class="q-mt-lg">
+                    <span class="q-title color-baked-title">
+                      {{product.name}}
+                    </span>
+                    <p class="q-caption">
+                      {{ product.summary }}
+                    </p>
+                    <p class="">
+                      {{$n(product.price) | money }}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-5 col-sm-6">
+                  <div :style="`background-image: url(${product.mainImage.path});`" class="product-img">
+                    &nbsp;
+                  </div>
+                </div>
               </div>
+              <!---->
             </router-link>
           </div>
           <div
@@ -92,6 +115,7 @@
 
   // Components
   import menuCategories from '@imagina/qcommerce/_components/frontend/categories/menu'
+  import recursiveTab from 'src/components/master/recursiveTab'
   import validateAddressComponent from 'src/components/icommerce/validateAddress'
   import breadcrumbComponent from 'src/components/pages/sections/breadcrumb'
   import innerLoading from 'src/components/master/innerLoading'
@@ -102,6 +126,7 @@
         showProduct:false,
         visible:false,
         products:[],
+        categoryChildren:[],
         paginate:{
           page: 1,
           take:10,
@@ -120,7 +145,8 @@
       validateAddressComponent,
       breadcrumbComponent,
       menuCategories,
-      innerLoading
+      innerLoading,
+      recursiveTab
     },
     watch:{
       $route(to, from) {
@@ -163,16 +189,16 @@
           this.visible = false
         })
       },
-      isAddressValidate(){
-				helper.storage.get.item('dataAddress').then(res => {
-				  console.warn(res)
+      isAddressValidate() {
+        helper.storage.get.item('dataAddress').then(res => {
+          console.warn(res)
           if (res != null) {
             this.isValidateAddress = true
-          }else{
+          } else {
             this.isValidateAddress = false
           }
         })
-			},
+      },
     }
   }
 
@@ -189,11 +215,13 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    width: 100%
-    height 260px
     border: 1px solid #dddddd52
     border-radius 10px
-
+    width: 100%;
+    height: 260px;
+  @media screen and (max-width: 768px)
+    .product-img
+      height: 150px;
   .btn-product
     margin-top 240px
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <breadcrumb-component
-      class="q-mb-lg"
+      class="q-mb-lg gt-sm"
       name="Pide en linea"
       image="statics/header-pide.jpg"/>
 
@@ -24,15 +24,15 @@
 
       <div v-else class="row gutter-x-sm q-mt-md ">
         <div class="col-12 col-md-3 desktop-only">
-          <menu-categories class="widgetMenuCategories desktop-only" title="· Nuestro Menú ·"/>
+          <menu-categories class="widgetMenuCategories" title="· Nuestro Menú ·"/>
         </div>
         <!--== Content ==-->
-        <div id="showProductContent" class="col-12 col-md-9">
+        <div id="showProductContent" :class="'col-12' + (this.$q.platform.is.desktop ? ' col-md-9' : '')">
           <div class="relative-position" style="min-height: 150px">
             <!--Product-->
             <div class="row justify-end" v-if="productData">
               <!--Products of same category-->
-              <div class="selectorOtherProducts col-12 col-md-7">
+              <div class="selectorOtherProducts col-12 col-md-7 desktop-only">
                 <div class="q-title q-py-sm q-mr-sm title">
                   Seleccione un Producto:
                 </div>
@@ -41,19 +41,21 @@
               </div>
 
               <!--Data product-->
-              <div class="col-12 row gutter-x-sm content q-mt-lg">
-                <!--Image-->
-                <div class="col-12 col-md-5">
-                  <img :src="productData.mainImage.path"
-                       class="responsive m-w-100 full-width">
-                </div>
+              <div class="col-12 row gutter-x-sm content">
                 <!--Name and description-->
-                <div class="col-12 col-md-7 q-mt-sm">
-                  <div class="q-display-2 color-baked-title">
-                    {{productData.name}}
-                  </div>
-                  <div v-html="productData.description" class="q-title">{{productData.description}}</div>
-                  <add-to-cart :product-id="productData.id" :price="productData.price" :additional-price="false"/>
+                <div class="col-12 col-md-4 q-mt-sm'">
+                    <div class="q-display-2 color-baked-title text-center">
+                        {{productData.name}}
+                    </div>
+                    <div class="text-center q-pb-md">
+                        <img :src="productData.mainImage.path"
+                             :class="'responsive m-w-100 full-width' + (this.$q.platform.is.desktop ? '' : ' img-mobile') ">
+                    </div>
+                </div>
+                <!--Image-->
+                <div class="col-12 col-md-8">
+                    <div v-html="productData.description" class="q-title">{{productData.description}}</div>
+                    <add-to-cart :product-id="productData.id" :price="productData.price" :additional-price="false"/>
                 </div>
               </div>
             </div>
@@ -66,9 +68,9 @@
           <!--Inner Loading-->
           <inner-loading :visible="loading"/>
         </div>
-        <div class="col-12 col-md-3 mobile-only q-mt-md">
+        <!--<div class="col-12 col-md-3 mobile-only q-mt-md">
           <menu-categories class="widgetMenuCategories" title="· Nuestro Menú ·"/>
-        </div>
+        </div>-->
       </div>
     </div>
   </div>
@@ -169,6 +171,11 @@
         img
           border 1px solid $grey-3
           border-radius 20px
+        @media (max-width: 768px)
+          img.img-mobile
+            width auto !important
+            height 180px !important
+            max-width: 100% !important
 
       #widgetSelectProducts
         .vue-treeselect

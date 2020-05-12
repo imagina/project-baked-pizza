@@ -8,6 +8,8 @@ import eCommercePages from '@imagina/qcommerce/_config/pages'
 eCommercePages.productsIndex.layout = require('src/layouts/pages/eCommerce/products/index').default
 eCommercePages.productsShow.layout = require('src/layouts/pages/eCommerce/products/show').default
 eCommercePages.checkout.layout = require('src/layouts/pages/eCommerce/checkout/index').default
+eCommercePages.orders.layout = require('src/layouts/pages/eCommerce/orders/index').default
+eCommercePages.order.layout = require('src/layouts/pages/eCommerce/orders/show').default
 
 export default {
   version: '1.0.2',//Version of APP

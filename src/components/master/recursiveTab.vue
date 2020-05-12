@@ -1,26 +1,31 @@
 <template>
-	<q-list separator link no-border id="listMenu" class="q-pa-none">
+	<q-tabs id="tabsMenu" class="q-pa-none" inverted>
 		<!--Single Item-->
-		<q-item :to="getObjectTo(item)"
-				v-if="checkItemSingle(item)" exact
-				v-for="(item,key) in menu" :key="key">
-			<q-item-side v-if="item.icon" :icon="item.icon"/>
-			<q-item-main>{{item.title}}</q-item-main>
-		</q-item>
+		<q-route-tab
+				:to="getObjectTo(item)"
+				v-if="checkItemSingle(item)"
+				exact
+				v-for="(item,key) in menu" :key="key" :icon="item.icon" :label="item.title" slot="title" />
+		<q-tab v-else-if="checkItemMultiple(item)" slot="title">
+			<q-btn-dropdown :icon="item.icon" :label="item.title" split inverted dense class="no-border no-shadow">
+				<recursive-tab :key="key" :menu="item.children"/>
+			</q-btn-dropdown>
+		</q-tab>
 
 		<!-- Dropdwon Item -->
-		<q-collapsible v-else-if="checkItemMultiple(item)"
-					   :icon="item.icon" :label="item.title">
+
+		<!--<q-collapsible v-else-if="checkItemMultiple(item)"
+		               :icon="item.icon" :label="item.title">
 			<recursive-menu :key="key" :menu="item.children"/>
-		</q-collapsible>
-	</q-list>
+		</q-collapsible>-->
+	</q-tabs>
 </template>
 <script>
 	//Plugins
 	import auth from '@imagina/quser/_plugins/auth'
 
 	export default {
-		name: 'recursiveMenu',
+		name: 'recursiveTab',
 		components: {},
 		props: {
 			menu: {default: false}
@@ -70,7 +75,7 @@
 </script>
 <style lang="stylus">
 	@import "~variables";
-	#listMenu
+	#tabsMenu
 		.q-icon
 			font-size 16px
 
@@ -81,4 +86,6 @@
 		.q-item, q-collapsible
 			min-height 38px !important
 			padding 6px 10px
+		.q-tab-label-parent,.q-btn-dropdown
+			display inline-flex
 </style>
