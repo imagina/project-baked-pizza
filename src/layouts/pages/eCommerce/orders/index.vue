@@ -14,16 +14,13 @@
           <q-tab default slot="title" name="tab-processing" label="Pendientes" />
           <q-tab slot="title" name="tab-completed" label="Confirmados" />
           <q-tab-pane name="tab-processing">
-            <div v-for="(order, i) in table.data.processing" :key="i">
-              <p>{{ order.total }}</p>
-            </div>
+                <card-details v-for="(order, i) in table.data.processing" :order="order" :key="i" />
+
             <infinite-loading @infinite="infinite1"></infinite-loading>
           </q-tab-pane>
           <q-tab-pane name="tab-completed">
-            <div v-for="(order, j) in table.data.completed" :key="j">
-              <p>{{ order.total }}</p>
-            </div>
-            <infinite-loading @infinite="infinite2"></infinite-loading>
+              <card-details v-for="(order, j) in table.data.completed" :key="j" :order="order" />
+              <infinite-loading @infinite="infinite2"></infinite-loading>
           </q-tab-pane>
         </q-tabs>
       </div>
@@ -40,15 +37,16 @@
   //Component
   import innerLoading from 'src/components/master/innerLoading'
   import infiniteLoading from 'vue-infinite-loading';
+  import cardDetails from "src/components/icommerce/order/cardDetails";
 
   export default {
     components: {
       innerLoading,
       infiniteLoading,
+      cardDetails,
     },
     mounted() {
       this.$nextTick(function () {
-        this.getDataTable()
       })
     },
     data() {
@@ -147,72 +145,66 @@
       }
     },
     methods: {
-      //Request products with params from server table
-      async getDataTable(refresh = false) {
-        await this.getdata({pagination: this.table.pagination}, refresh)
-        await this.getdata2({pagination: this.table.pagination}, refresh)
-      },
-      //Get processing orders
-      async getdata({pagination, filter}, refresh = false) {
-        this.loading = true
-        //Params to request
-        let params = {
-          refresh: refresh,
-          params: {
-            filter: Object.assign({}, this.table.filter1, this.table.filters1),
-            page: pagination.page,
-            take: pagination.rowsPerPage,
-          }
-        }
-        //Request
-        commerceServices.crud.index('apiRoutes.eCommerce.orders', params)
-        .then(response => {
-          this.table.data.processing = response.data
-          this.table.pagination.page = response.meta.page.currentPage
-          this.table.pagination.rowsNumber = response.meta.page.total
-          this.table.pagination.rowsPerPage = pagination.rowsPerPage
-          this.loading = false
-        })
-        .catch(error => {
-          this.loading = false
-          this.$helper.alert.error('Failed: ' + error, 'bottom')
-        })
-      },
       async infinite1(handler){
-        this.table.pagination ++
-        await this.getdata({pagination: this.table.pagination})
-        handler.loaded()
-      },
-      //Get completed orders
-      async getdata2({pagination, filter}, refresh = false) {
-        this.loading = true
-        //Params to request
-        let params = {
-          refresh: refresh,
-          params: {
-            filter: Object.assign({}, this.table.filter2, this.table.filters2),
-            page: pagination.page,
-            take: pagination.rowsPerPage,
+          //Params to request
+          let params = {
+              refresh: true,
+              params: {
+                  filter: Object.assign({}, this.table.filter1, this.table.filters1),
+                  page: this.table.pagination.page,
+                  take: this.table.pagination.rowsPerPage,
+                  include: 'orderItems.product',
+              }
           }
-        }
-        //Request
-        commerceServices.crud.index('apiRoutes.eCommerce.orders', params)
-            .then(response => {
-              this.table.data.completed = response.data
-              this.table.pagination2.page = response.meta.page.currentPage
-              this.table.pagination2.rowsNumber = response.meta.page.total
-              this.table.pagination2.rowsPerPage = pagination.rowsPerPage
-              this.loading = false
-            })
-            .catch(error => {
-              this.loading = false
-              this.$helper.alert.error('Failed: ' + error, 'bottom')
-            })
+          //Request
+          commerceServices.crud.index('apiRoutes.eCommerce.orders', params)
+              .then(response => {
+                  this.table.data.processing = response.data
+                  if(response.meta) {
+                      this.table.pagination.page = response.meta.page.currentPage
+                      this.table.pagination.rowsNumber = response.meta.page.total
+                      //this.table.pagination.rowsPerPage = this.table.pagination.rowsPerPage
+                      this.table.pagination++
+                      handler.loaded()
+                  }else{
+                      handler.complete()
+                  }
+              })
+              .catch(error => {
+                  this.$helper.alert.error('Failed: ' + error, 'bottom')
+                  handler.complete()
+              })
       },
       async infinite2(handler){
-        this.table.pagination2 ++
-        await this.getdata2({pagination: this.table.pagination2})
-        handler.loaded()
+          //Params to request
+          let params = {
+              refresh: true,
+              params: {
+                  filter: Object.assign({}, this.table.filter2, this.table.filters2),
+                  page: this.table.pagination2.page,
+                  take: this.table.pagination2.rowsPerPage,
+                  include: 'orderItems.product',
+              }
+          }
+          //Request
+          commerceServices.crud.index('apiRoutes.eCommerce.orders', params)
+              .then(response => {
+                  this.table.data.completed = response.data
+                  if(response.meta) {
+                      this.table.pagination2.page = response.meta.page.currentPage
+                      this.table.pagination2.rowsNumber = response.meta.page.total
+                      //this.table.pagination2.rowsPerPage = this.table.pagination2.rowsPerPage
+                      this.table.pagination2++
+                      handler.loaded()
+                  }else{
+                      handler.complete()
+                  }
+              })
+              .catch(error => {
+                  this.$helper.alert.error('Failed: ' + error, 'bottom')
+                  handler.complete()
+              })
+        handler.complete()
       },
     }
   }
