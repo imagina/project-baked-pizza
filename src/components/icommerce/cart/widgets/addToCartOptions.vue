@@ -186,11 +186,13 @@
       },
       //Add product to cart
       async addCart() {
-        
+        await this.getSchedules()
+		      
         if(!this.scheduleAvaliable){
           this.$q.dialog({
             title: 'Fuera del horario',
-            message:'Domicilio: Todos los dias de 1PM a 9.45PM, Fines de semana, y Festivos de 12.30PM a 9:45PM. Recoger en Tienda: Todos los días desde las 2PM hasta las 9.45PM ',
+            message:'Domicilio: Todos los dias de 1PM a 9.45PM, Fines de semana, y Festivos de 12.30PM a 9:45PM. ' +
+		            'Recoger en Tienda: Todos los días desde las 2PM hasta las 9.45PM ',
             color: 'positive',
             ok: 'Ok',
             cancel: 'Cancel'

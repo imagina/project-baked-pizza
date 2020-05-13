@@ -15,16 +15,6 @@
 		<div class="q-my-lg text-center">
 			(Recoger en tienda te ahorra la fila y esperar)
 		</div>
-		<div class="row text-center" v-if="userId">
-			<div class="col-xs-12 col-ms-12">
-				<input
-								@click="openMyAddress()"
-								type="button"
-								value="Usar Mis Direcciones"
-								class="button button-search">
-			</div>
-		</div>
-		
 		
 		<div class="q-my-lg" :id="false ? 'q-carousel-search': ''">
 			<div class="row text-center gutter-xs justify-center q-px-sm">
@@ -205,6 +195,9 @@
 							
 							</p>
 							<p v-if="coverage && coverage.status"> Costo Domicilio ${{ coverage.price}} </p>
+							
+							<q-checkbox v-model="saveAddress" label="Guardar esta Dirección para futuras compras" class="q-mb-md" v-if="userId && coverage && coverage.status"/>
+							
 						</div>
 						
 						<q-btn label="Aceptar" class="full-width" color="green" @click="saveConfigAddress(true)"/>
@@ -226,6 +219,7 @@
 										</q-item-side>
 									</q-item>
 								</q-card-main>
+								<q-checkbox v-model="saveAddress" label="Guardar esta Dirección para futuras compras" class="q-mb-md" v-if="userId && coverage && coverage.status"/>
 							</q-card>
 						</div>
 						<q-btn label="Aceptar" class="full-width" color="green" @click="saveConfigAddress(false)"/>
@@ -235,37 +229,6 @@
 				<q-inner-loading :visible="loading">
 					<q-spinner size="50px" color="primary"></q-spinner>
 				</q-inner-loading>
-			</q-modal-layout>
-		</q-modal>
-		
-		<q-modal
-						v-model="modalMyAddress">
-			<q-modal-layout>
-				<div class="q-mx-lg">
-					
-					<div class="row">
-						<div class="col-md-12">
-							<p class="q-mt-lg text-center">
-								Mis Direcciones
-							</p>
-						</div>
-						<div class="col-md-12">
-							<q-btn
-											v-for="(address, index) in myAddres"
-											:key="index"
-											color="green"
-											@click="setAddresFromMyAddress(address)"
-											class="q-my-sm q-mb-md full-width">
-								<p class="text-white">
-									{{address.address_1.typeStreet}}
-									{{address.address_1.street}}
-									{{address.address_1.number1}}
-									{{address.address_1.number2}}
-								</p>
-							</q-btn>
-						</div>
-					</div>
-				</div>
 			</q-modal-layout>
 		</q-modal>
 		
@@ -335,6 +298,7 @@
                 userId: false,
                 myAddres: [],
                 modalMyAddress: false,
+                saveAddress: false,
             }
         },
         validations: {
@@ -376,6 +340,7 @@
                 //this.isLoggued()
                 this.getMapAreas()
                 this.getStores()
+		            this.getUserId()
             })
         },
         methods: {
@@ -508,13 +473,31 @@
                     alert.error('Seleccione una tienda', 'bottom', false, 2500)
                     return
                 }
-
+								if(this.saveAddress && this.userId){
+								    this.saveAddressInProfile(data)
+								}
                 this.modalresultcoverage = false
                 helper.storage.set('dataAddress', data)
                 this.$emit('addressValidated')
                 this.$alert.success('Validación de cobertura exitosa', 'top')
                 this.$router.push({path: '/products/pizzas'})
             },
+		        async getUserId(){
+                this.userId = await helper.storage.get.item('userId')
+		        },
+		        saveAddressInProfile(data){
+                let formData = {
+                    attributes:{
+                        first_name: "default",
+                        last_name: "default",
+                        address_1: "default",
+                        options: data
+                    }
+                }
+              addressesService.create(formData).then( response => {
+                  this.$alert.success('Direccion Guardada de manera correcta', 'top')
+              }).catch( error => console.warn(error))
+		        },
             getDataFromStorage() {
                 helper.storage.get.item('dataAddress').then(res => {
                     if (res !== null) {

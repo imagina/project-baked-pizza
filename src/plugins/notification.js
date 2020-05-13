@@ -24,8 +24,6 @@ class Notification {
       .listen('.clearCache', (message) => {
         helper.clearCache(message['key'])
       })
-
-      console.warn(this.Echo, 'En el global method')
   }
 
   leave() {

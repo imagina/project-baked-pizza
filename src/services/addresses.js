@@ -6,7 +6,7 @@ import {helper} from "@imagina/qhelper/_plugins/helper";
 
 export default {
 
-  async index(filter, take, page, fields, include, refresh) {
+  async index(filter, take, page, fields, include, refresh = true) {
     let token = await helper.storage.get.item('userToken')
     http.defaults.headers.common['Authorization'] = token
 
