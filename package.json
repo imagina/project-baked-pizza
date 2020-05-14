@@ -24,6 +24,7 @@
     "@imagina/quser": "^0.0.51",
     "@riophae/vue-treeselect": "0.0.38",
     "axios": "^0.18.0",
+    "cordova-plugin-fcm-with-dependecy-updated": "^6.3.1",
     "dotenv": "^6.0.0",
     "laravel-echo": "^1.4.0",
     "pusher-js": "^4.3.1",

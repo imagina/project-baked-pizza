@@ -51,6 +51,9 @@
               click_action: `https://www.bakedpizza.com.co/#/order/${order.id}`,
             }
             this.showPushNotitication(configNotification)
+            if(this.$q.platform.is.cordova){
+              FCMPlugin.subscribeToTopic(`orderStatusCreated${this.$store.state.quserAuth.userData.id}`);
+            }
 	        }
         })
         console.log('[APP] init channels')
