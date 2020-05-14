@@ -67,14 +67,18 @@
 			
 			<div class="row text-center gutter-xs q-py-md q-mb-md flex-center">
 				<div class="col-6 col-sm-4 text-center">
-					<q-btn
-									label="VERIFICAR COBERTURA"
-									color="primary"
-									size="20px"
-									style="min-height: 40px"
-									@click="validateAddress()"/>
+                    <div class="row">
+                        <div class="col-12 q-px-sm">
+                            <q-btn
+                                    label="VERIFICAR COBERTURA"
+                                    color="primary"
+                                    size="20px"
+                                    style="min-height: 40px"
+                                    @click="validateAddress()"/>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-6 col-sm-4 text-center">
+                <div class="col-6 col-sm-4 text-center" v-if="userId">
 					<myAddress/>
                 </div>
 			</div>
@@ -307,6 +311,7 @@
         },
         data() {
             return {
+                userId: false,
                 geocoder: {},
                 map: '',
                 marker: '',
@@ -386,12 +391,16 @@
                 this.geocoder = new google.maps.Geocoder();
                 this.getDataFromStorage()
                 //this.isLoggued()
+                this.getUser()
                 this.getMapAreas()
                 this.getStores()
 		            this.getUserId()
             })
         },
         methods: {
+            async getUser(){
+                this.userId = await helper.storage.get.item('userId')
+            },
             validateAddress() {
                 this.containerMap = false
                 this.$v.form.$touch()

@@ -32,7 +32,7 @@
             <!--Product-->
             <div class="row justify-end" v-if="productData">
               <!--Products of same category-->
-              <div class="selectorOtherProducts col-12 col-md-7 desktop-only">
+              <div class="selectorOtherProducts col-12 col-md-7 desktop-only q-mb-lg">
                 <div class="q-title q-py-sm q-mr-sm title">
                   Seleccione un Producto:
                 </div>
@@ -176,7 +176,13 @@
             width auto !important
             height 180px !important
             max-width: 100% !important
-
+          img.img-mobile-options
+            width auto !important
+            height 60px !important
+            max-width: 100% !important
+        @media (min-width: 768px)
+          .options-value-select
+            text-align: center!important
       #widgetSelectProducts
         .vue-treeselect
           border 0px

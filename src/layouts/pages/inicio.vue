@@ -2,8 +2,8 @@
   <div>
     <section class="row">
       <div class="col-xs-12 col-md-12" style="position: relative;">
-        <div class="islider-inner row col-12 col-md-6 flex-center">
-          <div class="islider-inner-details text-white text-center col-12">
+        <div :class="'islider-inner full-width row flex-center '+(this.$q.platform.is.desktop?'flex-center':'')">
+          <div class="islider-inner-details text-white text-center col-12 col-md-6">
             <!--== START VALIDATE ADDRESS ==-->
             <validateaddressComponent/>
             <!--== END VALIDATE ADDRESS ==-->
@@ -16,7 +16,7 @@
           color="white"
           quick-nav
           maximized
-          :height="this.$q.platform.is.desktop ? '840px' : '400px'">
+          :height="this.$q.platform.is.desktop ? '840px' : '450px'">
           <q-carousel-slide
             v-for="(slider, index) in sliders"
             :key="index"
@@ -163,6 +163,13 @@
     cursor: pointer;
     transition: all .3s ease;
   }
+
+  @media (max-width: 768px){
+      input.toggle{
+          height: 30px
+      }
+  }
+
   input.toggle:before, input.toggle:after {
     transition: all .3s ease;
   }
@@ -316,6 +323,9 @@
     color: #F5A613;
   }
 
+  .q-carousel-right-arrow, .q-carousel-left-arrow{
+      z-index: 1200;
+  }
 
   .q-carousel-quick-nav
   {
