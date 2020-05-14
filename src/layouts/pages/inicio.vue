@@ -1,9 +1,9 @@
 <template>
   <div>
-    <section class="row validateAddress-content">
+    <section class="row">
       <div class="col-xs-12 col-md-12" style="position: relative;">
-        <div class="islider-inner">
-          <div class="islider-inner-details text-white text-center">
+        <div class="islider-inner row col-12 col-md-6 flex-center">
+          <div class="islider-inner-details text-white text-center col-12">
             <!--== START VALIDATE ADDRESS ==-->
             <validateaddressComponent/>
             <!--== END VALIDATE ADDRESS ==-->
@@ -16,7 +16,7 @@
           color="white"
           quick-nav
           maximized
-          :height="this.$q.platform.is.desktop ? '880px' : '350px'">
+          :height="this.$q.platform.is.desktop ? '840px' : '400px'">
           <q-carousel-slide
             v-for="(slider, index) in sliders"
             :key="index"
