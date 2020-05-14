@@ -1,10 +1,9 @@
 <template>
-	<div class="">
-		
-		<div class="q-display-1" v-if="whitLabels">
+	<div class="validateAddress-content row q-mt-md">
+		<div class="q-display-1 col-12" v-if="whitLabels">
 			¡ACEPTANDO PEDIDOS!
 		</div>
-		<div class="q-display-2 q-my-md text-center">
+		<div class="q-display-2 col-12 q-my-md text-center">
 			RECOGER EN TIENDA
 			<input
 							class="toggle toggle__textless"
@@ -12,11 +11,11 @@
 							v-model="typeOrder">
 			DOMICILIO
 		</div>
-		<div class="q-my-lg text-center">
+		<div class="q-my-lg col-12 text-center">
 			(Recoger en tienda te ahorra la fila y esperar)
 		</div>
 		
-		<div class="q-my-lg" :id="false ? 'q-carousel-search': ''">
+		<div class="q-my-lg col-12" :id="false ? 'q-carousel-search': ''">
 			<div class="row text-center gutter-xs justify-center q-px-sm">
 				<div class="col-xs-6 col-sm-3">
 					<q-select
@@ -66,29 +65,34 @@
 				</div>
 			</div>
 			
-			<div class="row text-center q-py-sm">
-				<div class="col-xs-12 col-ms-12 flex flex-center">
+			<div class="row text-center gutter-xs q-py-md q-mb-md flex-center">
+				<div class="col-6 col-sm-4 text-center">
 					<q-btn
 									label="VERIFICAR COBERTURA"
 									color="primary"
 									size="20px"
 									style="min-height: 40px"
 									@click="validateAddress()"/>
+                </div>
+                <div class="col-6 col-sm-4 text-center">
 					<myAddress/>
-				</div>
+                </div>
 			</div>
 		</div>
-		
-		<img
-						src="statics/cards2.png"
-						class="desktop-only"
-						v-if="$q.platform.is.desktop && whitLabels">
-		<div
-						class="desktop-only"
-						style="font-family: Muli"
-						v-if="$q.platform.is.desktop && whitLabels">
-			Paga tu pedido en línea de forma segura
-		</div>
+        <div class="col-12">
+            <div class="row desktop-only"
+                 style="font-family: Muli"
+                 v-if="$q.platform.is.desktop && whitLabels">
+                <div class="col-12 text-center">
+                    <img
+                            src="statics/cards2.png" />
+                </div>
+                <div class="col-12 text-center">
+                    Paga tu pedido en línea de forma segura
+                </div>
+            </div>
+        </div>
+
 		
 		<q-modal v-model="opened" class="backend-page" :content-css="{minWidth: '90vw', minHeight: '90vh'}">
 			<q-modal-layout>
@@ -213,7 +217,7 @@
 									<q-item tag="label" v-for="(store, index) in stores" :key="index">
 										<q-item-side>
 											<p>
-												<q-radio v-model="storeSelected" :val="store.id"/>
+												<q-radio v-model="storeSelected" :val="store.id" />
 												{{store.name}} <b class="secondary-font">{{store.address}}</b> {{store.phone}}
 											</p>
 										</q-item-side>
@@ -238,7 +242,51 @@
 	
 	</div>
 </template>
+<style lang="stylus">
+    @media screen and (max-width: 768px)
+    {
+        .csh3
+        {
+            background-image: none;
+        }
 
+        .m-wd-full{
+            width: 100%;
+        }
+
+        .button-search{
+            width: 70%!important;
+        }
+
+        .validateAddress-content .q-display-2{
+            font-size: 20px!important;
+        }
+
+        .validateAddress-content .islider-inner{
+            width: 100%!important;
+        }
+
+        .validateAddress-content .q-display-1{
+            font-size: 20px!important;
+        }
+
+        .validateAddress-content .q-carousel-right-arrow,.q-carousel-left-arrow{
+            display: none;
+        }
+
+        .validateAddress-content .q-carousel-quick-nav{
+            display: none
+        }
+
+        .validateAddress-content .search{
+            margin-top: 5px;
+        }
+        .validateAddress-content .btns{
+            text-align: center!important;
+        }
+
+    }
+</style>
 <script>
     import mapService from 'src/services/maparea'
     import {required} from 'vuelidate/lib/validators'

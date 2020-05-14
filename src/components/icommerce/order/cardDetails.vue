@@ -16,10 +16,10 @@
                 <div slot="subtitle">
                     <p class="color-baked-subtitle">$ {{ $n(order.total) }}</p>
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-12 col-md-2">
                             <p class="text-primary">Detalles</p>
                         </div>
-                        <div class="col-10">
+                        <div class="col-12 col-md-10">
                             <div>Método de Pago: {{ order.paymentMethod }}</div>
                             <div>Pedido Realizado el {{ $d(order.createdAt) }}</div>
                             <div>Estado: {{ order.statusName }}</div>

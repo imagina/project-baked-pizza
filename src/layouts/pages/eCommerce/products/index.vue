@@ -6,14 +6,14 @@
       image="statics/header-pide.jpg"/>
 
     <div class="q-container relative-position">
-      <div class="row gutter-x-sm q-mb-md"
+      <div class="row q-mb-md"
         v-if="!isValidateAddress"
         style="background:#c4c4c438;border-radius: 17px;">
-        <div class="col-md-12 flex flex-center gutter-x-sm q-mt-lg">
-          <p>Ingresa tu dirección para comenzar tu pedido</p>
+        <div class="col-12 text-center q-mt-lg">
+            <p>Ingresa tu dirección para comenzar tu pedido</p>
         </div>
         <div
-          class="col-md-12 flex flex-center gutter-x-sm q-mb-md">
+          class="col-12 q-mb-md">
           <validateAddressComponent
           :whitLabels="false"
           @addressValidated="isValidateAddress = true"/>
