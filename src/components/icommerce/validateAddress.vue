@@ -28,7 +28,7 @@
 									v-model="form.typeStreet"/>
 				</div>
 				
-				<div class="col-xs-6 col-sm-2">
+				<div class="col-xs-6 col-sm-3">
 					<q-input
 									v-model="form.street"
 									inverted
@@ -39,7 +39,7 @@
 									placeholder="87b"/>
 				</div>
 				
-				<div class="col-xs-6 col-sm-2">
+				<div class="col-xs-6 col-sm-3">
 					<q-input
 									v-model="form.number1"
 									inverted
@@ -51,7 +51,7 @@
 									placeholder="38a"/>
 				</div>
 				
-				<div class="col-xs-6 col-sm-2">
+				<div class="col-xs-6 col-sm-3">
 					<q-input
 									v-model="form.number2"
 									type="number"
@@ -66,7 +66,7 @@
 			</div>
 			
 			<div class="row text-center gutter-xs q-py-md q-mb-md flex-center">
-				<div :class="'col-6 col-sm-4 q-px-sm '+($q.screen.width > 768 ? 'text-right': 'text-center')">
+				<div :class="'col-6 col-sm-4 q-px-sm '+($q.screen.width > 768 ? (userId?'text-right':'text-center'): 'text-center')">
                     <div class="row">
                         <div class="col-12">
                             <q-btn
