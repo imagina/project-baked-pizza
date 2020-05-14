@@ -66,9 +66,9 @@
 			</div>
 			
 			<div class="row text-center gutter-xs q-py-md q-mb-md flex-center">
-				<div class="col-6 col-sm-4 text-center">
+				<div :class="'col-6 col-sm-4 q-px-sm '+($q.screen.width > 768 ? 'text-right': 'text-center')">
                     <div class="row">
-                        <div class="col-12 q-px-sm">
+                        <div class="col-12">
                             <q-btn
                                     label="VERIFICAR COBERTURA"
                                     color="primary"
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6 col-sm-4 text-center" v-if="userId">
+                <div :class="'col-6 col-sm-4 q-px-sm '+($q.screen.width > 768 ? 'text-left': 'text-center')" v-if="userId">
 					<myAddress/>
                 </div>
 			</div>
