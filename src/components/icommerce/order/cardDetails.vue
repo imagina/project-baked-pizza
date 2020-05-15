@@ -59,14 +59,14 @@
                     cancel: 'No'
                 }).then(async data => {
                     this.loading = true
-                    for(let x in order.items) {
+                    for(let x in this.order.items) {
                         let formData = {
-                            productId: order.items[x].productId,
-                            quantity: order.items[x].quantity,
-                            productOptionValues: order.items[x].options,
-                            price: order.items[x].price,
+                            productId: this.order.items[x].productId,
+                            quantity: this.order.items[x].quantity,
+                            productOptionValues: this.order.items[x].options,
+                            price: this.order.items[x].price,
                         }
-                        this.$store.dispatch('shoppingCart/SET_PRODUCT_INTO_CART', formData)
+                        await this.$store.dispatch('shoppingCart/SET_PRODUCT_INTO_CART', formData)
                     }
                     this.$router.push({name: 'shopping.cart.index'})
                 }).catch(() => {
