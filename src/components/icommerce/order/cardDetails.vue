@@ -2,7 +2,7 @@
     <div>
       <!--<router-link :to="{name: 'order.show',params: {id: order.id}}">-->
         <div class="row">
-            <q-card class="col-12 q-pa-sm q-mb-md">
+            <q-card class="col-12 q-pa-sm q-mb-md" style="border-radius: 15px">
                 <q-card-title>
                     <div class="row gutter-sm" v-for="(item,i) in order.items" :key="i">
                         <div class="col-7">
