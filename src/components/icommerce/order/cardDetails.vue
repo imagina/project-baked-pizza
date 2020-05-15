@@ -1,6 +1,6 @@
 <template>
     <div>
-      <router-link :to="{name: 'order.show',params: {id: order.id}}">
+      <!--<router-link :to="{name: 'order.show',params: {id: order.id}}">-->
         <div class="row">
             <q-card class="col-12 q-pa-sm q-mb-md">
                 <q-card-title>
@@ -27,14 +27,14 @@
                                 <div>Estado: {{ order.statusName }}</div>
                             </div>
                             <div class="col-12 text-center q-pt-sm">
-                                <q-btn color="positive" rounded label="REPETIR PEDIDO" />
+                                <q-btn color="positive" rounded label="REPETIR PEDIDO" @click="repeatOrder" />
                             </div>
                         </div>
                     </div>
                 </q-card-title>
             </q-card>
         </div>
-      </router-link>
+      <!--</router-link>-->
     </div>
 </template>
 <script>
@@ -48,6 +48,30 @@
         data(){
             return {
 
+            }
+        },
+        methods:{
+            repeatOrder(){
+                this.$q.dialog({
+                    title: '¿Desea Repetir este Pedido?',
+                    color: 'positive',
+                    ok: 'Sí',
+                    cancel: 'No'
+                }).then(async data => {
+                    this.loading = true
+                    for(let x in order.items) {
+                        let formData = {
+                            productId: order.items[x].productId,
+                            quantity: order.items[x].quantity,
+                            productOptionValues: order.items[x].options,
+                            price: order.items[x].price,
+                        }
+                        this.$store.dispatch('shoppingCart/SET_PRODUCT_INTO_CART', formData)
+                    }
+                    this.$router.push({name: 'shopping.cart.index'})
+                }).catch(() => {
+                  this.loading = false
+                })
             }
         }
     }
