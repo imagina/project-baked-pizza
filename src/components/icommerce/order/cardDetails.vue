@@ -57,7 +57,7 @@
     .product-img
         background-position: center;
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: contain;
         width: 100%;
         height 120px;
         border: 1px solid #dddddd52;

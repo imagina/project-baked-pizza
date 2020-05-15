@@ -15,7 +15,7 @@
           <q-tab slot="title" name="tab-completed" label="Confirmados" />
           <q-tab-pane name="tab-processing">
               <div class="row gutter-sm">
-                <card-details class="col-12 col-sm-4" v-for="(order, i) in table.data.processing" :order="order" :key="i" />
+                <card-details class="col-12 col-md-4" v-for="(order, i) in table.data.processing" :order="order" :key="i" />
               </div>
             <infinite-loading @infinite="infinite1"></infinite-loading>
           </q-tab-pane>

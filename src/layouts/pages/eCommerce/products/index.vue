@@ -68,8 +68,7 @@
                   </div>
                 </div>
                 <div class="col-5 col-sm-6">
-                  <div :style="`background-image: url(${product.mainImage.path});`" class="product-img">
-                    &nbsp;
+                  <div :style="`background-image: url(${product.mainImage.path});`" class="product-img">                    &nbsp;
                   </div>
                 </div>
               </div>
@@ -214,7 +213,7 @@
   .product-img
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     border: 1px solid #dddddd52
     border-radius 10px
     width: 100%;
