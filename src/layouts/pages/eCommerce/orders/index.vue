@@ -24,7 +24,9 @@
             </infinite-loading>
           </q-tab-pane>
           <q-tab-pane name="tab-completed">
-              <card-details v-for="(order, j) in table.data.completed" :key="j" :order="order" />
+              <div class="row gutter-sm">
+                <card-details class="col-12 col-md-4" v-for="(order, j) in table.data.completed" :key="j" :order="order" />
+              </div>
               <infinite-loading @infinite="infinite2">
                   <div slot="spinner">Cargando...</div>
                   <div slot="no-more">No hay más ordenes de compra disponibles</div>
@@ -124,8 +126,8 @@
           },
           filter1: {
             search: null,
-            customer:this.$store.state.auth.userId,
-            status: '1,11',
+            customer: this.$store.state.auth.userId,
+            status: '1,11,13',
             order:{
               field:'id',
               way:'DESC'
@@ -137,7 +139,7 @@
           filter2: {
             search: null,
             customer:this.$store.state.auth.userId,
-            status: 13,
+            status: '4',
             order:{
               field:'id',
               way:'DESC'
