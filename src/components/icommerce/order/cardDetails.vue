@@ -1,6 +1,6 @@
 <template>
     <div>
-        <q-scroll-area v-if="$q.screen.width > 768" style="height: 365px;width: 100%">
+        <q-scroll-area v-if="$q.screen.width > 768" style="height: 360px;width: 100%">
           <!--<router-link :to="{name: 'order.show',params: {id: order.id}}">-->
             <div class="row q-px-xs q-pt-xs">
                 <q-card class="col-12 q-mb-sm" style="border-radius: 15px;min-height: 335px">
