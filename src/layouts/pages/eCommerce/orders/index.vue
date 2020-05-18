@@ -17,11 +17,19 @@
               <div class="row gutter-sm">
                 <card-details class="col-12 col-md-4" v-for="(order, i) in table.data.processing" :order="order" :key="i" />
               </div>
-            <infinite-loading @infinite="infinite1"></infinite-loading>
+            <infinite-loading @infinite="infinite1">
+                <div slot="spinner">Cargando...</div>
+                <div slot="no-more">No hay más ordenes de compra disponibles</div>
+                <div slot="no-results">Sin Resultados</div>
+            </infinite-loading>
           </q-tab-pane>
           <q-tab-pane name="tab-completed">
               <card-details v-for="(order, j) in table.data.completed" :key="j" :order="order" />
-              <infinite-loading @infinite="infinite2"></infinite-loading>
+              <infinite-loading @infinite="infinite2">
+                  <div slot="spinner">Cargando...</div>
+                  <div slot="no-more">No hay más ordenes de compra disponibles</div>
+                  <div slot="no-results">Sin Resultados</div>
+              </infinite-loading>
           </q-tab-pane>
         </q-tabs>
       </div>
@@ -117,7 +125,7 @@
           filter1: {
             search: null,
             customer:this.$store.state.auth.userId,
-            status: 1,
+            status: '1,11',
             order:{
               field:'id',
               way:'DESC'
@@ -160,12 +168,12 @@
           //Request
           commerceServices.crud.index('apiRoutes.eCommerce.orders', params)
               .then(response => {
-                  this.table.data.processing = response.data
-                  if(response.meta) {
+                  this.table.data.processing = this.table.data.processing.concat(response.data)
+                  if(response.meta && response.data.length > 0) {
                       this.table.pagination.page = response.meta.page.currentPage
                       this.table.pagination.rowsNumber = response.meta.page.total
-                      //this.table.pagination.rowsPerPage = this.table.pagination.rowsPerPage
-                      this.table.pagination++
+                      this.table.pagination.rowsPerPage = response.meta.page.perPage
+                      this.table.pagination.page++
                       handler.loaded()
                   }else{
                       handler.complete()
@@ -190,12 +198,12 @@
           //Request
           commerceServices.crud.index('apiRoutes.eCommerce.orders', params)
               .then(response => {
-                  this.table.data.completed = response.data
-                  if(response.meta) {
+                  this.table.data.completed = this.table.data.completed.concat(response.data)
+                  if(response.meta && response.data.length > 0) {
                       this.table.pagination2.page = response.meta.page.currentPage
                       this.table.pagination2.rowsNumber = response.meta.page.total
-                      //this.table.pagination2.rowsPerPage = this.table.pagination2.rowsPerPage
-                      this.table.pagination2++
+                      this.table.pagination2.rowsPerPage = response.meta.page.perPage
+                      this.table.pagination2.page++
                       handler.loaded()
                   }else{
                       handler.complete()

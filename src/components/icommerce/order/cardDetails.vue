@@ -68,9 +68,9 @@
                         }
                         await this.$store.dispatch('shoppingCart/SET_PRODUCT_INTO_CART', formData)
                     }
+                    this.loading = false
                     this.$router.push({name: 'shopping.cart.index'})
                 }).catch(() => {
-                  this.loading = false
                 })
             }
         }
