@@ -117,8 +117,13 @@
               }
             }
           },
-          schedules: {}
+          schedules: {
+            close:{
+              value: null
+            }
+          }
         },
+	      settings:{},
         validatedAddress:{
           typeOrder:false,
         },
@@ -161,6 +166,7 @@
         this.getOptions()//Get options
         this.getSchedules()
         this.getValidateAddress()
+	      this.getSettings()
       },
       //Get options
       getOptions() {
@@ -187,8 +193,11 @@
       //Add product to cart
       async addCart() {
         await this.getSchedules()
-		      
-        if(!this.scheduleAvaliable){
+        await this.getSettings()
+	      
+	      console.log(this.settings.close.value)
+	      
+        if(!this.scheduleAvaliable || this.settings.close.value == 1 ){
           this.$q.dialog({
             title: 'Fuera del horario',
             message:'Domicilio: Todos los dias de 1PM a 9.45PM, Fines de semana, y Festivos de 12.30PM a 9:45PM. ' +
@@ -240,6 +249,18 @@
         commerceServices.crud.show('apiRoutes.eCommerce.schedules', criteria, params)
           .then(response => {
             this.schedules = response.data
+          })
+          .catch(error => {
+            console.warn(error)
+          })
+      },
+      getSettings(){
+        let params = {
+          refresh: true
+        }
+        commerceServices.crud.index('apiRoutes.eCommerce.settings',params)
+          .then(response => {
+            this.settings = response.data.Icommerce
           })
           .catch(error => {
             console.warn(error)
