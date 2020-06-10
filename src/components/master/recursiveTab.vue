@@ -81,7 +81,7 @@
 			font-weight bold
 			.q-icon
 				font-size 45px
-		.q-tab-label,.q-btn-inner
+		.q-tab-label,.q-btn-inner div
 			font-family 'Bebas Neue',sans-serif!important
 			font-size 24px
 		.q-icon
