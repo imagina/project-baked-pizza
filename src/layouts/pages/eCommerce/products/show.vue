@@ -23,11 +23,14 @@
       </div>
 
       <div v-else class="row gutter-x-sm q-mt-md ">
-        <div class="col-12 col-md-3 desktop-only">
+        <!--<div class="col-12 col-md-3 desktop-only">
           <menu-categories class="widgetMenuCategories" title="· Nuestro Menú ·"/>
-        </div>
+        </div>-->
         <!--== Content ==-->
-        <div id="showProductContent" :class="'col-12' + (this.$q.platform.is.desktop ? ' col-md-9' : '')">
+        <div class="col-12 q-mb-md">
+          <menu-tabs class="desktop-only" v-if="$route.name==='products.index' || $route.name==='product.show'" />
+        </div>
+        <div id="showProductContent" class="col-12">
           <div class="relative-position" style="min-height: 150px">
             <!--Product-->
             <div class="row justify-end" v-if="productData">
@@ -85,6 +88,7 @@
   import breadcrumbComponent from 'src/components/pages/sections/breadcrumb'
   import notFound from 'src/components/404'
   import validateaddressComponent from 'src/components/icommerce/validateAddress'
+  import menuTabs from '@imagina/qcommerce/_components/frontend/categories/menuTabs'
 
   // Services
   import icommerceService from '@imagina/qcommerce/_services/index';
@@ -100,7 +104,8 @@
       addToCart,
       breadcrumbComponent,
       notFound,
-      validateaddressComponent
+      validateaddressComponent,
+      menuTabs,
     },
     mounted() {
       this.$nextTick(function () {
