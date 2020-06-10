@@ -184,7 +184,7 @@
           <q-icon name="menu"/>
         </q-btn>
         <q-toolbar-title :class="$q.platform.is.mobile ? 'text-center' : ''">
-          <menu-tabs class="mobile-only" />
+          <menu-tabs class="mobile-only" v-if="$route.name==='products.index' || $route.name==='product.show'" />
         </q-toolbar-title>
         <search-component class="mobile-only"/>
       </q-toolbar>

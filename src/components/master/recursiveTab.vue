@@ -76,9 +76,11 @@
 <style lang="stylus">
 	@import "~variables";
 	#tabsMenu
+		.q-tab-label
+			font-family 'Bebas Neue',sans-serif!important
+			font-size 24px
 		.q-icon
 			font-size 16px
-
 		.q-collapsible-inner
 			a, .q-collapsible
 				border-top none !important

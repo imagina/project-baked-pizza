@@ -21,10 +21,10 @@
       </div>
 
       <div class="row gutter-x-sm" style="min-width: 150px" v-else>
-        <div class="col-xs-12 col-sm-12 col-md-3 desktop-only">
-          <menu-categories class="widgetMenuCategories" title="· Nuestro Menú ·" />
+        <div class="col-12 q-mb-md">
+          <menu-tabs class="desktop-only" v-if="$route.name==='products.index' || $route.name==='product.show'" />
         </div>
-        <div :class="$q.platform.is.desktop ? 'col-12 col-md-9' : 'col-12'">
+        <div class="col-12">
           <div
             class="row gutter-x-sm"
             v-if="products.length">
@@ -118,6 +118,7 @@
   import validateAddressComponent from 'src/components/icommerce/validateAddress'
   import breadcrumbComponent from 'src/components/pages/sections/breadcrumb'
   import innerLoading from 'src/components/master/innerLoading'
+  import menuTabs from '@imagina/qcommerce/_components/frontend/categories/menuTabs'
 
   export default {
     data(){
@@ -145,7 +146,8 @@
       breadcrumbComponent,
       menuCategories,
       innerLoading,
-      recursiveTab
+      recursiveTab,
+      menuTabs,
     },
     watch:{
       $route(to, from) {
