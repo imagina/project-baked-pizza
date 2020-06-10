@@ -13,7 +13,7 @@
             hide-header
             class=" no-shadow">
             <!--Image product-->
-            <q-td slot="body-cell-img-prodct" slot-scope="props" :props="props">
+            <q-td slot="body-cell-img-prodct" class="relative-position" slot-scope="props" :props="props">
               <!---Delete buttom-->
               <div class="content-btn-delete">
                 <q-btn size="sm" rounded color="negative" flat
