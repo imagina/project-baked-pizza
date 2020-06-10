@@ -1,5 +1,5 @@
 <template>
-	<q-tabs id="tabsMenu" class="q-pa-none" inverted>
+	<q-tabs id="tabsMenu" class="q-pa-none q-py-sm" inverted>
 		<!--Single Item-->
 		<q-route-tab
 				:to="getObjectTo(item)"
@@ -15,7 +15,7 @@
 		<!-- Dropdwon Item -->
 
 		<!--<q-collapsible v-else-if="checkItemMultiple(item)"
-		               :icon="item.icon" :label="item.title">
+					   :icon="item.icon" :label="item.title">
 			<recursive-menu :key="key" :menu="item.children"/>
 		</q-collapsible>-->
 	</q-tabs>
@@ -76,9 +76,16 @@
 <style lang="stylus">
 	@import "~variables";
 	#tabsMenu
+		.q-tabs-left-scroll, .q-tabs-right-scroll
+			color: $primary
+			font-weight bold
+			.q-icon
+				font-size 45px
+		.q-tab-label,.q-btn-inner div
+			font-family 'Bebas Neue',sans-serif!important
+			font-size 24px
 		.q-icon
 			font-size 16px
-
 		.q-collapsible-inner
 			a, .q-collapsible
 				border-top none !important
