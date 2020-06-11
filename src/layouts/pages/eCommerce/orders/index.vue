@@ -19,8 +19,8 @@
               </div>
             <infinite-loading @infinite="infinite1">
                 <div slot="spinner">Cargando...</div>
-                <div slot="no-more">No hay más ordenes de compra disponibles</div>
-                <div slot="no-results">Sin Resultados</div>
+                <div slot="no-more">&nbsp;</div>
+                <div slot="no-results" class="q-pt-lg">Sin Resultados</div>
             </infinite-loading>
           </q-tab-pane>
           <q-tab-pane name="tab-completed">
@@ -29,8 +29,8 @@
               </div>
               <infinite-loading @infinite="infinite2">
                   <div slot="spinner">Cargando...</div>
-                  <div slot="no-more">No hay más ordenes de compra disponibles</div>
-                  <div slot="no-results">Sin Resultados</div>
+                  <div slot="no-more">&nbsp;</div>
+                  <div slot="no-results" class="q-pt-lg">Sin Resultados</div>
               </infinite-loading>
           </q-tab-pane>
         </q-tabs>
