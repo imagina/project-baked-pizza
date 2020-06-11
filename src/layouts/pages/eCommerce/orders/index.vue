@@ -18,7 +18,7 @@
                 <card-details class="col-12 col-md-4" v-for="(order, i) in table.data.processing" :order="order" :key="i" />
               </div>
             <infinite-loading @infinite="infinite1">
-                <div slot="spinner">Cargando...</div>
+                <div slot="spinner" class="q-pt-lg">Cargando...</div>
                 <div slot="no-more">&nbsp;</div>
                 <div slot="no-results" class="q-pt-lg">Sin Resultados</div>
             </infinite-loading>
@@ -28,7 +28,7 @@
                 <card-details class="col-12 col-md-4" v-for="(order, j) in table.data.completed" :key="j" :order="order" />
               </div>
               <infinite-loading @infinite="infinite2">
-                  <div slot="spinner">Cargando...</div>
+                  <div slot="spinner" class="q-pt-lg">Cargando...</div>
                   <div slot="no-more">&nbsp;</div>
                   <div slot="no-results" class="q-pt-lg">Sin Resultados</div>
               </infinite-loading>
