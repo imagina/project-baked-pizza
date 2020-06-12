@@ -123,6 +123,18 @@
 				<div class="q-my-md">
 					<!--Validate Input Address-->
 					<div class="text-center q-mb-sm">
+						
+						<div class="q-display-2 col-12 q-my-md text-center">
+							RECOGER EN TIENDA
+							<input
+								class="toggle toggle__textless"
+								type="checkbox"
+								v-model="typeOrder">
+							DOMICILIO
+						</div>
+						
+					</div>
+					<div class="text-center q-mb-sm">
 						<q-icon name="fas fa-exclamation-circle q-mr-xs" color="cyan"/>
 						Cambia los datos de tu dirección o arrastra el marcador en el mapa, para indicar tu ubicación.
 						<div class="row text-center gutter-x-xs justify-center">
