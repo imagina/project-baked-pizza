@@ -16,28 +16,33 @@
           <q-tab-pane name="tab-processing">
               <div class="row gutter-sm">
                 <card-details class="col-12 col-md-4" v-for="(order, i) in table.data.processing" :order="order" :key="i" />
+                <div class="col-12 text-center q-pt-md" v-if="table.data.processing.length===0 && loading===false">
+                    Sin Resultados
+                </div>
               </div>
             <infinite-loading @infinite="infinite1">
-                <div slot="spinner">Cargando...</div>
-                <div slot="no-more">No hay más ordenes de compra disponibles</div>
-                <div slot="no-results">Sin Resultados</div>
+                <div slot="spinner" class="q-pt-lg">Cargando...</div>
+                <div slot="no-more">&nbsp;</div>
+                <div slot="no-results" class="q-pt-lg">&nbsp;</div>
             </infinite-loading>
           </q-tab-pane>
           <q-tab-pane name="tab-completed">
               <div class="row gutter-sm">
                 <card-details class="col-12 col-md-4" v-for="(order, j) in table.data.completed" :key="j" :order="order" />
+                <div class="col-12 text-center q-pt-md" v-if="table.data.completed.length===0 && loading===false">
+                      Sin Resultados
+                </div>
               </div>
               <infinite-loading @infinite="infinite2">
-                  <div slot="spinner">Cargando...</div>
-                  <div slot="no-more">No hay más ordenes de compra disponibles</div>
-                  <div slot="no-results">Sin Resultados</div>
+                  <div slot="spinner" class="q-pt-lg">Cargando...</div>
+                  <div slot="no-more">&nbsp;</div>
+                  <div slot="no-results" class="q-pt-lg">&nbsp;</div>
               </infinite-loading>
           </q-tab-pane>
         </q-tabs>
       </div>
-
       <!--Loading-->
-      <inner-loading :visible="loading" />
+      <inner-loading :show="loading" />
     </div>
   </div>
 </template>
@@ -158,6 +163,7 @@
     methods: {
       async infinite1(handler){
           //Params to request
+          this.loading = true
           let params = {
               refresh: true,
               params: {
@@ -185,8 +191,10 @@
                   this.$helper.alert.error('Failed: ' + error, 'bottom')
                   handler.complete()
               })
+            this.loading = false
       },
       async infinite2(handler){
+          this.loading = true
           //Params to request
           let params = {
               refresh: true,
@@ -216,6 +224,7 @@
                   handler.complete()
               })
         handler.complete()
+          this.loading = false
       },
     }
   }
