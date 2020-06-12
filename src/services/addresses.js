@@ -90,9 +90,15 @@ export default {
     });
   },
 
-  delete(id) {
+  async delete(id) {
+    let token = await helper.storage.get.item('userToken')
+    http.defaults.headers.common['Authorization'] = token
+
+    http.defaults.params = {
+      setting: {departmentId: 1, roleId: 1}
+    }
     return new Promise((resolve, reject) => {
-      http.delete(config('apiRoutes.api.api_url') + '/profile/addresses/'+ id)
+      http.delete(config('apiRoutes.api.api_url') + '/profile/v1/addresses/'+ id)
         .then(response => {
           resolve(response);
         })
