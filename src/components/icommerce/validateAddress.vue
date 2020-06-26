@@ -122,7 +122,7 @@
 				
 				<div class="q-my-md">
 					<!--Validate Input Address-->
-					<div class="text-center q-mb-sm">
+					<div class="validateAddress-content text-center q-mb-sm">
 						
 						<div class="q-display-2 col-12 q-my-md text-center">
 							RECOGER EN TIENDA
