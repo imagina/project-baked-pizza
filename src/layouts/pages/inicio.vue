@@ -48,7 +48,7 @@
         </div>
       </div>
     </section>
-    
+
     <!--== START CATERING ==-->
     <section-carting-app />
     <!--== END CATERING ==-->
@@ -66,7 +66,7 @@
           <!--== END CATEGORIES ==-->
       </div>
     </section>
-
+    <footer-top/>
   </div>
 </template>
 
@@ -75,11 +75,13 @@
   import validateaddressComponent from 'src/components/icommerce/validateAddress'
   import sliderService from 'src/services/sliders'
   import myAddress from "../../components/icommerce/myAddress";
+  import footerTop from 'src/components/master/footer/footerTop';
   export default{
     components:{
       categorieshomeComponent,
       validateaddressComponent,
-      myAddress
+      myAddress,
+      footerTop
     },
     data () {
       return {
@@ -477,10 +479,10 @@
       .validateAddress-content .q-carousel-quick-nav{
         display: none
       }
-      
+
       .validateAddress-content .search{
         margin-top: 5px;
       }
-      
+
     }
 </style>
