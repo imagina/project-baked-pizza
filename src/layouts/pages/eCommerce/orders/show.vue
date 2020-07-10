@@ -59,7 +59,7 @@
           <div class="row full-width">
             <div class="col-12 q-mb-md border-top-color shadow-1">
               <div class="q-heading  secondary-font text-primary text-weight-bold ">
-                Customer Data
+                Datos del usuario
               </div>
               <customerData :items="[order.customer]"/>
             </div>
@@ -89,7 +89,7 @@
             <!-- Payment Address -->
             <div class="col-12 q-mb-md border-top-color shadow-1">
               <div class="row">
-                <div class="q-heading secondary-font text-primary text-weight-bold "> Payment Address</div>
+                <div class="q-heading secondary-font text-primary text-weight-bold "> Direccion de Pago</div>
               </div>
               <div class="row q-py-xs text-right secondary-font text-weight-bold">
 
@@ -102,7 +102,7 @@
             <!-- Shipping Address -->
             <div class="col-12 q-mb-md border-top-color shadow-1">
               <div class="row">
-                <div class="q-heading secondary-font text-primary text-weight-bold "> Shipping Address</div>
+                <div class="q-heading secondary-font text-primary text-weight-bold "> Direccion de envío</div>
               </div>
               <div class="row q-py-xs text-right secondary-font text-weight-bold">
 
