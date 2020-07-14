@@ -7,38 +7,28 @@
     </h1>
 
     <!--Content-->
-    <div class="relative-position backend-page">
+    <div class="relative-position backend-page relative-position" style="min-height: 500px">
       <!--Table-->
       <div class="col-12">
         <q-tabs class="q-pa-none" inverted>
-          <q-tab default slot="title" name="tab-processing" label="Pendientes" />
-          <q-tab slot="title" name="tab-completed" label="Confirmados" />
+          <q-tab default slot="title" name="tab-processing" label="En Preparacion" />
+	        
+          <q-tab slot="title" name="tab-on-way" label="En Camino" />
+	        
+	        <q-tab slot="title" name="tab-completed" label="Completados" />
+	        
           <q-tab-pane name="tab-processing">
-              <div class="row gutter-sm">
-                <card-details class="col-12 col-md-4" v-for="(order, i) in table.data.processing" :order="order" :key="i" />
-                <div class="col-12 text-center q-pt-md" v-if="table.data.processing.length===0 && loading===false">
-                    Sin Resultados
-                </div>
-              </div>
-            <infinite-loading @infinite="infinite1">
-                <div slot="spinner" class="q-pt-lg">Cargando...</div>
-                <div slot="no-more">&nbsp;</div>
-                <div slot="no-results" class="q-pt-lg">&nbsp;</div>
-            </infinite-loading>
+            <orders status="11"></orders>
           </q-tab-pane>
-          <q-tab-pane name="tab-completed">
-              <div class="row gutter-sm">
-                <card-details class="col-12 col-md-4" v-for="(order, j) in table.data.completed" :key="j" :order="order" />
-                <div class="col-12 text-center q-pt-md" v-if="table.data.completed.length===0 && loading===false">
-                      Sin Resultados
-                </div>
-              </div>
-              <infinite-loading @infinite="infinite2">
-                  <div slot="spinner" class="q-pt-lg">Cargando...</div>
-                  <div slot="no-more">&nbsp;</div>
-                  <div slot="no-results" class="q-pt-lg">&nbsp;</div>
-              </infinite-loading>
+	        
+          <q-tab-pane name="tab-on-way">
+	          <orders status="2"></orders>
           </q-tab-pane>
+	        
+	        <q-tab-pane name="tab-completed">
+		        <orders status="4"></orders>
+	        </q-tab-pane>
+	        
         </q-tabs>
       </div>
       <!--Loading-->
@@ -53,13 +43,13 @@
   //Component
   import innerLoading from 'src/components/master/innerLoading'
   import infiniteLoading from 'vue-infinite-loading';
-  import cardDetails from "src/components/icommerce/order/cardDetails";
+  import orders from "src/components/icommerce/order/orders.vue";
 
   export default {
     components: {
       innerLoading,
       infiniteLoading,
-      cardDetails,
+      orders
     },
     mounted() {
       this.$nextTick(function () {
@@ -161,71 +151,7 @@
       }
     },
     methods: {
-      async infinite1(handler){
-          //Params to request
-          this.loading = true
-          let params = {
-              refresh: true,
-              params: {
-                  filter: Object.assign({}, this.table.filter1, this.table.filters1),
-                  page: this.table.pagination.page,
-                  take: this.table.pagination.rowsPerPage,
-                  include: 'orderItems.product',
-              }
-          }
-          //Request
-          commerceServices.crud.index('apiRoutes.eCommerce.orders', params)
-              .then(response => {
-                  this.table.data.processing = this.table.data.processing.concat(response.data)
-                  if(response.meta && response.data.length > 0) {
-                      this.table.pagination.page = response.meta.page.currentPage
-                      this.table.pagination.rowsNumber = response.meta.page.total
-                      this.table.pagination.rowsPerPage = response.meta.page.perPage
-                      this.table.pagination.page++
-                      handler.loaded()
-                  }else{
-                      handler.complete()
-                  }
-              })
-              .catch(error => {
-                  this.$helper.alert.error('Failed: ' + error, 'bottom')
-                  handler.complete()
-              })
-            this.loading = false
-      },
-      async infinite2(handler){
-          this.loading = true
-          //Params to request
-          let params = {
-              refresh: true,
-              params: {
-                  filter: Object.assign({}, this.table.filter2, this.table.filters2),
-                  page: this.table.pagination2.page,
-                  take: this.table.pagination2.rowsPerPage,
-                  include: 'orderItems.product',
-              }
-          }
-          //Request
-          commerceServices.crud.index('apiRoutes.eCommerce.orders', params)
-              .then(response => {
-                  this.table.data.completed = this.table.data.completed.concat(response.data)
-                  if(response.meta && response.data.length > 0) {
-                      this.table.pagination2.page = response.meta.page.currentPage
-                      this.table.pagination2.rowsNumber = response.meta.page.total
-                      this.table.pagination2.rowsPerPage = response.meta.page.perPage
-                      this.table.pagination2.page++
-                      handler.loaded()
-                  }else{
-                      handler.complete()
-                  }
-              })
-              .catch(error => {
-                  this.$helper.alert.error('Failed: ' + error, 'bottom')
-                  handler.complete()
-              })
-        handler.complete()
-          this.loading = false
-      },
+
     }
   }
 </script>
